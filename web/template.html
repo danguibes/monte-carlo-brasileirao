@@ -46,6 +46,11 @@
   .cell span{position:relative}
   .g4 i{background:var(--g4)} .g6 i{background:var(--g6)} .z4 i{background:var(--z4)}
   .muted{color:var(--mut)}
+  .dlt{display:inline-block;margin-left:5px;font-size:11px;font-weight:700;
+       font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .dlt.bom{color:var(--g4)} .dlt.ruim{color:var(--z4)}
+  .dlt.zero{color:var(--mut);font-weight:400}
+  #capvar{margin-top:8px}
   .scroll{overflow-x:auto}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .chip{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 12px;font-size:13px}
@@ -115,6 +120,8 @@
             margin:0 -14px;padding:0 14px;
             scrollbar-width:thin}
     .scroll table{min-width:620px}
+    body.comvar .scroll table{min-width:740px}   /* as variações alargam as células */
+    .dlt{font-size:11.5px}
     #tbl td:first-child,#tbl th:first-child,
     .hm td:first-child,.hm th:first-child{
       position:sticky;left:0;background:var(--card);z-index:2;
@@ -177,6 +184,7 @@
 <section>
   <h2>Projeção</h2>
   <p class="sub">Ordenada por pontos médios ao fim das 38 rodadas.</p>
+  <p class="sub" id="capvar" hidden></p>
   <div class="scroll" style="margin-top:14px"><table id="tbl"></table></div>
   <p class="dica-rolar">← arraste a tabela de lado para ver pontos, percentis e saldo</p>
   <div class="legend">
@@ -263,8 +271,8 @@ function gradesDoSorteio(di){
 }
 
 /* Aplica o condicional e acumula: zera placares incompativeis e renormaliza. */
-function acumular(p, m){
-  const c = new Float64Array(p.length); const k = forced[m]; let s = 0;
+function acumular(p, m, cenario){
+  const c = new Float64Array(p.length); const k = cenario[m]; let s = 0;
   for (let i = 0; i < p.length; i++){
     const gh = (i/G)|0, ga = i%G;
     const ok = !k || (k === 'H' ? gh > ga : k === 'E' ? gh === ga : gh < ga);
@@ -279,7 +287,10 @@ function pick(cum, u){ let lo = 0, hi = cum.length - 1;
   while (lo < hi){ const mid = (lo + hi) >> 1; if (cum[mid] < u) lo = mid + 1; else hi = mid; }
   return lo; }
 
-function run(n, done){
+let RUN_ID = 0;   // rodadas obsoletas param sozinhas em vez de brigar pela tela
+
+function run(n, cenario, done){
+  const meuID = ++RUN_ID;
   const rnd = mulberry32(12345);
   const comErro = usarErro();
   const nSorteios = comErro ? D.draws.length : 1;
@@ -299,7 +310,8 @@ function run(n, done){
   function bloco(){
     // um sorteio de parametro por passada: reconstroi as grades e roda as
     // temporadas daquele sorteio. Sem erro de estimacao, e uma passada so.
-    const cums = gradesDoSorteio(comErro ? di : -1).map((p, m) => acumular(p, m));
+    if (meuID !== RUN_ID) return;          // alguem clicou de novo: abandona
+    const cums = gradesDoSorteio(comErro ? di : -1).map((p, m) => acumular(p, m, cenario));
     const s0 = di * porSorteio;
     for (let s = s0; s < s0 + porSorteio; s++){
       const o = s * NT;
@@ -323,7 +335,7 @@ function run(n, done){
     di++;
     document.querySelector('#bar i').style.width = (100*di/nSorteios) + '%';
     if (di < nSorteios) setTimeout(bloco, 0);
-    else done({ n: total, pts, gp, gc, rankCount });
+    else if (meuID === RUN_ID) done({ n: total, pts, gp, gc, rankCount });
   }
   bloco();
 }
@@ -355,23 +367,53 @@ function summarise(r){
   }).sort((a, b) => b.mean - a.mean);
 }
 
-function bar(v, max, cls){
-  return `<td class="cell ${cls||''}"><i style="width:${Math.max(0,Math.min(100,v/max*100))}%"></i><span>${fmt(v)}</span></td>`;
+function bar(v, max, cls, dh){
+  return `<td class="cell ${cls||''}"><i style="width:${Math.max(0,Math.min(100,v/max*100))}%"></i>`
+       + `<span>${fmt(v)}${dh || ''}</span></td>`;
 }
 
-function renderTable(S){
+/* Variação contra a projeção vigente, a que não tem nada fixado.
+   `inverso` marca a coluna em que subir é piorar — o Z4.
+
+   Variação menor que o ruído das duas simulações não é exibida. São duas
+   rodadas independentes, então o erro da DIFERENÇA é raiz de 2 vezes o de uma
+   só: mostrar "+0,3" com ruído de ±1,4 seria inventar precisão. */
+function limiarRuido(n){ return 1.96 * Math.sqrt(2 * 0.25 / n) * 100; }
+
+function dlt(v, b, inverso, limiar){
+  if (b === undefined || b === null) return '';
+  const d = v - b;
+  if (Math.abs(d) < limiar) return '';
+  const bom = inverso ? d < 0 : d > 0;
+  const sinal = d > 0 ? '+' : '−';
+  return `<span class="dlt ${bom ? 'bom' : 'ruim'}">${sinal}${Math.abs(d).toFixed(1).replace('.', ',')}</span>`;
+}
+
+function indexar(S){
+  const m = {};
+  for (const r of S) m[r.name] = { tit: r.tit, g4: r.g4, g6: r.g6, z4: r.z4, mean: r.mean };
+  return m;
+}
+
+function renderTable(S, base, n){
   const b = D.base;
+  const lim = limiarRuido(n || 10000);
+  const limPts = 0.20;                       // pontos médios: ruído bem menor
   let h = `<thead><tr><th>Time</th><th>J</th><th>Pts hoje</th><th>Pts médio</th><th>p10–p90</th><th>Saldo</th>
     <th>Pos. med.</th><th>Título %</th><th>G4 %</th><th>G6 %</th><th>Z4 %</th></tr></thead><tbody>`;
   for (const r of S){
+    const o = base ? base[r.name] : null;
     h += `<tr><td class="nm">${r.name}</td>
       <td class="muted">${b.j[r.t]}</td>
       <td class="muted">${b.pts[r.t]}</td>
-      <td><strong>${r.mean.toFixed(1)}</strong></td>
+      <td><strong>${r.mean.toFixed(1)}</strong>${o ? dlt(r.mean, o.mean, false, limPts) : ''}</td>
       <td class="muted">${r.p10}–${r.p90}</td>
       <td class="muted">${r.sg>=0?'+':''}${r.sg.toFixed(0)}</td>
       <td class="muted">${r.med}º</td>
-      ${bar(r.tit,100,'g4')}${bar(r.g4,100,'g4')}${bar(r.g6,100,'g6')}${bar(r.z4,100,'z4')}</tr>`;
+      ${bar(r.tit,100,'g4', o ? dlt(r.tit,o.tit,false,lim) : '')}
+      ${bar(r.g4,100,'g4',  o ? dlt(r.g4, o.g4, false,lim) : '')}
+      ${bar(r.g6,100,'g6',  o ? dlt(r.g6, o.g6, false,lim) : '')}
+      ${bar(r.z4,100,'z4',  o ? dlt(r.z4, o.z4, true, lim) : '')}</tr>`;
   }
   document.getElementById('tbl').innerHTML = h + '</tbody>';
 }
@@ -481,17 +523,58 @@ function renderFixtures(){
   }).join('');
 }
 
+/* Projecao de referencia: a que nao tem nada fixado. E contra ela que a
+   variacao em p.p. e medida. Fica guardada por cenario — mudar o numero de
+   temporadas ou a chave do erro de estimacao invalida a referencia, porque
+   comparar rodadas de tamanhos diferentes mistura variacao com ruido. */
+let BASE = null, BASE_CHAVE = null;
+
+function chaveCenario(){
+  return (usarErro() ? 'bs' : 'fix') + ':' + document.getElementById('n').value;
+}
+
 function go(){
   const n = +document.getElementById('n').value;
   const st = document.getElementById('status');
-  st.textContent = 'simulando…';
   const t0 = performance.now();
-  run(n, r => {
+  const temCond = Object.keys(forced).length > 0;
+
+  if (temCond && BASE_CHAVE !== chaveCenario()){
+    st.textContent = 'medindo a projeção sem nada fixado, para comparar…';
+    const chave = chaveCenario();
+    run(n, {}, r => {                       // cenario vazio, sem tocar no global
+      BASE = indexar(summarise(r));
+      BASE_CHAVE = chave;
+      executar(n, st, t0);
+    });
+    return;
+  }
+  executar(n, st, t0);
+}
+
+function executar(n, st, t0){
+  st.textContent = 'simulando…';
+  const cenario = Object.assign({}, forced);
+  run(n, cenario, r => {
     RES = r;
     const S = summarise(r);
-    renderTable(S); renderRidge(S); renderHeat(S);
+    const nc = Object.keys(cenario).length;
+    if (!nc){ BASE = indexar(S); BASE_CHAVE = chaveCenario(); }
+
+    renderTable(S, nc ? BASE : null, n);
+    renderRidge(S); renderHeat(S);
+
+    const cap = document.getElementById('capvar');
+    document.body.classList.toggle('comvar', !!nc);
+    cap.hidden = !nc;
+    if (nc) cap.innerHTML = 'Os números em cor são a <strong>variação em pontos percentuais</strong> '
+      + 'contra a projeção sem nada fixado — '
+      + '<span class="dlt bom">verde</span> melhora para o time, '
+      + '<span class="dlt ruim">vermelho</span> piora (no Z4, subir é piorar). '
+      + `Variação abaixo de ${limiarRuido(n).toFixed(1).replace('.', ',')} p.p. fica oculta: não se distingue `
+      + 'do ruído das duas simulações. Rode com mais temporadas para enxergar diferenças menores.';
+
     const err = 1.96 * Math.sqrt(0.25/n) * 100;
-    const nc = Object.keys(forced).length;
     st.textContent = `${r.n.toLocaleString('pt-BR')} temporadas em ${((performance.now()-t0)/1000).toFixed(1)}s `
       + `· erro de Monte Carlo ≤ ${err.toFixed(2)} p.p.`
       + (usarErro() ? ` · forças sorteadas de ${D.draws.length} reajustes` : ' · forças fixas')
