@@ -1,20 +1,22 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brasileirão 2026 — Monte Carlo</title>
 <style>
   :root{
-    --bg:#faf9f7; --card:#fff; --ink:#1c1b19; --mut:#6b6862; --line:#e4e1db;
+    --bg:#faf9f7; --card:#fff; --ink:#1c1b19; --mut:#56534e; --line:#e4e1db;
     --accent:#1f6f4f; --accent-soft:#d8ebe1;
     --g4:#1f6f4f; --g6:#5b8ca8; --z4:#b03a2e; --bar:#cfd8d3;
     --grid:#efece7;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#9b968e; --line:#32353a;
+      --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#b3aea5; --line:#32353a;
       --accent:#5fbf94; --accent-soft:#22392f;
       --g4:#5fbf94; --g6:#7fb4d4; --z4:#e0705f; --bar:#3a3f44; --grid:#2a2d31;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#9b968e; --line:#32353a;
+    --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#b3aea5; --line:#32353a;
     --accent:#5fbf94; --accent-soft:#22392f;
     --g4:#5fbf94; --g6:#7fb4d4; --z4:#e0705f; --bar:#3a3f44; --grid:#2a2d31;
   }
@@ -66,6 +68,7 @@
   #bar{height:3px;background:var(--grid);border-radius:2px;overflow:hidden;margin-top:12px}
   #bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .1s}
   svg{display:block;width:100%;height:auto;overflow:visible}
+
   .fxrow{grid-template-columns:1fr auto}
   .fxname{background:none;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:6px}
   .fxname:hover{color:var(--accent)}
@@ -82,6 +85,57 @@
   .tri div{flex:1;border:1px solid var(--line);border-radius:8px;padding:9px 10px}
   .tri b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
   .tri span{color:var(--mut);font-size:11.5px}
+
+  /* ---------- celular ----------
+     Nada de esconder coluna: as tabelas rolam na horizontal com a coluna do
+     time congelada, entao a analise continua inteira e legivel de lado. */
+  @media (max-width: 700px){
+    body{font-size:16px}
+    .wrap{padding:0 14px}
+    header{padding:24px 0 16px}
+    h1{font-size:22px}
+    section{padding:16px 14px;border-radius:10px}
+    .shead{margin-bottom:14px}
+    .ctl{width:100%;flex-wrap:wrap;gap:8px}
+    .ctl select{flex:1 0 100%}        /* linha propria: senao vira uma setinha */
+    #lerro{flex:1 1 auto}
+    #go{flex:0 0 auto;padding:8px 18px}
+    #theme{flex:0 0 auto}
+
+    /* fontes pequenas demais para um celular */
+    .sub,.note{font-size:14px}
+    th{font-size:12px}
+    td{font-size:14px;padding:8px 7px}
+    .fxrow{font-size:14.5px;padding:10px 12px}
+    .fxrow .pp{font-size:12.5px}
+    .fxdate{font-size:12.5px}
+
+    /* rolagem lateral com a primeira coluna congelada */
+    .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;
+            margin:0 -14px;padding:0 14px;
+            scrollbar-width:thin}
+    .scroll table{min-width:620px}
+    #tbl td:first-child,#tbl th:first-child,
+    .hm td:first-child,.hm th:first-child{
+      position:sticky;left:0;background:var(--card);z-index:2;
+      box-shadow:1px 0 0 var(--line)}
+    .hm{min-width:760px}
+    .hm td div{padding:6px 0}
+    .hm th{font-size:10.5px}
+    .hm td{font-size:11px}
+
+    /* o jogo vira duas linhas: identificacao em cima, botoes embaixo */
+    .fxrow{grid-template-columns:1fr;gap:8px}
+    .fxrow .grp{justify-content:flex-start}
+    .grp button{padding:7px 16px;font-size:13.5px}
+    .fx{max-height:420px}
+
+    .tri b{font-size:17px}
+    #modal{padding:16px 14px}
+    .legend{font-size:13px;gap:12px}
+  }
+  .dica-rolar{display:none;color:var(--mut);font-size:12.5px;margin:8px 0 0}
+  @media (max-width: 700px){ .dica-rolar{display:block} }
 </style>
 
 <div class="wrap">
@@ -124,6 +178,7 @@
   <h2>Projeção</h2>
   <p class="sub">Ordenada por pontos médios ao fim das 38 rodadas.</p>
   <div class="scroll" style="margin-top:14px"><table id="tbl"></table></div>
+  <p class="dica-rolar">← arraste a tabela de lado para ver pontos, percentis e saldo</p>
   <div class="legend">
     <span><b style="background:var(--g4)"></b>G4 — Libertadores (fase de grupos)</span>
     <span><b style="background:var(--g6)"></b>G6</span>
@@ -141,6 +196,7 @@
   <h2>Probabilidade de posição final</h2>
   <p class="sub">Cada linha soma 100%. Células em branco são abaixo de 0,5%.</p>
   <div class="scroll" style="margin-top:14px"><table class="hm" id="heat"></table></div>
+  <p class="dica-rolar">← arraste de lado para ver todas as 20 posições</p>
 </section>
 
 <p class="note wrap" style="max-width:1120px;margin:0 auto;padding:0 20px">
@@ -321,12 +377,21 @@ function renderTable(S){
 }
 
 function renderRidge(S){
-  const lo = Math.max(0, Math.min(...S.map(r => r.p10)) - 10),
-        hi = Math.max(...S.map(r => r.p90)) + 10;
-  const W = 1000, L = 150, R = 46, PW = W - L - R, ROW = 38, TOP = 26;
-  const H = TOP + S.length * ROW + 14;
+  const cont = document.getElementById('ridge');
+  // viewBox = largura real em px, entao as fontes do SVG sao px de verdade.
+  // Com viewBox fixo o grafico encolhia junto com a tela e os nomes chegavam
+  // a 3,8px no celular.
+  const W = Math.max(280, Math.round(cont.clientWidth || 900));
+  const estreito = W < 520;
+
+  const lo = Math.max(0, Math.min(...S.map(r => r.p10)) - 8),
+        hi = Math.max(...S.map(r => r.p90)) + 8;
+  const L = estreito ? 6 : 150, R = estreito ? 30 : 46;
+  const ROW = estreito ? 54 : 38, TOP = estreito ? 22 : 26;
+  const AMP = estreito ? 30 : ROW * 1.75;
+  const PW = W - L - R, H = TOP + S.length * ROW + 14;
   const X = p => L + (p - lo) / (hi - lo) * PW;
-  // densidade por time, em janelas de 1 ponto, alisada
+
   const dens = S.map(r => {
     const c = new Float64Array(hi - lo + 1);
     for (const v of r.pts) if (v >= lo && v <= hi) c[v - lo]++;
@@ -340,11 +405,12 @@ function renderRidge(S){
     return sm;
   });
   const peak = Math.max(...dens.map(d => Math.max(...d)));
-  const AMP = ROW * 1.75;
+
   let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribuição de pontos finais por time">`;
-  for (let p = Math.ceil(lo/10)*10; p <= hi; p += 10){
-    s += `<line x1="${X(p)}" y1="${TOP-12}" x2="${X(p)}" y2="${H-14}" stroke="var(--grid)"/>
-          <text x="${X(p)}" y="${TOP-18}" fill="var(--mut)" font-size="11" text-anchor="middle">${p}</text>`;
+  const passo = estreito ? 20 : 10;
+  for (let p = Math.ceil(lo/passo)*passo; p <= hi; p += passo){
+    s += `<line x1="${X(p)}" y1="${TOP-10}" x2="${X(p)}" y2="${H-14}" stroke="var(--grid)"/>
+          <text x="${X(p)}" y="${TOP-15}" fill="var(--mut)" font-size="${estreito?11:11}" text-anchor="middle">${p}</text>`;
   }
   S.forEach((r, i) => {
     const y = TOP + i * ROW + ROW;
@@ -352,7 +418,6 @@ function renderRidge(S){
     let d = `M ${X(lo)} ${y}`;
     for (let k = 0; k < dens[i].length; k++) d += ` L ${X(lo+k).toFixed(1)} ${(y - dens[i][k]/peak*AMP).toFixed(1)}`;
     d += ` L ${X(hi)} ${y} Z`;
-    // normal de mesma media e desvio, para comparacao
     let nd = '';
     for (let k = 0; k < dens[i].length; k++){
       const x = lo + k, z = (x - r.mean) / r.sd;
@@ -360,11 +425,17 @@ function renderRidge(S){
       nd += (k ? ' L ' : 'M ') + X(x).toFixed(1) + ' ' + (y - f/peak*AMP).toFixed(1);
     }
     s += `<path d="${d}" fill="${col}" fill-opacity=".22" stroke="${col}" stroke-width="1.4"/>
-          <path d="${nd}" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" opacity=".75"/>
-          <text x="${L-12}" y="${y-3}" text-anchor="end" font-size="12.5" fill="var(--ink)">${r.name}</text>
-          <text x="${W-R+8}" y="${y-3}" font-size="11.5" fill="var(--mut)">${r.mean.toFixed(0)}</text>`;
+          <path d="${nd}" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" opacity=".75"/>`;
+    if (estreito){
+      // nome ACIMA da curva: no celular nao ha gutter lateral que caiba
+      s += `<text x="${L}" y="${y - AMP - 5}" font-size="12.5" font-weight="600" fill="var(--ink)">${r.name}</text>
+            <text x="${W - 2}" y="${y - AMP - 5}" font-size="12" text-anchor="end" fill="var(--mut)">${r.mean.toFixed(0)} pts</text>`;
+    } else {
+      s += `<text x="${L-12}" y="${y-3}" text-anchor="end" font-size="12.5" fill="var(--ink)">${r.name}</text>
+            <text x="${W-R+8}" y="${y-3}" font-size="11.5" fill="var(--mut)">${r.mean.toFixed(0)}</text>`;
+    }
   });
-  document.getElementById('ridge').innerHTML = s + '</svg>';
+  cont.innerHTML = s + '</svg>';
 }
 
 function renderHeat(S){
@@ -499,6 +570,12 @@ if (D.draws) {
   document.getElementById('lerro').style.display = 'flex';
   document.getElementById('erro').onchange = go;
 }
+
+let redesenho;
+addEventListener('resize', () => {
+  clearTimeout(redesenho);
+  redesenho = setTimeout(() => { if (RES) renderRidge(summarise(RES)); }, 180);
+});
 
 document.getElementById('go').onclick = go;
 document.getElementById('clear').onclick = () => { forced = {}; renderFixtures(); go(); };
