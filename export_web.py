@@ -37,6 +37,7 @@ def main():
         "teams": dc.teams,
         "gmax": GMAX,
         "homeAdv": round(float(np.exp(dc.home_adv)), 3),
+        "homeAdvLog": round(float(dc.home_adv), 4),
         "rho": round(float(dc.rho), 3),
         "base": {
             "pts": base.pts.astype(int).tolist(),
@@ -129,6 +130,35 @@ def glossario(dc, matches, rem, grid, payload):
         "__NEMP__": f"{int((p1x2.argmax(1) == 1).sum())}",
         "__NREM__": f"{len(hi)}",
     }
+
+    # moda dos placares: gerada, nao chutada
+    flat = grid.reshape(len(hi), -1)
+    pmod = float(flat.max(1).mean()) * 100
+    subs["__PMODAL__"] = f"{pmod:.0f}"
+    subs["__PMODAL_ERRA__"] = f"{100 - pmod:.0f}"
+
+    # numeros da validacao fora da amostra
+    val = {}
+    if os.path.exists("out/validacao.json"):
+        val = json.load(open("out/validacao.json", encoding="utf-8"))
+    subs["__NATS_DC__"] = f"{val.get('dixon_coles', 0):.4f}".replace(".", ",")
+    subs["__NATS_LIGA__"] = f"{val.get('base_liga', 0):.4f}".replace(".", ",")
+    subs["__NATS_GANHO__"] = f"{val.get('ganho', 0):.4f}".replace(".", ",")
+    subs["__NATS_T__"] = f"{val.get('t', 0):.2f}".replace(".", ",")
+    # O veredito tambem e gerado: com dado novo o sinal do ganho muda, e uma
+    # frase fixa dizendo "positivo mas nao significante" vira mentira.
+    g, tt = val.get("ganho", 0), abs(val.get("t", 0))
+    if tt >= 2:
+        subs["__NATS_VEREDITO__"] = ("ganho pequeno mas estatisticamente distinguivel"
+                                     if g > 0 else "PIOR que o baseline, e distinguivel")
+    elif g > 0:
+        subs["__NATS_VEREDITO__"] = "positivo, mas indistinguivel de ruido"
+    else:
+        subs["__NATS_VEREDITO__"] = ("empatado com o baseline: nesta rodada o modelo "
+                                     "ficou de fato um fio atras")
+    if not val:
+        sys.exit("out/validacao.json ausente: rode validate.py antes de "
+                 "gerar o glossario, senao ele sai com nats zerado")
     html = open("web/glossario_template.html", encoding="utf-8").read()
     for k, v in subs.items():
         html = html.replace(k, v)

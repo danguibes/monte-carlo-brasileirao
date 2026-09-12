@@ -26,6 +26,7 @@ PASSOS = [
     ("buscando resultados e datas no ge.globo", [sys.executable, "fetch_globo.py", "--refresh"]),
     ("ajustando o modelo e simulando", [sys.executable, "run.py", "--n", "50000"]),
     ("medindo o erro de estimacao das forcas", [sys.executable, "bootstrap.py", "--b", "60", "--n", "20000"]),
+    ("validando fora da amostra", [sys.executable, "validate.py"]),
     ("regerando a pagina", [sys.executable, "export_web.py"]),
 ]
 

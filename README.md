@@ -128,8 +128,26 @@ duas posições num universo simulado.
 Corolário: como a força é fixa, **a ordem dos jogos restantes não altera a
 distribuição final**. É por isso que o modelo funciona sem saber as datas.
 
-**Não trata vantagem de casa por confronto.** É um parâmetro só, estimado junto
-com ataque e defesa. Mediu-se `exp(0,365) = 1,44x` em 2026.
+**Não trata vantagem de casa por time.** É um parâmetro só para a liga inteira,
+estimado junto com ataque e defesa: `exp(0,365) = 1,44x` em 2026.
+
+Parece errado — altitude, viagem, torcida e gramado são diferentes em cada
+estádio. `fator_casa.py` ajusta a versão com uma vantagem por time e testa se
+ela mede alguma coisa:
+
+| | desvio entre times |
+|---|---|
+| observado | 0,398 log |
+| num mundo onde a vantagem é igual para todos | 0,288 (p5 0,032 · p95 0,463) |
+
+**p = 0,21 — não dá para distinguir de ruído.** Fora da amostra os 20
+parâmetros extras rendem +0,0037 nats/jogo, t = 0,49.
+
+As estimativas individuais mostram por quê: o Grêmio sai com **4,15x** de
+vantagem em casa e o Santos com **0,85x** — jogaria melhor fora. São ~13 jogos
+em casa por time; com amostra assim, o ajuste transforma sequência de sorte em
+"caldeirão". O 4,15x do Grêmio é a cara de uma descoberta e quase certamente
+não é nada.
 
 ## Limitações, medidas e não escondidas
 
@@ -227,6 +245,11 @@ nats/jogo, erro de Monte Carlo e a armadilha do "placar mais provável". É
 **gerado** por `export_web.py` com os números da rodada, não escrito à mão —
 texto fixo com número velho é pior que número nenhum, e o gerador aborta se
 algum marcador ficar sem substituir.
+
+Isso vale inclusive para o **veredito** da validação, não só para os números:
+em 12/09 o ganho fora da amostra virou de +0,0116 para −0,0006 nats com quatro
+jogos novos, e uma frase fixa dizendo "positivo, mas não significante" teria
+passado a mentir. A frase é escolhida a partir do sinal e do t medidos.
 
 ## Saídas
 

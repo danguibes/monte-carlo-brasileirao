@@ -90,6 +90,18 @@
   .tri{display:flex;gap:8px;margin-top:14px}
   .tri div{flex:1;border:1px solid var(--line);border-radius:8px;padding:9px 10px}
   .tri b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
+  .form{background:var(--grid);border-radius:8px;padding:12px 13px;margin:14px 0 4px;
+        font-size:12.5px;line-height:1.9;overflow-x:auto}
+  .form div{white-space:nowrap}
+  @media (max-width: 700px){
+    .form{font-size:13px;line-height:2}
+    .form div{white-space:normal}      /* quebrar e melhor que rolar de lado */
+    .form .lb{display:block;min-width:0;font-weight:600;margin-top:4px}
+  }
+  .form .lb{color:var(--mut);display:inline-block;min-width:74px}
+  .form .v{font-variant-numeric:tabular-nums;font-weight:600}
+  .form .at{color:var(--g4)} .form .df{color:var(--g6)} .form .ca{color:var(--z4)}
+  .form .res{font-weight:700}
   .tri span{color:var(--mut);font-size:11.5px}
 
   /* ---------- celular ----------
@@ -586,6 +598,36 @@ function executar(n, st, t0){
 /* ---------- matriz de placares ---------- */
 let aberto = null;
 
+/* A formula do Dixon-Coles com os numeros DESTE jogo, nao a generica.
+   E o unico lugar da pagina onde da para ver de onde sai cada lambda. */
+function formula(f){
+  const S = D.strength;
+  if (!S || D.homeAdvLog === undefined) return '';
+  const n = x => (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(3).replace('.', ',');
+  const n0 = x => x.toFixed(3).replace('.', ',');
+  const nm = i => T[i];
+  const ah = S.attack[f.h], dh = S.defence[f.h], aa = S.attack[f.a], da = S.defence[f.a];
+  const c = D.homeAdvLog;
+  const lh = Math.exp(ah + da + c), la = Math.exp(aa + dh);
+  return `<div class="form">
+    <div><span class="lb">mandante</span>exp(
+      <span class="v at">${n0(ah)}</span> ataque ${nm(f.h)}
+      <span class="v df">${n(da)}</span> defesa ${nm(f.a)}
+      <span class="v ca">${n(c)}</span> casa ) =
+      <span class="v res">${lh.toFixed(3).replace('.', ',')}</span> gols</div>
+    <div><span class="lb">visitante</span>exp(
+      <span class="v at">${n0(aa)}</span> ataque ${nm(f.a)}
+      <span class="v df">${n(dh)}</span> defesa ${nm(f.h)}
+      ) =
+      <span class="v res">${la.toFixed(3).replace('.', ',')}</span> gols</div>
+    <div style="white-space:normal;color:var(--mut);font-size:11.5px;line-height:1.5;margin-top:7px">
+      Desses dois números saem os 81 placares acima, pela Poisson, com a correção
+      ρ = ${D.rho.toFixed(3).replace('.', ',').replace('-', '−')} nos quatro placares baixos.
+      <a href="glossario.html#dixon-coles" style="color:var(--accent)">entenda</a>
+    </div>
+  </div>`;
+}
+
 function abrirMatriz(m){
   const f = FIX[m];
   const cells = [];
@@ -623,6 +665,7 @@ function abrirMatriz(m){
       <div><b>${(f.E*100).toFixed(1)}%</b><span>empate</span></div>
       <div><b>${(f.A*100).toFixed(1)}%</b><span>${T[f.a]} vence</span></div>
     </div>
+    ${formula(f)}
     <p class="sub" style="margin-top:12px">gols esperados ${eh.toFixed(2)} – ${ea.toFixed(2)} ·
       placar mais provável <strong>${((bi=>((bi/G)|0)+'–'+(bi%G))(f.p.indexOf(mx)))}</strong>,
       e ainda assim ele só sai em ${(mx*100).toFixed(0)}% dos jogos</p>

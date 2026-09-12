@@ -57,6 +57,20 @@ def main():
     print(f"\nganho sobre base_liga: {d.mean():+.4f} nats/jogo "
           f"(t={t:.2f}, vence em {(d>0).sum()}/{len(d)} reparticoes)")
 
+    # O glossario le isto. Numero de validacao escrito a mao envelhece errado
+    # e ninguem percebe — o texto continua bonito com o valor de tres meses atras.
+    import json
+    import os
+    os.makedirs("out", exist_ok=True)
+    json.dump({"dixon_coles": round(float(df.dixon_coles.mean()), 4),
+               "base_liga": round(float(df.base_liga.mean()), 4),
+               "uniforme": round(float(df.uniforme.mean()), 4),
+               "ganho": round(float(d.mean()), 4),
+               "t": round(float(t), 2),
+               "vence": int((d > 0).sum()), "de": int(len(d))},
+              open("out/validacao.json", "w"), indent=1)
+    print("gravado out/validacao.json")
+
 
 if __name__ == "__main__":
     main()

@@ -131,9 +131,9 @@ fato aconteceu, e tira-se o logaritmo.</p>
 <p>Chutar 1/3 para cada resultado dá <span class="num">1,0986</span> nats.
 Quanto menor, melhor. Acertar tudo com certeza daria zero.</p>
 <div class="box">
-Aqui: <strong>1,0789</strong> nats para o modelo, contra <strong>1,0905</strong>
-para quem só souber a taxa média da liga. Ganho de <strong>0,0116</strong>
-nats por jogo.
+Aqui: <strong>1,0804</strong> nats para o modelo, contra <strong>1,0798</strong>
+para quem só souber a taxa média da liga. Ganho de <strong>-0,0006</strong>
+nats por jogo, com t = -0,08 — empatado com o baseline: nesta rodada o modelo ficou de fato um fio atras.
 </div>
 <p>É pouco. E é o esperado: prever futebol jogo a jogo é quase impossível, e
 qualquer modelo honesto fica perto do piso de ruído.</p>
@@ -171,9 +171,11 @@ mente do jeito que a moda mente.</p>
 
 <dt id="confianca">Do que não confiar aqui</dt>
 <dd>
-<p><strong>Da segunda casa decimal.</strong> O modelo ganha do baseline por
-margem que não é estatisticamente significante. Trate 63,8% como "provável,
-não garantido", nunca como 63,8 e não 64,1.</p>
+<p><strong>Da segunda casa decimal.</strong> Fora da amostra, o modelo
+<strong>não se distingue</strong> de um baseline que só conhece a taxa média
+da liga — a diferença medida é -0,0006 nats/jogo, dentro do ruído.
+Trate uma probabilidade de 63,8% como "provável, não garantido", nunca como
+63,8 e não 64,1.</p>
 <p><strong>De qualquer coisa que dependa do que o modelo não vê.</strong> Ele
 só conhece placares do Brasileirão. Não sabe de lesão, suspensão, troca de
 técnico, time reserva poupado para a Libertadores, nem jogo com algo em jogo
