@@ -31,13 +31,25 @@ PASSOS = [
 
 
 def main():
+    tolerante = "--dados-opcionais" in sys.argv
+    avisos = []
     for i, (titulo, cmd) in enumerate(PASSOS, 1):
         print(f"\n=== {i}/{len(PASSOS)} {titulo} " + "=" * (44 - len(titulo)))
         r = subprocess.run(cmd)
         if r.returncode != 0:
+            if tolerante and i in OPCIONAIS:
+                avisos.append(titulo)
+                print(f"\n[tolerado] passo {i} falhou; seguindo com os dados "
+                      "da ultima busca boa.")
+                continue
             print(f"\nParou no passo {i} ({titulo}). Nada depois dele foi refeito.")
             sys.exit(r.returncode)
     print("\n" + "=" * 60)
+    if avisos:
+        print("ATENCAO: os dados NAO foram atualizados nesta rodada.")
+        for a in avisos:
+            print(f"  - falhou: {a}")
+        print("A pagina saiu com os dados da ultima busca boa.\n")
     print("pronto. abra web/brasileirao.html")
 
 
