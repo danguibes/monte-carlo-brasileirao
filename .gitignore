@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+# cache bruto das fontes: regeneravel, grande, e so ruido no diff
+data/page.html
+data/globo.json
+out/*_cond.csv

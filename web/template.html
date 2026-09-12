@@ -1,0 +1,396 @@
+<title>Brasileirão 2026 — Monte Carlo</title>
+<style>
+  :root{
+    --bg:#faf9f7; --card:#fff; --ink:#1c1b19; --mut:#6b6862; --line:#e4e1db;
+    --accent:#1f6f4f; --accent-soft:#d8ebe1;
+    --g4:#1f6f4f; --g6:#5b8ca8; --z4:#b03a2e; --bar:#cfd8d3;
+    --grid:#efece7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#9b968e; --line:#32353a;
+      --accent:#5fbf94; --accent-soft:#22392f;
+      --g4:#5fbf94; --g6:#7fb4d4; --z4:#e0705f; --bar:#3a3f44; --grid:#2a2d31;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#9b968e; --line:#32353a;
+    --accent:#5fbf94; --accent-soft:#22392f;
+    --g4:#5fbf94; --g6:#7fb4d4; --z4:#e0705f; --bar:#3a3f44; --grid:#2a2d31;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:0 0 80px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  header{padding:36px 0 20px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.02em}
+  h2{font-size:17px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--mut);font-size:13.5px;margin:0}
+  section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:20px}
+  .shead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+  .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  button{font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:6px 12px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  select,input[type=search]{font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:6px 10px}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th{text-align:right;font-weight:600;color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;padding:0 8px 8px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:right;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  .nm{font-weight:600}
+  .cell{position:relative}
+  .cell i{position:absolute;left:0;top:3px;bottom:3px;background:var(--bar);border-radius:2px;opacity:.55}
+  .cell span{position:relative}
+  .g4 i{background:var(--g4)} .g6 i{background:var(--g6)} .z4 i{background:var(--z4)}
+  .muted{color:var(--mut)}
+  .scroll{overflow-x:auto}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 12px;font-size:13px}
+  .chip b{font-weight:600}
+  .chip button{border:none;background:transparent;padding:0 6px;color:var(--mut);font-size:16px;line-height:1}
+  .fx{max-height:330px;overflow-y:auto;border:1px solid var(--line);border-radius:8px}
+  .fxrow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--grid);font-size:13.5px}
+  .fxrow:last-child{border-bottom:none}
+  .fxrow .pp{color:var(--mut);font-size:11.5px;font-variant-numeric:tabular-nums}
+  .grp{display:flex;gap:4px}
+  .grp button{padding:3px 9px;font-size:12px;border-radius:5px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;color:var(--mut);font-size:12.5px;margin-top:10px}
+  .legend b{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+  .note{color:var(--mut);font-size:12.5px;line-height:1.6;margin-top:14px}
+  .hm td{padding:0;border:none;text-align:center;font-size:9.5px;color:var(--ink)}
+  .hm th{padding:0 0 6px;font-size:9.5px;text-transform:none;letter-spacing:0}
+  .hm td div{padding:3px 0;border-radius:2px}
+  #bar{height:3px;background:var(--grid);border-radius:2px;overflow:hidden;margin-top:12px}
+  #bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .1s}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Campeonato Brasileiro 2026 — Série A</h1>
+  <p class="sub" id="hdr"></p>
+</header>
+
+<section>
+  <div class="shead">
+    <div><h2>Simulação</h2><p class="sub">Monte Carlo rodando no navegador, a partir das distribuições de placar do modelo Dixon-Coles.</p></div>
+    <div class="ctl">
+      <select id="n">
+        <option value="2000">2.000 temporadas</option>
+        <option value="10000" selected>10.000 temporadas</option>
+        <option value="50000">50.000 temporadas</option>
+      </select>
+      <button class="primary" id="go">Rodar</button>
+      <button id="theme">◐</button>
+    </div>
+  </div>
+  <div id="bar"><i></i></div>
+  <p class="sub" id="status" style="margin-top:10px"></p>
+</section>
+
+<section>
+  <div class="shead">
+    <div><h2>Condicionais</h2><p class="sub">Fixe o resultado de qualquer jogo que falta e veja a temporada inteira se reorganizar.</p></div>
+    <button id="clear">Limpar</button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <input type="search" id="find" placeholder="filtrar por time…" style="width:100%;margin-bottom:10px">
+  <div class="fx" id="fx"></div>
+</section>
+
+<section>
+  <h2>Projeção</h2>
+  <p class="sub">Ordenada por pontos médios ao fim das 38 rodadas.</p>
+  <div class="scroll" style="margin-top:14px"><table id="tbl"></table></div>
+  <div class="legend">
+    <span><b style="background:var(--g4)"></b>G4 — Libertadores (fase de grupos)</span>
+    <span><b style="background:var(--g6)"></b>G6</span>
+    <span><b style="background:var(--z4)"></b>Z4 — rebaixamento</span>
+  </div>
+</section>
+
+<section>
+  <h2>Distribuição de pontos finais</h2>
+  <p class="sub">A densidade simulada de cada time, na mesma escala. A linha pontilhada é a normal de mesma média e desvio — serve para ver <em>onde</em> a distribuição real se afasta dela.</p>
+  <div id="ridge" style="margin-top:18px"></div>
+</section>
+
+<section>
+  <h2>Probabilidade de posição final</h2>
+  <p class="sub">Cada linha soma 100%. Células em branco são abaixo de 0,5%.</p>
+  <div class="scroll" style="margin-top:14px"><table class="hm" id="heat"></table></div>
+</section>
+
+<p class="note wrap" style="max-width:1120px;margin:0 auto;padding:0 20px">
+  <strong>Leia com desconfiança.</strong> Fora da amostra o modelo ganha da taxa média da liga
+  por apenas +0,0116 nats/jogo (t = 1,12, vencendo em 15 de 20 repartições) — positivo,
+  mas não significante. A previsão jogo a jogo em futebol vive perto do piso de ruído.
+  As probabilidades de título e de rebaixamento são mais firmes que isso, porque dependem
+  sobretudo da tabela já construída, mas nenhum número aqui vale na segunda casa decimal.
+  O modelo não sabe de lesão, calendário, Libertadores nem time reserva.
+</p>
+</div>
+
+<script>
+const D = /*__DADOS__*/null;
+const T = D.teams, NT = T.length, G = D.gmax + 1, NF = D.fixtures.length;
+const FIX = D.fixtures.map(f => {
+  const c = new Float64Array(f.p.length); let s = 0;
+  for (let i = 0; i < f.p.length; i++) { s += f.p[i]; c[i] = s; }
+  for (let i = 0; i < c.length; i++) c[i] /= s;
+  let H = 0, E = 0, A = 0;
+  for (let i = 0; i < f.p.length; i++) {
+    const gh = (i / G) | 0, ga = i % G;
+    if (gh > ga) H += f.p[i]; else if (gh === ga) E += f.p[i]; else A += f.p[i];
+  }
+  const t = H + E + A;
+  let bi = 0; for (let i = 1; i < f.p.length; i++) if (f.p[i] > f.p[bi]) bi = i;
+  const top = ((bi/G)|0) + '–' + (bi%G) + ' (' + (f.p[bi]*100).toFixed(0) + '%)';
+  return { h: f.h, a: f.a, cum: c, p: f.p, H: H/t, E: E/t, A: A/t, top };
+});
+
+let forced = {};            // idx do jogo -> 'H' | 'E' | 'A'
+let RES = null;
+
+function mulberry32(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* Reaplica o condicional: zera os placares incompatíveis e renormaliza. */
+function cumFor(m){
+  const f = FIX[m], k = forced[m];
+  if (!k) return f.cum;
+  const c = new Float64Array(f.p.length); let s = 0;
+  for (let i = 0; i < f.p.length; i++){
+    const gh = (i/G)|0, ga = i%G;
+    const ok = k === 'H' ? gh > ga : k === 'E' ? gh === ga : gh < ga;
+    s += ok ? f.p[i] : 0; c[i] = s;
+  }
+  for (let i = 0; i < c.length; i++) c[i] /= s;
+  return c;
+}
+
+function pick(cum, u){ let lo = 0, hi = cum.length - 1;
+  while (lo < hi){ const mid = (lo + hi) >> 1; if (cum[mid] < u) lo = mid + 1; else hi = mid; }
+  return lo; }
+
+function run(n, done){
+  const rnd = mulberry32(12345);
+  const cums = FIX.map((_, m) => cumFor(m));
+  const pts = new Int32Array(n * NT), win = new Int32Array(n * NT),
+        gp  = new Int32Array(n * NT), gc  = new Int32Array(n * NT),
+        rankCount = new Int32Array(NT * NT);
+  const b = D.base;
+  for (let s = 0; s < n; s++) for (let t = 0; t < NT; t++){
+    const i = s*NT+t; pts[i]=b.pts[t]; win[i]=b.v[t]; gp[i]=b.gp[t]; gc[i]=b.gc[t];
+  }
+  const key = new Float64Array(NT), ord = new Int32Array(NT);
+  const CHUNK = 500; let s0 = 0;
+
+  function step(){
+    const end = Math.min(s0 + CHUNK, n);
+    for (let s = s0; s < end; s++){
+      const o = s * NT;
+      for (let m = 0; m < NF; m++){
+        const f = FIX[m], k = pick(cums[m], rnd());
+        const sh = (k / G) | 0, sa = k % G, h = o + f.h, a = o + f.a;
+        gp[h] += sh; gc[h] += sa; gp[a] += sa; gc[a] += sh;
+        if (sh > sa){ pts[h] += 3; win[h]++; }
+        else if (sh === sa){ pts[h]++; pts[a]++; }
+        else { pts[a] += 3; win[a]++; }
+      }
+      for (let t = 0; t < NT; t++){
+        const i = o + t;
+        key[t] = pts[i]*1e10 + win[i]*1e7 + (gp[i]-gc[i]+500)*1e3 + gp[i] + rnd()*0.9;
+        ord[t] = t;
+      }
+      const a2 = Array.from(ord).sort((x, y) => key[y] - key[x]);
+      for (let p = 0; p < NT; p++) rankCount[a2[p]*NT + p]++;
+    }
+    s0 = end;
+    document.querySelector('#bar i').style.width = (100*s0/n) + '%';
+    if (s0 < n) setTimeout(step, 0);
+    else done({ n, pts, gp, gc, rankCount });
+  }
+  step();
+}
+
+/* ---------- render ---------- */
+const fmt = x => x >= 99.95 ? '100' : x < 0.005 ? '—' : x < 0.1 ? x.toFixed(2) : x < 10 ? x.toFixed(1) : x.toFixed(1);
+
+function summarise(r){
+  const { n, pts, gp, gc, rankCount } = r;
+  return T.map((name, t) => {
+    const v = new Int32Array(n);
+    for (let s = 0; s < n; s++) v[s] = pts[s*NT + t];
+    const srt = Int32Array.from(v).sort();
+    let sum = 0; for (let s = 0; s < n; s++) sum += v[s];
+    const mean = sum / n;
+    let ss = 0; for (let s = 0; s < n; s++) ss += (v[s]-mean)**2;
+    let sgp = 0, sgc = 0;
+    for (let s = 0; s < n; s++){ sgp += gp[s*NT+t]; sgc += gc[s*NT+t]; }
+    const rc = i => rankCount[t*NT + i] / n * 100;
+    let tit = rc(0), g4 = 0, g6 = 0, z4 = 0, med = 0, acc = 0;
+    for (let i = 0; i < NT; i++){
+      if (i < 4) g4 += rc(i); if (i < 6) g6 += rc(i); if (i >= NT-4) z4 += rc(i);
+      acc += rc(i); if (med === 0 && acc >= 50) med = i + 1;
+    }
+    return { t, name, pts: v, mean, sd: Math.sqrt(ss/n),
+      gp: sgp/n, gc: sgc/n, sg: (sgp-sgc)/n,
+      p10: srt[(n*0.10)|0], p90: srt[(n*0.90)|0],
+      tit, g4, g6, z4, med, dist: Array.from({length: NT}, (_, i) => rc(i)) };
+  }).sort((a, b) => b.mean - a.mean);
+}
+
+function bar(v, max, cls){
+  return `<td class="cell ${cls||''}"><i style="width:${Math.max(0,Math.min(100,v/max*100))}%"></i><span>${fmt(v)}</span></td>`;
+}
+
+function renderTable(S){
+  const b = D.base;
+  let h = `<thead><tr><th>Time</th><th>J</th><th>Pts hoje</th><th>Pts médio</th><th>p10–p90</th><th>Saldo</th>
+    <th>Pos. med.</th><th>Título %</th><th>G4 %</th><th>G6 %</th><th>Z4 %</th></tr></thead><tbody>`;
+  for (const r of S){
+    h += `<tr><td class="nm">${r.name}</td>
+      <td class="muted">${b.j[r.t]}</td>
+      <td class="muted">${b.pts[r.t]}</td>
+      <td><strong>${r.mean.toFixed(1)}</strong></td>
+      <td class="muted">${r.p10}–${r.p90}</td>
+      <td class="muted">${r.sg>=0?'+':''}${r.sg.toFixed(0)}</td>
+      <td class="muted">${r.med}º</td>
+      ${bar(r.tit,100,'g4')}${bar(r.g4,100,'g4')}${bar(r.g6,100,'g6')}${bar(r.z4,100,'z4')}</tr>`;
+  }
+  document.getElementById('tbl').innerHTML = h + '</tbody>';
+}
+
+function renderRidge(S){
+  const lo = Math.max(0, Math.min(...S.map(r => r.p10)) - 10),
+        hi = Math.max(...S.map(r => r.p90)) + 10;
+  const W = 1000, L = 150, R = 46, PW = W - L - R, ROW = 38, TOP = 26;
+  const H = TOP + S.length * ROW + 14;
+  const X = p => L + (p - lo) / (hi - lo) * PW;
+  // densidade por time, em janelas de 1 ponto, alisada
+  const dens = S.map(r => {
+    const c = new Float64Array(hi - lo + 1);
+    for (const v of r.pts) if (v >= lo && v <= hi) c[v - lo]++;
+    const sm = new Float64Array(c.length);
+    for (let i = 0; i < c.length; i++){
+      let s = 0, w = 0;
+      for (let k = -2; k <= 2; k++){ const j = i + k; if (j < 0 || j >= c.length) continue;
+        const ww = Math.exp(-k*k/2); s += c[j]*ww; w += ww; }
+      sm[i] = s / w / r.pts.length;
+    }
+    return sm;
+  });
+  const peak = Math.max(...dens.map(d => Math.max(...d)));
+  const AMP = ROW * 1.75;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribuição de pontos finais por time">`;
+  for (let p = Math.ceil(lo/10)*10; p <= hi; p += 10){
+    s += `<line x1="${X(p)}" y1="${TOP-12}" x2="${X(p)}" y2="${H-14}" stroke="var(--grid)"/>
+          <text x="${X(p)}" y="${TOP-18}" fill="var(--mut)" font-size="11" text-anchor="middle">${p}</text>`;
+  }
+  S.forEach((r, i) => {
+    const y = TOP + i * ROW + ROW;
+    const col = r.med <= 4 ? 'var(--g4)' : r.med <= 6 ? 'var(--g6)' : r.med > NT-4 ? 'var(--z4)' : 'var(--mut)';
+    let d = `M ${X(lo)} ${y}`;
+    for (let k = 0; k < dens[i].length; k++) d += ` L ${X(lo+k).toFixed(1)} ${(y - dens[i][k]/peak*AMP).toFixed(1)}`;
+    d += ` L ${X(hi)} ${y} Z`;
+    // normal de mesma media e desvio, para comparacao
+    let nd = '';
+    for (let k = 0; k < dens[i].length; k++){
+      const x = lo + k, z = (x - r.mean) / r.sd;
+      const f = Math.exp(-z*z/2) / (r.sd * Math.sqrt(2*Math.PI));
+      nd += (k ? ' L ' : 'M ') + X(x).toFixed(1) + ' ' + (y - f/peak*AMP).toFixed(1);
+    }
+    s += `<path d="${d}" fill="${col}" fill-opacity=".22" stroke="${col}" stroke-width="1.4"/>
+          <path d="${nd}" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" opacity=".75"/>
+          <text x="${L-12}" y="${y-3}" text-anchor="end" font-size="12.5" fill="var(--ink)">${r.name}</text>
+          <text x="${W-R+8}" y="${y-3}" font-size="11.5" fill="var(--mut)">${r.mean.toFixed(0)}</text>`;
+  });
+  document.getElementById('ridge').innerHTML = s + '</svg>';
+}
+
+function renderHeat(S){
+  let h = '<thead><tr><th></th>';
+  for (let p = 1; p <= NT; p++) h += `<th>${p}º</th>`;
+  h += '</tr></thead><tbody>';
+  for (const r of S){
+    h += `<tr><td style="text-align:left;padding-right:10px;font-size:12px;font-weight:600;white-space:nowrap">${r.name}</td>`;
+    for (let p = 0; p < NT; p++){
+      const v = r.dist[p], a = Math.min(1, Math.sqrt(v/100)*1.25);
+      const col = p < 4 ? '31,111,79' : p >= NT-4 ? '176,58,46' : '108,116,124';
+      h += `<td><div style="background:rgba(${col},${a.toFixed(3)});color:${a>.55?'#fff':'inherit'}">${v>=0.5?Math.round(v):''}</div></td>`;
+    }
+    h += '</tr>';
+  }
+  document.getElementById('heat').innerHTML = h + '</tbody>';
+}
+
+function renderFixtures(){
+  const q = document.getElementById('find').value.trim().toLowerCase();
+  let h = '';
+  FIX.forEach((f, m) => {
+    const nm = T[f.h] + ' x ' + T[f.a];
+    if (q && !nm.toLowerCase().includes(q)) return;
+    const k = forced[m];
+    h += `<div class="fxrow"><div>${T[f.h]} <span class="muted">x</span> ${T[f.a]}
+      <span class="pp">&nbsp; M ${(f.H*100).toFixed(0)} · E ${(f.E*100).toFixed(0)} · V ${(f.A*100).toFixed(0)}
+      &nbsp;|&nbsp; placar mais provável ${f.top}</span></div>
+      <div class="grp">
+        <button data-m="${m}" data-k="H" class="${k==='H'?'on':''}">M</button>
+        <button data-m="${m}" data-k="E" class="${k==='E'?'on':''}">E</button>
+        <button data-m="${m}" data-k="A" class="${k==='A'?'on':''}">V</button>
+      </div></div>`;
+  });
+  document.getElementById('fx').innerHTML = h || '<div class="fxrow"><span class="muted">nenhum jogo</span></div>';
+  const lbl = { H: 'vence', E: 'empata', A: 'perde' };
+  document.getElementById('chips').innerHTML = Object.keys(forced).map(m => {
+    const f = FIX[m];
+    return `<span class="chip"><b>${T[f.h]}</b> ${lbl[forced[m]]} <b>${T[f.a]}</b>
+      <button data-del="${m}">×</button></span>`;
+  }).join('');
+}
+
+function go(){
+  const n = +document.getElementById('n').value;
+  const st = document.getElementById('status');
+  st.textContent = 'simulando…';
+  const t0 = performance.now();
+  run(n, r => {
+    RES = r;
+    const S = summarise(r);
+    renderTable(S); renderRidge(S); renderHeat(S);
+    const err = 1.96 * Math.sqrt(0.25/n) * 100;
+    const nc = Object.keys(forced).length;
+    st.textContent = `${n.toLocaleString('pt-BR')} temporadas em ${((performance.now()-t0)/1000).toFixed(1)}s `
+      + `· erro de Monte Carlo ≤ ${err.toFixed(2)} p.p.`
+      + (nc ? ` · ${nc} resultado${nc>1?'s':''} fixado${nc>1?'s':''}` : '');
+  });
+}
+
+document.getElementById('go').onclick = go;
+document.getElementById('clear').onclick = () => { forced = {}; renderFixtures(); go(); };
+document.getElementById('find').oninput = renderFixtures;
+document.getElementById('fx').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const m = b.dataset.m, k = b.dataset.k;
+  if (forced[m] === k) delete forced[m]; else forced[m] = k;
+  renderFixtures(); go();
+};
+document.getElementById('chips').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  delete forced[b.dataset.del]; renderFixtures(); go();
+};
+document.getElementById('theme').onclick = () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : cur === 'light' ? null : 'dark';
+  if (next) document.documentElement.setAttribute('data-theme', next);
+  else document.documentElement.removeAttribute('data-theme');
+  try { next ? localStorage.setItem('tema', next) : localStorage.removeItem('tema'); } catch(e){}
+};
+try { const t = localStorage.getItem('tema'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+
+document.getElementById('hdr').textContent =
+  `${D.played} jogos disputados, ${NF} restantes · vantagem de casa ${D.homeAdv}x · ρ ${D.rho} · Dixon-Coles ajustado só na temporada de 2026`;
+renderFixtures();
+go();
+</script>

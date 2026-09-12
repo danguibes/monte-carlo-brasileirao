@@ -1,0 +1,67 @@
+name: atualizar e publicar
+
+# Roda todo dia de manhã (08:00 em Brasília) e a qualquer momento pelo botão.
+# Se as duas fontes divergirem, atualizar.py sai com erro, o job falha e o
+# Pages continua servindo a última versão boa — que é o comportamento certo.
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Um deploy por vez; não cancela um que já começou.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: instalar dependências
+        run: pip install --quiet numpy pandas scipy requests beautifulsoup4 lxml
+
+      - name: buscar, conferir, simular e gerar a página
+        run: python atualizar.py
+
+      - name: conferir que a página saiu com dados de verdade
+        run: |
+          test -f web/index.html
+          # a página só presta se o JSON foi injetado; sem isso o placeholder
+          # continua lá e o navegador mostra uma tela em branco sem erro.
+          if grep -q '/\*__DADOS__\*/null' web/index.html; then
+            echo "placeholder nao substituido: a pagina sairia vazia"; exit 1
+          fi
+          python - <<'PY'
+          import re, sys
+          h = open("web/index.html", encoding="utf-8").read()
+          m = re.search(r'"played":(\d+)', h)
+          if not m or int(m.group(1)) < 1:
+              sys.exit("pagina sem jogos disputados")
+          print(f"ok: {len(h)//1024} KB, {m.group(1)} jogos disputados")
+          PY
+
+      # o template cru nao deve ir para o ar: serviria uma pagina quebrada
+      # em /template.html. O checkout e efemero, entao apagar aqui e seguro.
+      - name: tirar o template do que vai publicado
+        run: rm -f web/template.html web/brasileirao.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deploy
+        uses: actions/deploy-pages@v4
