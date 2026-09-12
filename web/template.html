@@ -57,7 +57,9 @@
   .grp button{padding:3px 9px;font-size:12px;border-radius:5px}
   .legend{display:flex;gap:16px;flex-wrap:wrap;color:var(--mut);font-size:12.5px;margin-top:10px}
   .legend b{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:5px}
-  .note{color:var(--mut);font-size:12.5px;line-height:1.6;margin-top:14px}
+  .note{color:var(--mut);font-size:13px;line-height:1.65;margin-top:14px}
+  .note a{color:var(--accent);text-decoration:none;white-space:nowrap;font-weight:600}
+  .note a:hover{text-decoration:underline}
   .hm td{padding:0;border:none;text-align:center;font-size:9.5px;color:var(--ink)}
   .hm th{padding:0 0 6px;font-size:9.5px;text-transform:none;letter-spacing:0}
   .hm td div{padding:3px 0;border-radius:2px}
@@ -142,22 +144,10 @@
 </section>
 
 <p class="note wrap" style="max-width:1120px;margin:0 auto;padding:0 20px">
-  <strong>Leia com desconfiança.</strong> Fora da amostra o modelo ganha da taxa média da liga
-  por apenas +0,0116 nats/jogo (t = 1,12) — positivo, mas não significante. A previsão jogo a
-  jogo em futebol vive perto do piso de ruído. Nenhum número aqui vale na segunda casa decimal,
-  e o modelo não sabe de lesão, calendário, Libertadores nem time reserva.
-  <br><br>
-  <strong>Sobre o 1–1 aparecer tanto.</strong> Em 80 dos 123 jogos que faltam o placar mais
-  provável é 1–1 — mas ele sai em só 14% das vezes, porque a probabilidade está espalhada por
-  81 placares. O empate <em>como resultado</em> é bem menos provável: 27,6% na média, contra
-  46,9% de vitória do mandante, e em apenas 2 dos 123 jogos o empate é o desfecho mais provável.
-  A moda de uma distribuição espalhada não a resume. Clique num jogo para ver a matriz inteira.
-  <br><br>
-  <strong>Erro de estimação.</strong> A força de cada time é estimada de ~26 jogos e carrega
-  erro de cerca de 19% em gols. Com a chave ligada, cada temporada simulada sorteia um dos 60
-  reajustes do bootstrap em vez de fingir que as forças são conhecidas exatamente. Isso desinfla
-  a confiança onde ela era falsa — o líder cai alguns pontos percentuais e os times na beira do
-  Z4 ganham risco real.
+  Modelo estatístico a partir dos placares desta temporada. Acerta na média e erra em jogo
+  isolado — não sabe de lesão, time reserva nem troca de técnico. Trate os números como
+  ordem de grandeza, nunca como a segunda casa decimal.
+  <a href="glossario.html">O que cada número quer dizer →</a>
 </p>
 </div>
 
@@ -534,7 +524,9 @@ document.getElementById('theme').onclick = () => {
 try { const t = localStorage.getItem('tema'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
 
 document.getElementById('hdr').textContent =
-  `${D.played} jogos disputados, ${NF} restantes · vantagem de casa ${D.homeAdv}x · ρ ${D.rho} · Dixon-Coles ajustado só na temporada de 2026`;
+  `${D.played} jogos disputados, ${NF} restantes · vantagem de casa `
+  + `${D.homeAdv.toFixed(3).replace('.', ',')}x · ρ ${D.rho.toFixed(3).replace('.', ',')}`
+  + ` · Dixon-Coles ajustado só na temporada de 2026`;
 renderFixtures();
 go();
 </script>

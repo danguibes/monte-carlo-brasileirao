@@ -1,0 +1,8 @@
+  uniforme pronto  meia-vida 50 pronto                                        
+        peso  jogos  n_efetivo  erro_ataque  amplitude  ruido_sinal_%  titulo_1o_%  titulo_2o_%
+    uniforme    257      257.0       0.1635      1.476           11.1         65.3         34.0
+meia-vida 50    257      136.3       0.2179      1.695           12.9         65.7         32.6
+
+A meia-vida de 50 reduz a amostra efetiva de 257 para 136 jogos (47% a menos)
+e aumenta o erro das forcas de 0.164 para 0.218 log (+33%).
+ruido/sinal: 11.1% -> 12.9%

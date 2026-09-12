@@ -1,0 +1,198 @@
+<title>Glossário — Brasileirão Monte Carlo</title>
+<style>
+  :root{
+    --bg:#faf9f7; --card:#fff; --ink:#1c1b19; --mut:#6b6862; --line:#e4e1db;
+    --accent:#1f6f4f; --accent-soft:#d8ebe1; --grid:#efece7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#9b968e; --line:#32353a;
+      --accent:#5fbf94; --accent-soft:#22392f; --grid:#2a2d31;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17181a; --card:#1f2124; --ink:#e8e6e1; --mut:#9b968e; --line:#32353a;
+    --accent:#5fbf94; --accent-soft:#22392f; --grid:#2a2d31;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font:15.5px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:0 0 80px}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  header{padding:36px 0 18px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  h1{font-size:25px;margin:0 0 6px;letter-spacing:-.02em}
+  a{color:var(--accent)}
+  .volta{display:inline-block;margin-bottom:20px;font-size:14px;text-decoration:none}
+  .volta:hover{text-decoration:underline}
+  dl{margin:0}
+  dt{font-weight:650;font-size:17px;margin:30px 0 6px;letter-spacing:-.01em;scroll-margin-top:20px}
+  dt:first-of-type{margin-top:22px}
+  dd{margin:0;color:var(--ink)}
+  dd p{margin:0 0 10px}
+  .num{background:var(--accent-soft);border-radius:5px;padding:1px 6px;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .mut{color:var(--mut)}
+  .box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0;font-size:14.5px}
+  code{background:var(--grid);padding:1px 5px;border-radius:4px;font-size:13.5px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px}
+  .toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--ink)}
+  .toc a:hover{border-color:var(--accent);color:var(--accent)}
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Glossário</h1>
+  <p class="mut" style="margin:0">O que cada número da página quer dizer, e o que ele não quer dizer.</p>
+</header>
+
+<a class="volta" href="./">← voltar para a projeção</a>
+
+<div class="toc">
+  <a href="#dixon-coles">Dixon-Coles</a>
+  <a href="#casa">vantagem de casa</a>
+  <a href="#rho">ρ</a>
+  <a href="#bootstrap">bootstrap</a>
+  <a href="#nats">nats/jogo</a>
+  <a href="#mc">erro de Monte Carlo</a>
+  <a href="#modal">placar mais provável</a>
+  <a href="#confianca">o que não confiar</a>
+</div>
+
+<dl>
+
+<dt id="dixon-coles">Dixon-Coles</dt>
+<dd>
+<p>O modelo por trás de tudo. Publicado em 1997 por Mark Dixon e Stuart Coles,
+é a forma padrão de estimar força de times de futebol a partir de placares.</p>
+<p>Cada time ganha dois números: um de <strong>ataque</strong> (quanto marca) e
+um de <strong>defesa</strong> (quanto sofre). O número esperado de gols de um
+jogo sai de somá-los:</p>
+<div class="box">
+gols esperados do mandante = exp( ataque<sub>casa</sub> + defesa<sub>fora</sub> + vantagem de casa )<br>
+gols esperados do visitante = exp( ataque<sub>fora</sub> + defesa<sub>casa</sub> )
+</div>
+<p>Daí sai a probabilidade de cada placar, e do placar sai quem venceu. Aqui o
+ajuste usa <span class="num">__JOGOS__</span> jogos — só os desta temporada, e
+nenhum de anos anteriores.</p>
+<p class="mut">A parte "Coles" da coisa é a correção ρ, logo abaixo: sem ela o
+modelo é a Poisson simples, que erra sistematicamente os placares baixos.</p>
+</dd>
+
+<dt id="casa">vantagem de casa __CASA__x</dt>
+<dd>
+<p>Jogar em casa multiplica os gols esperados do mandante por
+<span class="num">__CASA__</span>. Não é chute nem convenção: é estimado junto
+com as forças, a partir dos jogos desta temporada.</p>
+<p>Na prática, dos <span class="num">__JOGOS__</span> jogos já disputados o
+mandante venceu <span class="num">__PCTM__%</span>, empatou
+<span class="num">__PCTE__%</span> e perdeu <span class="num">__PCTV__%</span>.</p>
+<p>É <em>um número só</em> para a liga inteira, não um por time nem por
+confronto. Estádio, altitude e torcida entram todos misturados aí dentro.</p>
+</dd>
+
+<dt id="rho">ρ = __RHO__</dt>
+<dd>
+<p>A correção de dependência nos placares baixos. Se os gols de cada time
+fossem totalmente independentes, dava para multiplicar duas Poisson e acabou.
+Só que o futebol real tem <strong>mais 0–0 e mais 1–1</strong> do que essa
+conta prevê — times seguram resultado, o jogo trava, a partida "morre".</p>
+<p>ρ mede exatamente isso, e mexe só em quatro placares: 0–0, 1–0, 0–1 e 1–1.
+Com ρ = <span class="num">__RHO__</span>, a chance de 1–1 sobe
+<span class="num">__RHOPCT__%</span> em relação à Poisson independente.</p>
+<p class="mut">ρ negativo é o normal no futebol. Valor perto de zero significa
+que a liga se comporta como Poisson pura.</p>
+</dd>
+
+<dt id="bootstrap">bootstrap / erro de estimação</dt>
+<dd>
+<p>A força de cada time não é conhecida — é <em>estimada</em> a partir de umas
+26 partidas. Um time pode ter tido sorte nesse pedaço de temporada, e o modelo
+não tem como saber.</p>
+<p>O bootstrap mede esse erro pelo caminho mais direto que existe: <strong>simula
+uma temporada inteira usando o modelo, reajusta o modelo nessa temporada
+inventada, e vê o quanto os números saem diferentes.</strong> Repetindo
+<span class="num">__NDRAWS__</span> vezes, temos <span class="num">__NDRAWS__</span>
+versões plausíveis de quão forte cada time realmente é.</p>
+<p>Medido aqui: o ataque de um time carrega erro típico de
+<span class="num">__ERROPCT__%</span> em gols.</p>
+<p>Com a chave <strong>erro de estimação</strong> ligada, cada temporada
+simulada sorteia uma dessas versões em vez de fingir que as forças são
+exatas. O efeito é desinflar confiança falsa — o líder perde alguns pontos
+percentuais de título e os times na beira do Z4 ganham risco de verdade. É
+mais honesto, e por isso vem ligado.</p>
+</dd>
+
+<dt id="nats">nats por jogo</dt>
+<dd>
+<p>A unidade em que se mede se uma previsão presta. Vem do <em>log-loss</em>:
+para cada jogo, olha-se a probabilidade que o modelo deu ao resultado que de
+fato aconteceu, e tira-se o logaritmo.</p>
+<p>Chutar 1/3 para cada resultado dá <span class="num">1,0986</span> nats.
+Quanto menor, melhor. Acertar tudo com certeza daria zero.</p>
+<div class="box">
+Aqui: <strong>1,0789</strong> nats para o modelo, contra <strong>1,0905</strong>
+para quem só souber a taxa média da liga. Ganho de <strong>0,0116</strong>
+nats por jogo.
+</div>
+<p>É pouco. E é o esperado: prever futebol jogo a jogo é quase impossível, e
+qualquer modelo honesto fica perto do piso de ruído.</p>
+</dd>
+
+<dt id="mc">erro de Monte Carlo</dt>
+<dd>
+<p>A simulação sorteia um número finito de temporadas, então os percentuais
+tremem um pouco de uma rodada para outra mesmo sem nada ter mudado. Esse é o
+tamanho do tremor.</p>
+<p>Com 10.000 temporadas ele é de cerca de <span class="num">1 ponto
+percentual</span>; com 50.000, cai para <span class="num">0,44</span>. É o
+único erro desta página que se resolve só esperando mais — todos os outros são
+do modelo, não da contagem.</p>
+</dd>
+
+<dt id="modal">"placar mais provável" — a armadilha</dt>
+<dd>
+<p>Na lista de jogos, a maioria tem <strong>1–1</strong> como placar mais
+provável. Isso engana, e vale explicar por quê.</p>
+<p>Há 81 placares possíveis na grade. A probabilidade se espalha por todos
+eles, então o placar "mais provável" costuma ter só uns
+<span class="num">14%</span> — ou seja, <strong>ele erra 86% das vezes</strong>.
+Ser o mais provável de 81 não é ser provável.</p>
+<p>E empate como <em>resultado</em> é bem menos comum do que o 1–1 na lista
+sugere: a média é <span class="num">__PEMP__%</span> de empate contra
+<span class="num">__PMAND__%</span> de vitória do mandante. Em apenas
+<span class="num">__NEMP__</span> dos <span class="num">__NREM__</span> jogos
+que faltam o empate é o desfecho mais provável.</p>
+<p>É por isso que clicar no jogo abre a matriz inteira: a distribuição não
+mente do jeito que a moda mente.</p>
+</dd>
+
+<hr>
+
+<dt id="confianca">Do que não confiar aqui</dt>
+<dd>
+<p><strong>Da segunda casa decimal.</strong> O modelo ganha do baseline por
+margem que não é estatisticamente significante. Trate 63,8% como "provável,
+não garantido", nunca como 63,8 e não 64,1.</p>
+<p><strong>De qualquer coisa que dependa do que o modelo não vê.</strong> Ele
+só conhece placares do Brasileirão. Não sabe de lesão, suspensão, troca de
+técnico, time reserva poupado para a Libertadores, nem jogo com algo em jogo
+para um lado só.</p>
+<p><strong>Da ideia de que o passado se repete.</strong> As forças vêm de uma
+temporada que já aconteceu. Se um time mudou de patamar em agosto, o modelo
+demora a perceber.</p>
+<p class="mut">O que é sólido: a aritmética. Dado o modelo, as probabilidades
+de posição final estão certas, e os critérios de desempate da CBF — pontos,
+vitórias, saldo, gols pró — são aplicados como no regulamento.</p>
+</dd>
+
+</dl>
+
+<footer>
+  <a class="volta" href="./" style="margin:0">← voltar para a projeção</a><br><br>
+  Código aberto em <a href="https://github.com/danguibes/monte-carlo-brasileirao">github.com/danguibes/monte-carlo-brasileirao</a>.
+  Dados da Wikipedia e do ge.globo, conferidos um contra o outro.
+</footer>
+</div>
+
+<script>
+  try { const t = localStorage.getItem('tema'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+</script>

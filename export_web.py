@@ -68,6 +68,8 @@ def main():
             sys.exit("data/draws.json e de outro conjunto de times; "
                      "rode bootstrap.py de novo")
         payload["draws"] = d["draws"]
+        att = np.array([x["att"] for x in d["draws"]])
+        payload["erro_ataque"] = float(att.std(0).mean())
         print(f"  + {len(d['draws'])} sorteios de parametro (erro de estimacao)")
     else:
         print("  (sem data/draws.json: a pagina sai sem erro de estimacao; "
@@ -84,6 +86,8 @@ def main():
     print(f"web/index.html + brasileirao.html  {kb:.0f} KB  "
           f"({len(payload['fixtures'])} jogos restantes, grade {GMAX+1}x{GMAX+1})")
 
+    glossario(dc, matches, rem, grid, payload)
+
     # controle: a grade truncada ainda soma 1 e preserva o 1X2 do modelo cheio?
     full = dc.probs_1x2(hi, ai)
     g = np.arange(GMAX + 1)
@@ -91,6 +95,41 @@ def main():
     trunc = np.stack([grid[:, GH > GA].sum(1), grid[:, GH == GA].sum(1),
                       grid[:, GH < GA].sum(1)], 1)
     print(f"erro maximo do truncamento em 1X2: {np.abs(full - trunc).max()*100:.4f} p.p.")
+
+
+def glossario(dc, matches, rem, grid, payload):
+    """O glossario e GERADO, nao escrito a mao: os numeros dele sao os da
+    rodada. Texto fixo com numero velho e pior que numero nenhum."""
+    p = matches[matches.played]
+    gh = p.home_goals.to_numpy(int)
+    ga = p.away_goals.to_numpy(int)
+    hi = rem.home.map(dc.idx).to_numpy()
+    ai = rem.away.map(dc.idx).to_numpy()
+    p1x2 = dc.probs_1x2(hi, ai)
+
+    subs = {
+        "__JOGOS__": f"{len(p)}",
+        "__CASA__": f"{np.exp(dc.home_adv):.3f}".replace(".", ","),
+        "__RHO__": f"{dc.rho:+.3f}".replace(".", ","),
+        "__RHOPCT__": f"{-dc.rho*100:.1f}".replace(".", ","),
+        "__PCTM__": f"{(gh > ga).mean()*100:.0f}",
+        "__PCTE__": f"{(gh == ga).mean()*100:.0f}",
+        "__PCTV__": f"{(gh < ga).mean()*100:.0f}",
+        "__NDRAWS__": f"{len(payload.get('draws', []))}",
+        "__ERROPCT__": f"{(np.exp(payload.get('erro_ataque', 0)) - 1)*100:.0f}",
+        "__PEMP__": f"{p1x2[:,1].mean()*100:.1f}".replace(".", ","),
+        "__PMAND__": f"{p1x2[:,0].mean()*100:.1f}".replace(".", ","),
+        "__NEMP__": f"{int((p1x2.argmax(1) == 1).sum())}",
+        "__NREM__": f"{len(hi)}",
+    }
+    html = open("web/glossario_template.html", encoding="utf-8").read()
+    for k, v in subs.items():
+        html = html.replace(k, v)
+    faltou = [k for k in subs if k in html]
+    if faltou:
+        sys.exit(f"placeholder nao substituido no glossario: {faltou}")
+    open("web/glossario.html", "w", encoding="utf-8").write(html)
+    print(f"  + web/glossario.html ({len(html)//1024} KB)")
 
 
 if __name__ == "__main__":

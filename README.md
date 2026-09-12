@@ -146,10 +146,23 @@ com ataque e defesa. Mediu-se `exp(0,365) = 1,44x` em 2026.
    | taxa média da liga | 1,0739 |
 
    Meia-vida 50 é a melhor, com +0,0185 nats/jogo sobre uniforme — mas **t =
-   0,98** com 100 previsões, ou seja, indistinguível de ruído. Por isso o padrão
-   continua uniforme: a ordem das meias-vidas é plausível e bate com a
-   literatura, mas a medição não sustenta a afirmação. Para usar assim mesmo:
-   `python run.py --half-life 50`. O flag aborta se os dados não tiverem data.
+   0,98** com 100 previsões, ou seja, indistinguível de ruído.
+
+   O bootstrap deu depois a régua que faltava para ver o **custo** da recência,
+   que o log-loss sozinho não mostra: peso por recência joga fora amostra.
+   `comparar_recencia.py` mede:
+
+   | | amostra efetiva | erro do ataque | ruído/sinal |
+   |---|---|---|---|
+   | uniforme | 257 jogos | 0,164 log | 11,1% |
+   | meia-vida 50 | 136 jogos | 0,218 log | **12,9%** |
+
+   A meia-vida de 50 descarta 47% da amostra efetiva e aumenta o erro das
+   forças em 33%. A razão ruído/sinal **piora**. Ou seja: o ganho de previsão,
+   que já não era significante, é comprado com mais incerteza nos parâmetros —
+   e as probabilidades finais mal se mexem (65,3/34,0 contra 65,7/32,6 no
+   título). Padrão continua uniforme, agora por dois motivos medidos em vez de
+   um. Para usar assim mesmo: `python run.py --half-life 50`.
 
 3. **Gols/jogo do modelo (2,548) fica abaixo do observado (2,646).** Não é bug:
    a τ de Dixon-Coles torna a verossimilhança imprópria, e a grade renormalizada
@@ -189,6 +202,14 @@ normal de mesma média e desvio sobreposta para comparação, e o mapa de calor
 66,89% de título para o Flamengo e o JS dá 66,9%; no condicional
 `Palmeiras>Flamengo`, 50,61/49,23 contra 50,0/49,8 — dentro do erro de Monte
 Carlo de 10.000 temporadas (≤ 0,98 p.p.).
+
+## Glossário
+
+`web/glossario.html` explica Dixon-Coles, vantagem de casa, ρ, bootstrap,
+nats/jogo, erro de Monte Carlo e a armadilha do "placar mais provável". É
+**gerado** por `export_web.py` com os números da rodada, não escrito à mão —
+texto fixo com número velho é pior que número nenhum, e o gerador aborta se
+algum marcador ficar sem substituir.
 
 ## Saídas
 
