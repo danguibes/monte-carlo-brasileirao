@@ -15,6 +15,12 @@ com a ultima versao boa.
 import subprocess
 import sys
 
+# Passos que podem falhar sem impedir a publicacao. Se a fonte estiver no meio
+# de uma edicao, o certo e publicar a PAGINA nova com o DADO anterior — que ja
+# e o que o site mostra — em vez de travar uma correcao de codigo atras de um
+# problema de dado. Com --dados-opcionais, so os passos de busca sao tolerados.
+OPCIONAIS = {1, 2}
+
 PASSOS = [
     ("conferindo na Wikipedia", [sys.executable, "parse_data.py", "--refresh"]),
     ("buscando resultados e datas no ge.globo", [sys.executable, "fetch_globo.py", "--refresh"]),

@@ -7,6 +7,7 @@ Assim o condicional vira clique, sem servidor e sem reajustar nada.
 """
 import json
 import os
+from datetime import datetime, timezone, timedelta
 import sys
 import numpy as np
 import pandas as pd
@@ -57,6 +58,12 @@ def main():
             for m, (h, a) in enumerate(zip(hi, ai))
         ],
         "played": int(matches.played.sum()),
+        # Idade do dado, visivel no topo. Sem isso, tolerar falha de fonte
+        # trocaria uma falha barulhenta por uma silenciosa.
+        "ultimoJogo": (str(matches[matches.played].data.max())[:10]
+                       if "data" in matches.columns else None),
+        "geradoEm": datetime.now(timezone.utc).astimezone(
+            timezone(timedelta(hours=-3))).strftime("%d/%m %H:%M"),
     }
 
     # Sorteios de parametro do bootstrap, se existirem. Sao eles que permitem a

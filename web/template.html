@@ -46,6 +46,7 @@
   .cell span{position:relative}
   .g4 i{background:var(--g4)} .g6 i{background:var(--g6)} .z4 i{background:var(--z4)}
   .muted{color:var(--mut)}
+  .idade{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--mut)}
   .dlt{display:inline-block;margin-left:5px;font-size:11px;font-weight:700;
        font-variant-numeric:tabular-nums;letter-spacing:-.01em}
   .dlt.bom{color:var(--g4)} .dlt.ruim{color:var(--z4)}
@@ -683,10 +684,13 @@ document.getElementById('theme').onclick = () => {
 };
 try { const t = localStorage.getItem('tema'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
 
-document.getElementById('hdr').textContent =
+const brDia = s => s ? s.slice(8,10) + '/' + s.slice(5,7) : '';
+document.getElementById('hdr').innerHTML =
   `${D.played} jogos disputados, ${NF} restantes · vantagem de casa `
   + `${D.homeAdv.toFixed(3).replace('.', ',')}x · ρ ${D.rho.toFixed(3).replace('.', ',')}`
-  + ` · Dixon-Coles ajustado só na temporada de 2026`;
+  + ` · Dixon-Coles ajustado só na temporada de 2026`
+  + (D.ultimoJogo ? `<br><span class="idade">dados até ${brDia(D.ultimoJogo)}`
+      + `${D.geradoEm ? ` · página gerada ${D.geradoEm}` : ''}</span>` : '');
 renderFixtures();
 go();
 </script>

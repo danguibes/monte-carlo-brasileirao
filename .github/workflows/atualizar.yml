@@ -34,8 +34,10 @@ jobs:
       - name: instalar dependências
         run: pip install --quiet numpy pandas scipy requests beautifulsoup4 lxml
 
+      # Falha de fonte nao bloqueia a publicacao: a pagina sai com os dados da
+      # ultima busca boa, e a data deles fica visivel no topo do site.
       - name: buscar, conferir, simular e gerar a página
-        run: python atualizar.py
+        run: python atualizar.py --dados-opcionais
 
       - name: conferir que a página saiu com dados de verdade
         run: |
