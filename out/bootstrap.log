@@ -1,0 +1,46 @@
+bootstrap parametrico: 60 reajustes sobre 257 jogos
+  1/60  2/60  3/60  4/60  5/60  6/60  7/60  8/60  9/60  10/60  11/60  12/60  13/60  14/60  15/60  16/60  17/60  18/60  19/60  20/60  21/60  22/60  23/60  24/60  25/60  26/60  27/60  28/60  29/60  30/60  31/60  32/60  33/60  34/60  35/60  36/60  37/60  38/60  39/60  40/60  41/60  42/60  43/60  44/60  45/60  46/60  47/60  48/60  49/60  50/60  51/60  52/60  53/60  54/60  55/60  56/60  57/60  58/60  59/60  60/60                              
+erro-padrao das forcas estimadas (log):
+                time  ataque  erro_ataque  defesa  erro_defesa
+Athletico Paranaense   0.155        0.139  -0.125        0.174
+    Atlético Mineiro   0.011        0.187  -0.077        0.154
+               Bahia   0.176        0.154   0.002        0.150
+            Botafogo   0.187        0.176   0.187        0.154
+         Chapecoense  -0.155        0.204   0.446        0.177
+         Corinthians  -0.266        0.194  -0.229        0.209
+            Coritiba   0.031        0.138   0.116        0.148
+            Cruzeiro   0.113        0.160   0.104        0.134
+            Flamengo   0.407        0.140  -0.468        0.257
+          Fluminense   0.165        0.121  -0.046        0.166
+              Grêmio  -0.184        0.215   0.035        0.180
+       Internacional  -0.193        0.162  -0.015        0.167
+            Mirassol  -0.179        0.195   0.145        0.153
+           Palmeiras   0.285        0.153  -0.477        0.282
+ Red Bull Bragantino  -0.030        0.146  -0.144        0.187
+                Remo  -0.099        0.145   0.258        0.156
+              Santos   0.123        0.184   0.202        0.167
+           São Paulo  -0.062        0.176  -0.160        0.173
+       Vasco da Gama  -0.207        0.202   0.196        0.142
+             Vitória  -0.278        0.259   0.047        0.174
+
+erro tipico do ataque: 0.173 log = 19% em gols
+amplitude de forca entre os times: 1.476 log
+razao ruido/sinal: 12%
+
+probabilidades sem e com o erro de estimacao das forcas:
+         time  titulo_fixo  titulo_bs  G4_fixo  G4_bs  Z4_fixo  Z4_bs  d_titulo
+     Flamengo        66.68      63.51   100.00  99.92     0.00   0.00     -3.17
+    Palmeiras        33.18      35.84    99.94  99.61     0.00   0.00      2.66
+     Botafogo         0.00       0.00     0.91   1.85     1.23   2.98      0.00
+  Chapecoense         0.00       0.00     0.00   0.00    99.68  98.33      0.00
+       Grêmio         0.00       0.00     0.00   0.05    25.56  24.81      0.00
+  Corinthians         0.00       0.00     0.03   0.15     5.43   7.02      0.00
+Internacional         0.00       0.00     0.00   0.00    56.41  52.97      0.00
+     Mirassol         0.00       0.00     0.00   0.01    40.40  42.45      0.00
+         Remo         0.00       0.00     0.00   0.00    86.68  83.88      0.00
+       Santos         0.00       0.00     0.15   1.01     5.35   5.53      0.00
+Vasco da Gama         0.00       0.00     0.00   0.00    70.14  63.12      0.00
+      Vitória         0.00       0.00     0.03   0.11     8.23  16.72      0.00
+gravado data/draws.json com 60 sorteios de parametro
+
+gravado out/bootstrap.csv e out/erro_forcas.csv

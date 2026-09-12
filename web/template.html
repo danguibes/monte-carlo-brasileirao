@@ -64,6 +64,22 @@
   #bar{height:3px;background:var(--grid);border-radius:2px;overflow:hidden;margin-top:12px}
   #bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .1s}
   svg{display:block;width:100%;height:auto;overflow:visible}
+  .fxrow{grid-template-columns:1fr auto}
+  .fxname{background:none;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:6px}
+  .fxname:hover{color:var(--accent)}
+  .fxdate{color:var(--mut);font-size:11.5px;font-variant-numeric:tabular-nums;margin-right:8px}
+  #back{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+  #modal{background:var(--card);border:1px solid var(--line);border-radius:12px;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:22px}
+  #modal h3{margin:0 0 2px;font-size:18px}
+  #modal .x{float:right;border:none;background:none;font-size:22px;line-height:1;color:var(--mut);padding:0 4px}
+  .mx{border-collapse:separate;border-spacing:2px;margin:16px 0 6px;width:100%}
+  .mx td,.mx th{padding:0;text-align:center;font-size:10.5px;font-variant-numeric:tabular-nums}
+  .mx th{color:var(--mut);font-size:10px;font-weight:600;text-transform:none;letter-spacing:0;border:none}
+  .mx td div{padding:5px 2px;border-radius:3px}
+  .tri{display:flex;gap:8px;margin-top:14px}
+  .tri div{flex:1;border:1px solid var(--line);border-radius:8px;padding:9px 10px}
+  .tri b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
+  .tri span{color:var(--mut);font-size:11.5px}
 </style>
 
 <div class="wrap">
@@ -81,6 +97,9 @@
         <option value="10000" selected>10.000 temporadas</option>
         <option value="50000">50.000 temporadas</option>
       </select>
+      <label id="lerro" style="display:none;align-items:center;gap:6px;font-size:13px;color:var(--mut);cursor:pointer">
+        <input type="checkbox" id="erro" checked> erro de estimação
+      </label>
       <button class="primary" id="go">Rodar</button>
       <button id="theme">◐</button>
     </div>
@@ -124,11 +143,21 @@
 
 <p class="note wrap" style="max-width:1120px;margin:0 auto;padding:0 20px">
   <strong>Leia com desconfiança.</strong> Fora da amostra o modelo ganha da taxa média da liga
-  por apenas +0,0116 nats/jogo (t = 1,12, vencendo em 15 de 20 repartições) — positivo,
-  mas não significante. A previsão jogo a jogo em futebol vive perto do piso de ruído.
-  As probabilidades de título e de rebaixamento são mais firmes que isso, porque dependem
-  sobretudo da tabela já construída, mas nenhum número aqui vale na segunda casa decimal.
-  O modelo não sabe de lesão, calendário, Libertadores nem time reserva.
+  por apenas +0,0116 nats/jogo (t = 1,12) — positivo, mas não significante. A previsão jogo a
+  jogo em futebol vive perto do piso de ruído. Nenhum número aqui vale na segunda casa decimal,
+  e o modelo não sabe de lesão, calendário, Libertadores nem time reserva.
+  <br><br>
+  <strong>Sobre o 1–1 aparecer tanto.</strong> Em 80 dos 123 jogos que faltam o placar mais
+  provável é 1–1 — mas ele sai em só 14% das vezes, porque a probabilidade está espalhada por
+  81 placares. O empate <em>como resultado</em> é bem menos provável: 27,6% na média, contra
+  46,9% de vitória do mandante, e em apenas 2 dos 123 jogos o empate é o desfecho mais provável.
+  A moda de uma distribuição espalhada não a resume. Clique num jogo para ver a matriz inteira.
+  <br><br>
+  <strong>Erro de estimação.</strong> A força de cada time é estimada de ~26 jogos e carrega
+  erro de cerca de 19% em gols. Com a chave ligada, cada temporada simulada sorteia um dos 60
+  reajustes do bootstrap em vez de fingir que as forças são conhecidas exatamente. Isso desinfla
+  a confiança onde ela era falsa — o líder cai alguns pontos percentuais e os times na beira do
+  Z4 ganham risco real.
 </p>
 </div>
 
@@ -147,7 +176,7 @@ const FIX = D.fixtures.map(f => {
   const t = H + E + A;
   let bi = 0; for (let i = 1; i < f.p.length; i++) if (f.p[i] > f.p[bi]) bi = i;
   const top = ((bi/G)|0) + '–' + (bi%G) + ' (' + (f.p[bi]*100).toFixed(0) + '%)';
-  return { h: f.h, a: f.a, cum: c, p: f.p, H: H/t, E: E/t, A: A/t, top };
+  return { h: f.h, a: f.a, d: f.d, r: f.r, cum: c, p: f.p, H: H/t, E: E/t, A: A/t, top };
 });
 
 let forced = {};            // idx do jogo -> 'H' | 'E' | 'A'
@@ -155,16 +184,47 @@ let RES = null;
 
 function mulberry32(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 
-/* Reaplica o condicional: zera os placares incompatíveis e renormaliza. */
-function cumFor(m){
-  const f = FIX[m], k = forced[m];
-  if (!k) return f.cum;
-  const c = new Float64Array(f.p.length); let s = 0;
-  for (let i = 0; i < f.p.length; i++){
-    const gh = (i/G)|0, ga = i%G;
-    const ok = k === 'H' ? gh > ga : k === 'E' ? gh === ga : gh < ga;
-    s += ok ? f.p[i] : 0; c[i] = s;
+/* Constroi a distribuicao de placares a partir de um par de lambdas.
+   E o que permite usar os sorteios do bootstrap sem exportar 60 grades. */
+const FAT = (() => { const f = [1]; for (let k = 1; k <= G; k++) f[k] = f[k-1]*k; return f; })();
+function gridDeLambda(lh, la, rho){
+  const ph = [], pa = [];
+  for (let k = 0; k < G; k++){
+    ph[k] = Math.exp(-lh) * Math.pow(lh, k) / FAT[k];
+    pa[k] = Math.exp(-la) * Math.pow(la, k) / FAT[k];
   }
+  const out = new Float64Array(G*G); let s = 0;
+  for (let gh = 0; gh < G; gh++) for (let ga = 0; ga < G; ga++){
+    let t = 1;                                   // correcao de Dixon-Coles
+    if (gh === 0 && ga === 0) t = 1 - lh*la*rho;
+    else if (gh === 0 && ga === 1) t = 1 + lh*rho;
+    else if (gh === 1 && ga === 0) t = 1 + la*rho;
+    else if (gh === 1 && ga === 1) t = 1 - rho;
+    const v = Math.max(0, ph[gh]*pa[ga]*t);
+    out[gh*G+ga] = v; s += v;
+  }
+  for (let i = 0; i < out.length; i++) out[i] /= s;
+  return out;
+}
+
+/* Grades de um sorteio de parametro (di) ou do ajuste pontual (di === -1). */
+function gradesDoSorteio(di){
+  if (di < 0) return FIX.map(f => f.p);
+  const d = D.draws[di];
+  return FIX.map(f => gridDeLambda(
+    Math.exp(d.att[f.h] + d.def[f.a] + d.home),
+    Math.exp(d.att[f.a] + d.def[f.h]), D.rho));
+}
+
+/* Aplica o condicional e acumula: zera placares incompativeis e renormaliza. */
+function acumular(p, m){
+  const c = new Float64Array(p.length); const k = forced[m]; let s = 0;
+  for (let i = 0; i < p.length; i++){
+    const gh = (i/G)|0, ga = i%G;
+    const ok = !k || (k === 'H' ? gh > ga : k === 'E' ? gh === ga : gh < ga);
+    s += ok ? p[i] : 0; c[i] = s;
+  }
+  if (s <= 0) return null;
   for (let i = 0; i < c.length; i++) c[i] /= s;
   return c;
 }
@@ -175,23 +235,31 @@ function pick(cum, u){ let lo = 0, hi = cum.length - 1;
 
 function run(n, done){
   const rnd = mulberry32(12345);
-  const cums = FIX.map((_, m) => cumFor(m));
-  const pts = new Int32Array(n * NT), win = new Int32Array(n * NT),
-        gp  = new Int32Array(n * NT), gc  = new Int32Array(n * NT),
-        rankCount = new Int32Array(NT * NT);
+  const comErro = usarErro();
+  const nSorteios = comErro ? D.draws.length : 1;
+  const porSorteio = Math.ceil(n / nSorteios);
+  const total = porSorteio * nSorteios;
+
   const b = D.base;
-  for (let s = 0; s < n; s++) for (let t = 0; t < NT; t++){
+  const pts = new Int32Array(total * NT), win = new Int32Array(total * NT),
+        gp  = new Int32Array(total * NT), gc  = new Int32Array(total * NT),
+        rankCount = new Int32Array(NT * NT);
+  for (let s = 0; s < total; s++) for (let t = 0; t < NT; t++){
     const i = s*NT+t; pts[i]=b.pts[t]; win[i]=b.v[t]; gp[i]=b.gp[t]; gc[i]=b.gc[t];
   }
   const key = new Float64Array(NT), ord = new Int32Array(NT);
-  const CHUNK = 500; let s0 = 0;
+  let di = 0;
 
-  function step(){
-    const end = Math.min(s0 + CHUNK, n);
-    for (let s = s0; s < end; s++){
+  function bloco(){
+    // um sorteio de parametro por passada: reconstroi as grades e roda as
+    // temporadas daquele sorteio. Sem erro de estimacao, e uma passada so.
+    const cums = gradesDoSorteio(comErro ? di : -1).map((p, m) => acumular(p, m));
+    const s0 = di * porSorteio;
+    for (let s = s0; s < s0 + porSorteio; s++){
       const o = s * NT;
       for (let m = 0; m < NF; m++){
-        const f = FIX[m], k = pick(cums[m], rnd());
+        const cum = cums[m]; if (!cum) continue;
+        const f = FIX[m], k = pick(cum, rnd());
         const sh = (k / G) | 0, sa = k % G, h = o + f.h, a = o + f.a;
         gp[h] += sh; gc[h] += sa; gp[a] += sa; gc[a] += sh;
         if (sh > sa){ pts[h] += 3; win[h]++; }
@@ -206,12 +274,12 @@ function run(n, done){
       const a2 = Array.from(ord).sort((x, y) => key[y] - key[x]);
       for (let p = 0; p < NT; p++) rankCount[a2[p]*NT + p]++;
     }
-    s0 = end;
-    document.querySelector('#bar i').style.width = (100*s0/n) + '%';
-    if (s0 < n) setTimeout(step, 0);
-    else done({ n, pts, gp, gc, rankCount });
+    di++;
+    document.querySelector('#bar i').style.width = (100*di/nSorteios) + '%';
+    if (di < nSorteios) setTimeout(bloco, 0);
+    else done({ n: total, pts, gp, gc, rankCount });
   }
-  step();
+  bloco();
 }
 
 /* ---------- render ---------- */
@@ -332,9 +400,11 @@ function renderFixtures(){
     const nm = T[f.h] + ' x ' + T[f.a];
     if (q && !nm.toLowerCase().includes(q)) return;
     const k = forced[m];
-    h += `<div class="fxrow"><div>${T[f.h]} <span class="muted">x</span> ${T[f.a]}
-      <span class="pp">&nbsp; M ${(f.H*100).toFixed(0)} · E ${(f.E*100).toFixed(0)} · V ${(f.A*100).toFixed(0)}
-      &nbsp;|&nbsp; placar mais provável ${f.top}</span></div>
+    const dt = f.d ? new Date(f.d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}) : '—';
+    const rod = f.r ? `R${f.r}` : '';
+    h += `<div class="fxrow"><button class="fxname" data-abrir="${m}">
+      <span class="fxdate">${dt} ${rod}</span>${T[f.h]} <span class="muted">x</span> ${T[f.a]}
+      <span class="pp">&nbsp; M ${(f.H*100).toFixed(0)} · E ${(f.E*100).toFixed(0)} · V ${(f.A*100).toFixed(0)}</span></button>
       <div class="grp">
         <button data-m="${m}" data-k="H" class="${k==='H'?'on':''}">M</button>
         <button data-m="${m}" data-k="E" class="${k==='E'?'on':''}">E</button>
@@ -361,10 +431,83 @@ function go(){
     renderTable(S); renderRidge(S); renderHeat(S);
     const err = 1.96 * Math.sqrt(0.25/n) * 100;
     const nc = Object.keys(forced).length;
-    st.textContent = `${n.toLocaleString('pt-BR')} temporadas em ${((performance.now()-t0)/1000).toFixed(1)}s `
+    st.textContent = `${r.n.toLocaleString('pt-BR')} temporadas em ${((performance.now()-t0)/1000).toFixed(1)}s `
       + `· erro de Monte Carlo ≤ ${err.toFixed(2)} p.p.`
+      + (usarErro() ? ` · forças sorteadas de ${D.draws.length} reajustes` : ' · forças fixas')
       + (nc ? ` · ${nc} resultado${nc>1?'s':''} fixado${nc>1?'s':''}` : '');
   });
+}
+
+/* ---------- matriz de placares ---------- */
+let aberto = null;
+
+function abrirMatriz(m){
+  const f = FIX[m];
+  const cells = [];
+  for (let gh = 0; gh < G; gh++) for (let ga = 0; ga < G; ga++) cells.push(f.p[gh*G+ga]);
+  const mx = Math.max(...cells);
+  const dt = f.d ? new Date(f.d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : 'data a definir';
+  let eh = 0, ea = 0;
+  for (let gh = 0; gh < G; gh++) for (let ga = 0; ga < G; ga++){ eh += gh*f.p[gh*G+ga]; ea += ga*f.p[gh*G+ga]; }
+
+  let t = '<table class="mx"><thead><tr><th></th><th colspan="' + G + '" style="padding-bottom:4px">gols do visitante &rarr;</th></tr><tr><th></th>';
+  for (let ga = 0; ga < G; ga++) t += `<th>${ga}</th>`;
+  t += '</tr></thead><tbody>';
+  for (let gh = 0; gh < G; gh++){
+    t += `<tr><th style="padding-right:6px">${gh}</th>`;
+    for (let ga = 0; ga < G; ga++){
+      const v = f.p[gh*G+ga] * 100;
+      const al = Math.min(1, Math.sqrt(f.p[gh*G+ga]/mx) * 1.05);
+      const col = gh > ga ? '31,111,79' : gh === ga ? '108,116,124' : '176,58,46';
+      t += `<td><div style="background:rgba(${col},${al.toFixed(3)});color:${al>.55?'#fff':'inherit'}"
+        title="${gh}–${ga}: ${v.toFixed(2)}%">${v >= 0.5 ? v.toFixed(0) : ''}</div></td>`;
+    }
+    t += '</tr>';
+  }
+  t += '</tbody></table>';
+
+  document.body.insertAdjacentHTML('beforeend', `<div id="back"><div id="modal" role="dialog" aria-modal="true">
+    <button class="x" id="fechar" aria-label="fechar">×</button>
+    <h3>${T[f.h]} <span class="muted" style="font-weight:400">x</span> ${T[f.a]}</h3>
+    <p class="sub">${dt}${f.r ? ' · rodada ' + f.r : ''}</p>
+    ${t}
+    <p class="sub" style="font-size:11.5px">linhas = gols do mandante · valores em % · em branco abaixo de 0,5% ·
+       verde mandante, cinza empate, vermelho visitante</p>
+    <div class="tri">
+      <div><b>${(f.H*100).toFixed(1)}%</b><span>${T[f.h]} vence</span></div>
+      <div><b>${(f.E*100).toFixed(1)}%</b><span>empate</span></div>
+      <div><b>${(f.A*100).toFixed(1)}%</b><span>${T[f.a]} vence</span></div>
+    </div>
+    <p class="sub" style="margin-top:12px">gols esperados ${eh.toFixed(2)} – ${ea.toFixed(2)} ·
+      placar mais provável <strong>${((bi=>((bi/G)|0)+'–'+(bi%G))(f.p.indexOf(mx)))}</strong>,
+      e ainda assim ele só sai em ${(mx*100).toFixed(0)}% dos jogos</p>
+  </div></div>`);
+  aberto = m;
+  // o gesto de voltar do celular fecha a sobreposicao, nao sai da pagina
+  history.pushState({matriz: m}, '');
+  document.getElementById('fechar').onclick = () => history.back();
+  document.getElementById('back').onclick = e => { if (e.target.id === 'back') history.back(); };
+  document.getElementById('modal').focus?.();
+}
+
+function fecharMatriz(){
+  const b = document.getElementById('back');
+  if (b) b.remove();
+  aberto = null;
+}
+
+window.addEventListener('popstate', fecharMatriz);
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && aberto !== null) history.back();
+});
+
+function usarErro(){
+  const c = document.getElementById('erro');
+  return !!(D.draws && c && c.checked);
+}
+if (D.draws) {
+  document.getElementById('lerro').style.display = 'flex';
+  document.getElementById('erro').onchange = go;
 }
 
 document.getElementById('go').onclick = go;
@@ -372,6 +515,7 @@ document.getElementById('clear').onclick = () => { forced = {}; renderFixtures()
 document.getElementById('find').oninput = renderFixtures;
 document.getElementById('fx').onclick = e => {
   const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.abrir !== undefined) { abrirMatriz(+b.dataset.abrir); return; }
   const m = b.dataset.m, k = b.dataset.k;
   if (forced[m] === k) delete forced[m]; else forced[m] = k;
   renderFixtures(); go();

@@ -6,6 +6,8 @@ pagina e a distribuicao conjunta de placares ja pronta de cada jogo restante.
 Assim o condicional vira clique, sem servidor e sem reajustar nada.
 """
 import json
+import os
+import sys
 import numpy as np
 import pandas as pd
 from model import DixonColes, MAXG
@@ -17,7 +19,12 @@ GMAX = 8  # teto de gols exportado; a cauda acima disso e desprezivel
 def main():
     matches, st = load()
     dc, _ = fit_model(matches, None)
-    rem = matches[~matches.played].reset_index(drop=True)
+    rem = matches[~matches.played].copy()
+    if "data" in rem.columns:
+        # ordem cronologica; adiados (sem data) caem no fim
+        rem = (rem.assign(_o=rem.data.fillna("9999"))
+                  .sort_values(["_o", "home"]).drop(columns="_o"))
+    rem = rem.reset_index(drop=True)
     hi = rem.home.map(dc.idx).to_numpy()
     ai = rem.away.map(dc.idx).to_numpy()
 
@@ -43,11 +50,28 @@ def main():
         },
         "fixtures": [
             {"h": int(h), "a": int(a),
+             "d": (rem.data.iloc[m] if pd.notna(rem.data.iloc[m]) else None)
+                  if "data" in rem.columns else None,
+             "r": int(rem.rodada.iloc[m]) if "rodada" in rem.columns else None,
              "p": [round(float(x), 6) for x in grid[m].ravel()]}
             for m, (h, a) in enumerate(zip(hi, ai))
         ],
         "played": int(matches.played.sum()),
     }
+
+    # Sorteios de parametro do bootstrap, se existirem. Sao eles que permitem a
+    # pagina embutir o erro de estimacao das forcas em vez de tratar ataque e
+    # defesa como se fossem conhecidos exatamente.
+    if os.path.exists("data/draws.json"):
+        d = json.load(open("data/draws.json", encoding="utf-8"))
+        if d["teams"] != dc.teams:
+            sys.exit("data/draws.json e de outro conjunto de times; "
+                     "rode bootstrap.py de novo")
+        payload["draws"] = d["draws"]
+        print(f"  + {len(d['draws'])} sorteios de parametro (erro de estimacao)")
+    else:
+        print("  (sem data/draws.json: a pagina sai sem erro de estimacao; "
+              "rode bootstrap.py)")
 
     tpl = open("web/template.html", encoding="utf-8").read()
     html = tpl.replace("/*__DADOS__*/null",
