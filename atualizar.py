@@ -19,9 +19,10 @@ import sys
 # de uma edicao, o certo e publicar a PAGINA nova com o DADO anterior — que ja
 # e o que o site mostra — em vez de travar uma correcao de codigo atras de um
 # problema de dado. Com --dados-opcionais, so os passos de busca sao tolerados.
-OPCIONAIS = {1, 2}
+OPCIONAIS = {2, 3}   # so as buscas; os testes nunca sao tolerados
 
 PASSOS = [
+    ("conferindo invariantes", [sys.executable, "testes.py"]),
     ("conferindo na Wikipedia", [sys.executable, "parse_data.py", "--refresh"]),
     ("buscando resultados e datas no ge.globo", [sys.executable, "fetch_globo.py", "--refresh"]),
     ("ajustando o modelo e simulando", [sys.executable, "run.py", "--n", "50000"]),

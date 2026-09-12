@@ -11,7 +11,7 @@ import json
 import os
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
 
@@ -22,17 +22,40 @@ UA = {"User-Agent": "Mozilla/5.0 (brasileirao-mc; uso pessoal)"}
 RODADAS = 38
 MIN_APOS_INICIO = 150   # 90 + intervalo + acrescimos + folga, em minutos
 
+# Estados de transmissao vistos na fonte. So ENCERRADA e jogo acabado.
+# REAL_TIME e bola rolando; LIVE aparece tambem ANTES do apito, quando a
+# transmissao ja esta no ar; PRE_DIA e o dia do jogo. Qualquer um deles nunca
+# pode virar "encerrado", por mais tempo que tenha passado — sem essa lista,
+# um jogo parado por 2h30 (VAR, falta de luz, confusao) entraria com o placar
+# parcial assim que o relogio de seguranca estourasse.
+NAO_ENCERRADOS = {"LIVE", "REAL_TIME", "AO_VIVO", "PRE_DIA", "PRE_JOGO", "ADIADO"}
+ENCERRADO = "ENCERRADA"
+_vistos = set()
+
+
+BRT = timezone(timedelta(hours=-3))
+
+
+def agora_brt():
+    """Agora em horario de Brasilia, seja qual for o fuso da maquina.
+
+    datetime.now() aqui era um bug que SO aparecia no CI: o runner do GitHub
+    roda em UTC, tres horas a frente, entao um jogo das 20:30 parecia ter
+    comecado ha 3h e o placar parcial entrava como final. Na minha maquina,
+    em BRT, o mesmo codigo acertava — que e o pior tipo de bug de fuso."""
+    return datetime.now(timezone.utc).astimezone(BRT).replace(tzinfo=None)
+
 
 def comecou_ha(data_realizacao, minutos):
     """O jogo comecou ha mais de `minutos`? Usado so quando a API nao diz o
-    estado. Horario de Brasilia, que e o que a fonte publica."""
+    estado. A fonte publica os horarios em Brasilia."""
     if not data_realizacao:
         return False
     try:
         ini = datetime.strptime(data_realizacao[:16], "%Y-%m-%dT%H:%M")
     except ValueError:
         return False
-    return datetime.now() >= ini + timedelta(minutes=minutos)
+    return agora_brt() >= ini + timedelta(minutes=minutos)
 
 # ge.globo usa nomes curtos; a Wikipedia usa nomes longos. A ponte e explicita
 # de proposito: se um nome mudar, o script para em vez de casar errado.
@@ -95,13 +118,17 @@ def build(jogos):
         # A API distingue: broadcast.id e ENCERRADA, LIVE, PRE_DIA ou vazio.
         trans = j.get("transmissao") or {}
         estado = ((trans.get("broadcast") or {}).get("id") or "").upper()
-        if estado == "LIVE":
-            encerrado = False
-        elif estado == "ENCERRADA":
+        if estado == ENCERRADO:
             encerrado = tem_placar
+        elif estado in NAO_ENCERRADOS:
+            encerrado = False
         else:
-            # Sem o campo (ou com valor novo), cai no relogio: so vale como
-            # encerrado bem depois do apito inicial. Conservador de proposito.
+            # Valor novo ou ausente: cai no relogio, conservador de proposito.
+            # E avisa, porque estado desconhecido merece olho humano.
+            if estado and estado not in _vistos:
+                _vistos.add(estado)
+                print(f"  [atencao] estado de transmissao desconhecido: {estado!r} "
+                      "— tratado pelo relogio; confira se e jogo encerrado")
             encerrado = tem_placar and comecou_ha(j["data_realizacao"], MIN_APOS_INICIO)
 
         rows.append({

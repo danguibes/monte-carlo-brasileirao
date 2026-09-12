@@ -29,6 +29,13 @@ ge.globo distingue pelo campo `transmissao.broadcast.id`: `ENCERRADA`, `LIVE`,
 `PRE_DIA` ou vazio. Só `ENCERRADA` entra; se o campo sumir ou mudar, cai num
 relógio conservador de 150 minutos após o apito inicial.
 
+O relógio de segurança usa **horário de Brasília explícito**, não o da
+máquina. Com `datetime.now()` cru, o bug só aparecia no CI: o runner do GitHub
+roda em UTC, três horas à frente, então um jogo das 20:30 parecia ter começado
+há três horas e o placar parcial entrava como final — enquanto na máquina do
+dono, em BRT, o mesmo código acertava. `testes.py` trava isso e roda como
+primeiro passo de `atualizar.py`, sem tolerância a falha.
+
 Isso **não** era pego pela conferência entre as fontes: a Wikipedia também
 atualiza placar ao vivo, então as duas concordavam no parcial. O controle
 cruzado prova consistência, não finalização — são coisas diferentes, e essa
