@@ -55,6 +55,23 @@ atualizada e a matriz ainda não; a solução é tentar de novo mais tarde.
 Isso também significa que o dado depende de alguém ter editado a Wikipedia.
 Não é instantâneo ao apito final.
 
+### Publicar agora, sem esperar a manhã
+
+```bash
+python publicar.py
+```
+
+Dispara o mesmo workflow do agendamento, acompanha até o fim e **confere o ar,
+não só o deploy** — baixa a página publicada e verifica que ela tem jogos de
+verdade. Leva uns 3 minutos, quase tudo no bootstrap. `--nowait` só dispara e
+sai.
+
+Sem o terminal à mão, dá para fazer o mesmo pelo celular: aba **Actions** do
+repositório → *atualizar e publicar* → botão **Run workflow**.
+
+Se as fontes divergirem, o job falha de propósito e o site continua servindo a
+última versão boa.
+
 ### Passo a passo, se precisar
 
 ```bash
