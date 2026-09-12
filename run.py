@@ -38,12 +38,21 @@ def load():
     pub = "data/standings.csv"
     if os.path.exists(pub):
         o = pd.read_csv(pub, encoding="utf-8").set_index("team")
+        # So compara se as duas fontes sao do MESMO momento. Se a tabela
+        # publicada tem outro total de jogos, ela e de outra busca, e a
+        # divergencia seria so a diferenca de horario — alarme falso.
+        if int(o.j.sum()) != int(st.j.sum()):
+            print(f"(tabela publicada e de outro momento: {int(o.j.sum())//2} jogos "
+                  f"contra {int(st.j.sum())//2}; conferencia pulada)")
+            return m, st
         j = st.set_index("team").join(o[["pts", "j", "gp", "gc"]], rsuffix="_pub")
         bad = j[(j.pts != j.pts_pub) | (j.j != j.j_pub)
                 | (j.gp != j.gp_pub) | (j.gc != j.gc_pub)].dropna(how="all")
         if len(bad):
             print("AVISO: classificacao derivada difere da publicada "
-                  f"em {len(bad)} time(s) — punicao em pontos?")
+                  f"em {len(bad)} time(s).")
+            print("       causas comuns: jogo EM ANDAMENTO (a Wikipedia conta o "
+                  "parcial e nos nao) ou punicao em pontos.")
             print(bad[["pts", "pts_pub", "j", "j_pub"]].to_string())
     return m, st
 

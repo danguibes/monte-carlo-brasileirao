@@ -79,6 +79,7 @@
   .fxname{background:none;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:6px}
   .fxname:hover{color:var(--accent)}
   .fxdate{color:var(--mut);font-size:11.5px;font-variant-numeric:tabular-nums;margin-right:8px}
+  .viv{color:var(--z4);font-weight:700}
   #back{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
   #modal{background:var(--card);border:1px solid var(--line);border-radius:12px;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:22px}
   #modal h3{margin:0 0 2px;font-size:18px}
@@ -243,7 +244,9 @@ const FIX = D.fixtures.map(f => {
   const t = H + E + A;
   let bi = 0; for (let i = 1; i < f.p.length; i++) if (f.p[i] > f.p[bi]) bi = i;
   const top = ((bi/G)|0) + '–' + (bi%G) + ' (' + (f.p[bi]*100).toFixed(0) + '%)';
-  return { h: f.h, a: f.a, d: f.d, r: f.r, cum: c, p: f.p, H: H/t, E: E/t, A: A/t, top };
+  // espalha o objeto original: listar campo a campo ja fez sumir 'd', 'r' e
+  // 'viv' em silencio — o campo novo nunca chegava ao render
+  return Object.assign({}, f, { cum: c, H: H/t, E: E/t, A: A/t, top });
 });
 
 let forced = {};            // idx do jogo -> 'H' | 'E' | 'A'
@@ -517,7 +520,7 @@ function renderFixtures(){
     if (q && !nm.toLowerCase().includes(q)) return;
     const k = forced[m];
     const dt = f.d ? new Date(f.d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}) : '—';
-    const rod = f.r ? `R${f.r}` : '';
+    const rod = (f.r ? `R${f.r}` : '') + (f.viv ? ' <span class="viv">em andamento</span>' : '');
     h += `<div class="fxrow"><button class="fxname" data-abrir="${m}">
       <span class="fxdate">${dt} ${rod}</span>${T[f.h]} <span class="muted">x</span> ${T[f.a]}
       <span class="pp">&nbsp; M ${(f.H*100).toFixed(0)} · E ${(f.E*100).toFixed(0)} · V ${(f.A*100).toFixed(0)}</span></button>
@@ -733,7 +736,10 @@ document.getElementById('hdr').innerHTML =
   + `${D.homeAdv.toFixed(3).replace('.', ',')}x · ρ ${D.rho.toFixed(3).replace('.', ',')}`
   + ` · Dixon-Coles ajustado só na temporada de 2026`
   + (D.ultimoJogo ? `<br><span class="idade">dados até ${brDia(D.ultimoJogo)}`
-      + `${D.geradoEm ? ` · página gerada ${D.geradoEm}` : ''}</span>` : '');
+      + `${D.geradoEm ? ` · página gerada ${D.geradoEm}` : ''}`
+      + (D.emAndamento ? ` · <strong>${D.emAndamento} jogo${D.emAndamento>1?'s':''} `
+          + `em andamento</strong>, fora da conta até acabar` : '')
+      + `</span>` : '');
 renderFixtures();
 go();
 </script>

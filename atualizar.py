@@ -47,10 +47,12 @@ def main():
             sys.exit(r.returncode)
     print("\n" + "=" * 60)
     if avisos:
-        print("ATENCAO: os dados NAO foram atualizados nesta rodada.")
+        print("ATENCAO: uma fonte falhou nesta rodada:")
         for a in avisos:
-            print(f"  - falhou: {a}")
-        print("A pagina saiu com os dados da ultima busca boa.\n")
+            print(f"  - {a}")
+        print("Se a outra respondeu, os dados ATUALIZARAM — mas sem a conferencia")
+        print("cruzada, que e o que normalmente prova que o placar esta certo.")
+        print("Se as duas falharam, a pagina saiu com os dados da ultima busca boa.\n")
     print("pronto. abra web/brasileirao.html")
 
 

@@ -23,6 +23,18 @@ O ge.globo é uma API não oficial (`api.globoesporte.globo.com`) — sem contra
 sem aviso de mudança, mas sem chave e com tudo que falta. É ela que traz a data
 por jogo, sem a qual o peso por recência não existe.
 
+**Jogo em andamento não conta.** Uma partida rolando também tem placar — o
+parcial — e contá-lo como final envenena o ajuste, a tabela e a projeção. O
+ge.globo distingue pelo campo `transmissao.broadcast.id`: `ENCERRADA`, `LIVE`,
+`PRE_DIA` ou vazio. Só `ENCERRADA` entra; se o campo sumir ou mudar, cai num
+relógio conservador de 150 minutos após o apito inicial.
+
+Isso **não** era pego pela conferência entre as fontes: a Wikipedia também
+atualiza placar ao vivo, então as duas concordavam no parcial. O controle
+cruzado prova consistência, não finalização — são coisas diferentes, e essa
+foi a lição mais cara desta página. O topo do site mostra quantos jogos estão
+em andamento e fora da conta, e a lista de jogos marca cada um deles.
+
 `atualizar.py` busca as duas e **só grava se elas concordarem jogo a jogo**.
 Medido em 2026-09-12: acordo total nos 257 jogos disputados. Duas fontes
 independentes batendo é o que separa "o número apareceu" de "o número está

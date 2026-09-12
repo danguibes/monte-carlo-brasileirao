@@ -11,6 +11,7 @@ import json
 import os
 import sys
 import time
+from datetime import datetime, timedelta
 import pandas as pd
 import requests
 
@@ -19,6 +20,19 @@ BASE = ("https://api.globoesporte.globo.com/tabela/"
         "fase-unica-campeonato-brasileiro-2026")
 UA = {"User-Agent": "Mozilla/5.0 (brasileirao-mc; uso pessoal)"}
 RODADAS = 38
+MIN_APOS_INICIO = 150   # 90 + intervalo + acrescimos + folga, em minutos
+
+
+def comecou_ha(data_realizacao, minutos):
+    """O jogo comecou ha mais de `minutos`? Usado so quando a API nao diz o
+    estado. Horario de Brasilia, que e o que a fonte publica."""
+    if not data_realizacao:
+        return False
+    try:
+        ini = datetime.strptime(data_realizacao[:16], "%Y-%m-%dT%H:%M")
+    except ValueError:
+        return False
+    return datetime.now() >= ini + timedelta(minutes=minutos)
 
 # ge.globo usa nomes curtos; a Wikipedia usa nomes longos. A ponte e explicita
 # de proposito: se um nome mudar, o script para em vez de casar errado.
@@ -74,10 +88,29 @@ def build(jogos):
             if nome not in NOMES:
                 desconhecidos.add(nome)
         gh, ga = j["placar_oficial_mandante"], j["placar_oficial_visitante"]
+        tem_placar = gh is not None and ga is not None
+
+        # Jogo EM ANDAMENTO tambem tem placar — o parcial. Contar isso como
+        # resultado final envenena tudo: o ajuste, a tabela e a projecao.
+        # A API distingue: broadcast.id e ENCERRADA, LIVE, PRE_DIA ou vazio.
+        trans = j.get("transmissao") or {}
+        estado = ((trans.get("broadcast") or {}).get("id") or "").upper()
+        if estado == "LIVE":
+            encerrado = False
+        elif estado == "ENCERRADA":
+            encerrado = tem_placar
+        else:
+            # Sem o campo (ou com valor novo), cai no relogio: so vale como
+            # encerrado bem depois do apito inicial. Conservador de proposito.
+            encerrado = tem_placar and comecou_ha(j["data_realizacao"], MIN_APOS_INICIO)
+
         rows.append({
             "home": NOMES.get(h, h), "away": NOMES.get(a, a),
-            "home_goals": gh, "away_goals": ga,
-            "played": gh is not None and ga is not None,
+            "home_goals": gh if encerrado else None,
+            "away_goals": ga if encerrado else None,
+            "played": encerrado,
+            "em_andamento": tem_placar and not encerrado,
+            "estado": estado or None,
             "rodada": j["rodada"], "data": j["data_realizacao"],
         })
     if desconhecidos:
@@ -104,8 +137,11 @@ def conciliar(novo, antigo_path="data/matches.csv"):
         return None
     k = ["home", "away"]
     cols = ["home_goals", "away_goals"]
+    # So o que as DUAS dao por encerrado. A Wikipedia atualiza placar ao vivo,
+    # entao um jogo em andamento aparece la com parcial e aqui como nao
+    # disputado — isso e o comportamento certo, nao divergencia.
     j = (old[old.played].set_index(k)[cols]
-         .join(novo[novo.played].set_index(k)[cols], rsuffix="_ge", how="outer"))
+         .join(novo[novo.played].set_index(k)[cols], rsuffix="_ge", how="inner"))
     return j[(j.home_goals != j.home_goals_ge) | (j.away_goals != j.away_goals_ge)]
 
 
@@ -120,6 +156,11 @@ if __name__ == "__main__":
     print(f"jogos restantes : {int((~df.played).sum())}")
     com = df.data.dropna()
     print(f"periodo         : {com.min()[:10]} a {com.max()[:10]}")
+    if df.em_andamento.any():
+        viv = df[df.em_andamento]
+        print(f"em andamento AGORA ({len(viv)}), fora da conta:")
+        for r in viv.itertuples():
+            print(f"  {r.home} x {r.away}  ({r.data[11:16]}, {r.estado})")
     if df.adiado.any():
         print(f"sem data (adiados): {int(df.adiado.sum())} "
               f"na rodada {sorted(df[df.adiado].rodada.unique())}")

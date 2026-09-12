@@ -1,9 +1,9 @@
 {
- "dixon_coles": 1.0804,
- "base_liga": 1.0798,
+ "dixon_coles": 1.0752,
+ "base_liga": 1.0845,
  "uniforme": 1.0986,
- "ganho": -0.0006,
- "t": -0.08,
- "vence": 11,
+ "ganho": 0.0093,
+ "t": 0.89,
+ "vence": 10,
  "de": 20
 }

@@ -1,381 +1,381 @@
-home,away,home_goals,away_goals,played,rodada,data,adiado
-Atlético Mineiro,Palmeiras,2.0,2.0,True,1,2026-01-28T19:00,False
-Coritiba,Red Bull Bragantino,0.0,1.0,True,1,2026-01-28T19:00,False
-Internacional,Athletico Paranaense,0.0,1.0,True,1,2026-01-28T19:00,False
-Vitória,Remo,2.0,0.0,True,1,2026-01-28T19:00,False
-Fluminense,Grêmio,2.0,1.0,True,1,2026-01-28T19:30,False
-Chapecoense,Santos,4.0,2.0,True,1,2026-01-28T20:00,False
-Corinthians,Bahia,1.0,2.0,True,1,2026-01-28T20:00,False
-São Paulo,Flamengo,2.0,1.0,True,1,2026-01-28T21:30,False
-Mirassol,Vasco da Gama,2.0,1.0,True,1,2026-01-29T20:00,False
-Botafogo,Cruzeiro,4.0,0.0,True,1,2026-01-29T21:30,False
-Flamengo,Internacional,1.0,1.0,True,2,2026-02-04T19:00,False
-Red Bull Bragantino,Atlético Mineiro,1.0,0.0,True,2,2026-02-04T19:00,False
-Remo,Mirassol,2.0,2.0,True,2,2026-02-04T20:00,False
-Santos,São Paulo,1.0,1.0,True,2,2026-02-04T20:00,False
-Grêmio,Botafogo,5.0,3.0,True,2,2026-02-04T21:30,False
-Palmeiras,Vitória,5.0,1.0,True,2,2026-02-04T21:30,False
-Bahia,Fluminense,1.0,1.0,True,2,2026-02-05T19:00,False
-Vasco da Gama,Chapecoense,1.0,1.0,True,2,2026-02-05T20:00,False
-Cruzeiro,Coritiba,1.0,2.0,True,2,2026-02-05T21:30,False
-Vitória,Flamengo,1.0,2.0,True,3,2026-02-10T21:30,False
-Chapecoense,Coritiba,3.0,3.0,True,3,2026-02-11T19:00,False
-Mirassol,Cruzeiro,2.0,2.0,True,3,2026-02-11T19:00,False
-Atlético Mineiro,Remo,3.0,3.0,True,3,2026-02-11T20:00,False
-São Paulo,Grêmio,2.0,0.0,True,3,2026-02-11T21:30,False
-Vasco da Gama,Bahia,0.0,1.0,True,3,2026-02-11T21:30,False
-Athletico Paranaense,Santos,2.0,1.0,True,3,2026-02-12T19:00,False
-Fluminense,Botafogo,1.0,0.0,True,3,2026-02-12T19:30,False
-Corinthians,Red Bull Bragantino,2.0,0.0,True,3,2026-02-12T20:00,False
-Internacional,Palmeiras,1.0,3.0,True,3,2026-02-12T21:30,False
-Athletico Paranaense,Corinthians,0.0,1.0,True,2,2026-02-19T19:30,False
-Red Bull Bragantino,Athletico Paranaense,1.0,1.0,True,4,2026-02-25T19:00,False
-Remo,Internacional,1.0,1.0,True,4,2026-02-25T19:00,False
-Coritiba,São Paulo,0.0,1.0,True,4,2026-02-25T19:30,False
-Cruzeiro,Corinthians,1.0,1.0,True,4,2026-02-25T20:00,False
-Grêmio,Atlético Mineiro,2.0,1.0,True,4,2026-02-25T21:30,False
-Palmeiras,Fluminense,2.0,1.0,True,4,2026-02-25T21:30,False
-Santos,Vasco da Gama,2.0,1.0,True,4,2026-02-26T19:00,False
-Mirassol,Santos,2.0,2.0,True,5,2026-03-10T21:30,False
-Atlético Mineiro,Internacional,1.0,0.0,True,5,2026-03-11T19:00,False
-Bahia,Vitória,1.0,1.0,True,5,2026-03-11T20:00,False
-Corinthians,Coritiba,0.0,2.0,True,5,2026-03-11T21:30,False
-Flamengo,Cruzeiro,2.0,0.0,True,5,2026-03-11T21:30,False
-Remo,Fluminense,0.0,2.0,True,5,2026-03-12T19:00,False
-Vasco da Gama,Palmeiras,2.0,1.0,True,5,2026-03-12T19:30,False
-São Paulo,Chapecoense,2.0,0.0,True,5,2026-03-12T20:00,False
-Grêmio,Red Bull Bragantino,1.0,1.0,True,5,2026-03-12T21:30,False
-Vitória,Atlético Mineiro,2.0,0.0,True,6,2026-03-14T18:30,False
-Botafogo,Flamengo,0.0,3.0,True,6,2026-03-14T20:30,False
-Fluminense,Athletico Paranaense,3.0,2.0,True,6,2026-03-15T16:00,False
-Internacional,Bahia,0.0,1.0,True,6,2026-03-15T16:00,False
-Santos,Corinthians,1.0,1.0,True,6,2026-03-15T16:00,False
-Coritiba,Remo,1.0,0.0,True,6,2026-03-15T18:30,False
-Palmeiras,Mirassol,1.0,0.0,True,6,2026-03-15T18:30,False
-Cruzeiro,Vasco da Gama,3.0,3.0,True,6,2026-03-15T20:30,False
-Red Bull Bragantino,São Paulo,1.0,2.0,True,6,2026-03-15T20:30,False
-Chapecoense,Grêmio,1.0,1.0,True,6,2026-03-16T20:00,False
-Bahia,Red Bull Bragantino,2.0,0.0,True,7,2026-03-18T19:00,False
-Palmeiras,Botafogo,2.0,1.0,True,7,2026-03-18T19:00,False
-Athletico Paranaense,Cruzeiro,2.0,1.0,True,7,2026-03-18T19:30,False
-Atlético Mineiro,São Paulo,1.0,0.0,True,7,2026-03-18T20:00,False
-Mirassol,Coritiba,0.0,1.0,True,7,2026-03-18T20:00,False
-Santos,Internacional,1.0,2.0,True,7,2026-03-18T21:30,False
-Vasco da Gama,Fluminense,3.0,2.0,True,7,2026-03-18T21:30,False
-Grêmio,Vitória,2.0,0.0,True,7,2026-03-19T19:00,False
-Flamengo,Remo,3.0,0.0,True,7,2026-03-19T20:00,False
-Chapecoense,Corinthians,0.0,0.0,True,7,2026-03-19T21:30,False
-Red Bull Bragantino,Botafogo,1.0,2.0,True,8,2026-03-21T16:00,False
-Fluminense,Atlético Mineiro,1.0,0.0,True,8,2026-03-21T18:30,False
-São Paulo,Palmeiras,0.0,1.0,True,8,2026-03-21T21:00,False
-Athletico Paranaense,Coritiba,2.0,0.0,True,8,2026-03-22T16:00,False
-Cruzeiro,Santos,0.0,0.0,True,8,2026-03-22T16:00,False
-Remo,Bahia,4.0,1.0,True,8,2026-03-22T16:00,False
-Vasco da Gama,Grêmio,2.0,1.0,True,8,2026-03-22T16:00,False
-Internacional,Chapecoense,2.0,0.0,True,8,2026-03-22T18:30,False
-Vitória,Mirassol,1.0,0.0,True,8,2026-03-22T18:30,False
-Corinthians,Flamengo,1.0,1.0,True,8,2026-03-22T20:30,False
-Athletico Paranaense,Botafogo,4.0,1.0,True,5,2026-03-29T19:30,False
-Botafogo,Mirassol,3.0,2.0,True,9,2026-04-01T19:30,False
-Internacional,São Paulo,1.0,1.0,True,9,2026-04-01T19:30,False
-Bahia,Athletico Paranaense,3.0,0.0,True,9,2026-04-01T20:00,False
-Cruzeiro,Vitória,3.0,0.0,True,9,2026-04-01T20:00,False
-Coritiba,Vasco da Gama,1.0,1.0,True,9,2026-04-01T20:30,False
-Fluminense,Corinthians,3.0,1.0,True,9,2026-04-01T21:30,False
-Chapecoense,Atlético Mineiro,0.0,4.0,True,9,2026-04-02T19:00,False
-Santos,Remo,2.0,0.0,True,9,2026-04-02T19:00,False
-Palmeiras,Grêmio,2.0,1.0,True,9,2026-04-02T21:30,False
-Red Bull Bragantino,Flamengo,3.0,0.0,True,9,2026-04-02T21:30,False
-São Paulo,Cruzeiro,4.0,1.0,True,10,2026-04-04T18:30,False
-Coritiba,Fluminense,1.0,1.0,True,10,2026-04-04T20:30,False
-Vasco da Gama,Botafogo,1.0,2.0,True,10,2026-04-04T21:00,False
-Chapecoense,Vitória,1.0,1.0,True,10,2026-04-05T16:00,False
-Atlético Mineiro,Athletico Paranaense,2.0,1.0,True,10,2026-04-05T17:30,False
-Flamengo,Santos,3.0,1.0,True,10,2026-04-05T17:30,False
-Bahia,Palmeiras,1.0,2.0,True,10,2026-04-05T19:30,False
-Corinthians,Internacional,0.0,1.0,True,10,2026-04-05T19:30,False
-Mirassol,Red Bull Bragantino,0.0,1.0,True,10,2026-04-05T20:00,False
-Grêmio,Remo,0.0,0.0,True,10,2026-04-05T20:30,False
-Remo,Vasco da Gama,1.0,1.0,True,11,2026-04-11T16:30,False
-Vitória,São Paulo,2.0,0.0,True,11,2026-04-11T16:30,False
-Mirassol,Bahia,1.0,2.0,True,11,2026-04-11T18:30,False
-Santos,Atlético Mineiro,1.0,0.0,True,11,2026-04-11T20:00,False
-Internacional,Grêmio,0.0,0.0,True,11,2026-04-11T20:30,False
-Athletico Paranaense,Chapecoense,2.0,0.0,True,11,2026-04-12T11:00,False
-Botafogo,Coritiba,2.0,2.0,True,11,2026-04-12T16:00,False
-Fluminense,Flamengo,1.0,2.0,True,11,2026-04-12T18:00,False
-Corinthians,Palmeiras,0.0,0.0,True,11,2026-04-12T18:30,False
-Cruzeiro,Red Bull Bragantino,2.0,1.0,True,11,2026-04-12T18:30,False
-Chapecoense,Botafogo,1.0,4.0,True,12,2026-04-18T18:30,False
-Vasco da Gama,São Paulo,2.0,1.0,True,12,2026-04-18T18:30,False
-Vitória,Corinthians,0.0,0.0,True,12,2026-04-18T20:00,False
-Cruzeiro,Grêmio,2.0,0.0,True,12,2026-04-18T20:30,False
-Internacional,Mirassol,1.0,2.0,True,12,2026-04-19T11:00,False
-Coritiba,Atlético Mineiro,2.0,0.0,True,12,2026-04-19T16:00,False
-Santos,Fluminense,2.0,3.0,True,12,2026-04-19T16:00,False
-Palmeiras,Athletico Paranaense,1.0,0.0,True,12,2026-04-19T18:30,False
-Red Bull Bragantino,Remo,4.0,2.0,True,12,2026-04-19T18:30,False
-Flamengo,Bahia,2.0,0.0,True,12,2026-04-19T19:30,False
-Bahia,Santos,2.0,2.0,True,13,2026-04-25T18:30,False
-Botafogo,Internacional,2.0,2.0,True,13,2026-04-25T18:30,False
-Remo,Cruzeiro,0.0,1.0,True,13,2026-04-25T18:30,False
-São Paulo,Mirassol,1.0,0.0,True,13,2026-04-25T21:00,False
-Corinthians,Vasco da Gama,1.0,0.0,True,13,2026-04-26T16:00,False
-Grêmio,Coritiba,1.0,0.0,True,13,2026-04-26T16:00,False
-Athletico Paranaense,Vitória,3.0,1.0,True,13,2026-04-26T18:30,False
-Red Bull Bragantino,Palmeiras,0.0,1.0,True,13,2026-04-26T18:30,False
-Atlético Mineiro,Flamengo,0.0,4.0,True,13,2026-04-26T20:30,False
-Fluminense,Chapecoense,2.0,1.0,True,13,2026-04-26T20:30,False
-Botafogo,Remo,1.0,2.0,True,14,2026-05-02T16:00,False
-Palmeiras,Santos,1.0,1.0,True,14,2026-05-02T18:30,False
-Vitória,Coritiba,4.0,1.0,True,14,2026-05-02T18:30,False
-Athletico Paranaense,Grêmio,0.0,0.0,True,14,2026-05-02T20:30,False
-Cruzeiro,Atlético Mineiro,1.0,3.0,True,14,2026-05-02T21:00,False
-Flamengo,Vasco da Gama,2.0,2.0,True,14,2026-05-03T16:00,False
-São Paulo,Bahia,2.0,2.0,True,14,2026-05-03T16:00,False
-Chapecoense,Red Bull Bragantino,1.0,2.0,True,14,2026-05-03T18:30,False
-Internacional,Fluminense,2.0,0.0,True,14,2026-05-03T18:30,False
-Mirassol,Corinthians,2.0,1.0,True,14,2026-05-03T20:30,False
-Coritiba,Internacional,2.0,2.0,True,15,2026-05-09T16:00,False
-Fluminense,Vitória,2.0,2.0,True,15,2026-05-09T18:00,False
-Bahia,Cruzeiro,1.0,2.0,True,15,2026-05-09T21:00,False
-Atlético Mineiro,Botafogo,1.0,1.0,True,15,2026-05-10T16:00,False
-Remo,Palmeiras,1.0,1.0,True,15,2026-05-10T16:00,False
-Corinthians,São Paulo,3.0,2.0,True,15,2026-05-10T18:30,False
-Mirassol,Chapecoense,1.0,1.0,True,15,2026-05-10T18:30,False
-Santos,Red Bull Bragantino,2.0,0.0,True,15,2026-05-10T18:30,False
-Grêmio,Flamengo,0.0,1.0,True,15,2026-05-10T19:30,False
-Vasco da Gama,Athletico Paranaense,1.0,0.0,True,15,2026-05-10T20:30,False
-Atlético Mineiro,Mirassol,3.0,1.0,True,16,2026-05-16T18:30,False
-Internacional,Vasco da Gama,4.0,1.0,True,16,2026-05-16T18:30,False
-Fluminense,São Paulo,2.0,1.0,True,16,2026-05-16T19:00,False
-Palmeiras,Cruzeiro,1.0,1.0,True,16,2026-05-16T21:00,False
-Santos,Coritiba,0.0,3.0,True,16,2026-05-17T11:00,False
-Bahia,Grêmio,1.0,1.0,True,16,2026-05-17T16:00,False
-Botafogo,Corinthians,3.0,1.0,True,16,2026-05-17T16:00,False
-Chapecoense,Remo,2.0,3.0,True,16,2026-05-17T18:30,False
-Red Bull Bragantino,Vitória,2.0,0.0,True,16,2026-05-17T18:30,False
-Athletico Paranaense,Flamengo,1.0,1.0,True,16,2026-05-17T19:30,False
-São Paulo,Botafogo,1.0,1.0,True,17,2026-05-23T17:00,False
-Vitória,Internacional,2.0,0.0,True,17,2026-05-23T17:00,False
-Grêmio,Santos,3.0,2.0,True,17,2026-05-23T19:00,False
-Mirassol,Fluminense,1.0,0.0,True,17,2026-05-23T19:00,False
-Flamengo,Palmeiras,0.0,3.0,True,17,2026-05-23T21:00,False
-Cruzeiro,Chapecoense,2.0,1.0,True,17,2026-05-24T16:00,False
-Remo,Athletico Paranaense,1.0,2.0,True,17,2026-05-24T16:00,False
-Corinthians,Atlético Mineiro,1.0,0.0,True,17,2026-05-24T18:30,False
-Vasco da Gama,Red Bull Bragantino,0.0,3.0,True,17,2026-05-24T20:30,False
-Coritiba,Bahia,3.0,2.0,True,17,2026-05-25T20:00,False
-Athletico Paranaense,Mirassol,1.0,0.0,True,18,2026-05-30T16:00,False
-Flamengo,Coritiba,3.0,0.0,True,18,2026-05-30T16:00,False
-Bahia,Botafogo,2.0,1.0,True,18,2026-05-30T17:30,False
-Grêmio,Corinthians,1.0,3.0,True,18,2026-05-30T17:30,False
-Santos,Vitória,3.0,1.0,True,18,2026-05-30T20:00,False
-Red Bull Bragantino,Internacional,3.0,1.0,True,18,2026-05-31T11:00,False
-Palmeiras,Chapecoense,1.0,0.0,True,18,2026-05-31T16:00,False
-Vasco da Gama,Atlético Mineiro,0.0,1.0,True,18,2026-05-31T16:00,False
-Cruzeiro,Fluminense,1.0,1.0,True,18,2026-05-31T20:30,False
-Remo,São Paulo,1.0,0.0,True,18,2026-05-31T20:30,False
-Botafogo,Santos,2.0,1.0,True,19,2026-07-16T19:30,False
-Vitória,Vasco da Gama,1.0,0.0,True,19,2026-07-16T19:30,False
-Bahia,Chapecoense,2.0,0.0,True,4,2026-07-17T19:30,False
-Fluminense,Red Bull Bragantino,1.0,1.0,True,19,2026-07-17T20:00,False
-Mirassol,Grêmio,2.0,1.0,True,19,2026-07-17T20:00,False
-Atlético Mineiro,Bahia,1.0,1.0,True,19,2026-07-21T19:30,False
-Coritiba,Palmeiras,1.0,3.0,True,19,2026-07-22T19:30,False
-Chapecoense,Flamengo,0.0,4.0,True,19,2026-07-22T21:30,False
-Internacional,Cruzeiro,1.0,2.0,True,19,2026-07-22T21:30,False
-São Paulo,Athletico Paranaense,1.0,2.0,True,19,2026-07-22T21:30,False
-Botafogo,Vitória,0.0,0.0,True,4,2026-07-23T19:30,False
-Corinthians,Remo,3.0,0.0,True,19,2026-07-23T19:30,False
-Athletico Paranaense,Internacional,2.0,0.0,True,20,2026-07-25T18:30,False
-Santos,Chapecoense,2.0,2.0,True,20,2026-07-25T18:30,False
-Vasco da Gama,Mirassol,1.0,1.0,True,20,2026-07-25T20:30,False
-Bahia,Corinthians,1.0,1.0,True,20,2026-07-26T16:00,False
-Cruzeiro,Botafogo,0.0,1.0,True,20,2026-07-26T16:00,False
-Flamengo,São Paulo,1.0,1.0,True,20,2026-07-26T18:30,False
-Grêmio,Fluminense,1.0,1.0,True,20,2026-07-26T18:30,False
-Red Bull Bragantino,Coritiba,0.0,0.0,True,20,2026-07-26T18:30,False
-Palmeiras,Atlético Mineiro,1.0,2.0,True,20,2026-07-26T19:30,False
-Remo,Vitória,2.0,0.0,True,20,2026-07-26T19:30,False
-Internacional,Flamengo,1.0,1.0,True,21,2026-07-29T19:30,False
-Mirassol,Remo,2.0,1.0,True,21,2026-07-29T19:30,False
-Fluminense,Bahia,0.0,0.0,True,21,2026-07-29T21:30,False
-Vitória,Palmeiras,0.0,4.0,True,21,2026-07-29T21:30,False
-Corinthians,Athletico Paranaense,0.0,0.0,True,21,2026-07-30T19:30,False
-Coritiba,Cruzeiro,0.0,1.0,True,21,2026-07-30T21:30,False
-Grêmio,São Paulo,2.0,1.0,True,22,2026-08-08T16:00,False
-Remo,Atlético Mineiro,2.0,2.0,True,22,2026-08-08T18:30,False
-Coritiba,Chapecoense,2.0,1.0,True,22,2026-08-08T20:30,False
-Botafogo,Fluminense,1.0,1.0,True,22,2026-08-08T21:00,False
-Cruzeiro,Mirassol,3.0,1.0,True,22,2026-08-09T11:00,False
-Bahia,Vasco da Gama,0.0,0.0,True,22,2026-08-09T16:00,False
-Palmeiras,Internacional,0.0,0.0,True,22,2026-08-09T16:00,False
-Red Bull Bragantino,Corinthians,0.0,2.0,True,22,2026-08-09T18:30,False
-Santos,Athletico Paranaense,0.0,2.0,True,22,2026-08-09T18:30,False
-Flamengo,Vitória,2.0,0.0,True,22,2026-08-09T19:30,False
-Fluminense,Palmeiras,3.0,2.0,True,23,2026-08-15T16:30,False
-Athletico Paranaense,Red Bull Bragantino,1.0,1.0,True,23,2026-08-15T18:30,False
-São Paulo,Coritiba,1.0,1.0,True,23,2026-08-15T21:00,False
-Chapecoense,Bahia,3.0,3.0,True,23,2026-08-16T11:00,False
-Atlético Mineiro,Grêmio,3.0,0.0,True,23,2026-08-16T16:00,False
-Vasco da Gama,Santos,0.0,3.0,True,23,2026-08-16T16:00,False
-Mirassol,Flamengo,1.0,5.0,True,23,2026-08-16T18:30,False
-Vitória,Botafogo,1.0,0.0,True,23,2026-08-16T18:30,False
-Corinthians,Cruzeiro,1.0,2.0,True,23,2026-08-16T19:30,False
-Internacional,Remo,1.0,1.0,True,23,2026-08-17T20:00,False
-Fluminense,Remo,2.0,1.0,True,24,2026-08-22T16:00,False
-Internacional,Atlético Mineiro,0.0,0.0,True,24,2026-08-22T18:30,False
-Cruzeiro,Flamengo,2.0,1.0,True,24,2026-08-22T20:30,False
-Palmeiras,Vasco da Gama,4.0,1.0,True,24,2026-08-23T16:00,False
-Red Bull Bragantino,Grêmio,1.0,0.0,True,24,2026-08-23T16:00,False
-Vitória,Bahia,0.0,2.0,True,24,2026-08-23T16:00,False
-Chapecoense,São Paulo,1.0,0.0,True,24,2026-08-23T18:30,False
-Santos,Mirassol,1.0,1.0,True,24,2026-08-23T18:30,False
-Coritiba,Corinthians,2.0,1.0,True,24,2026-08-23T19:30,False
-Botafogo,Athletico Paranaense,2.0,3.0,True,24,2026-08-24T20:00,False
-Atlético Mineiro,Vitória,2.0,1.0,True,25,2026-08-29T18:30,False
-São Paulo,Red Bull Bragantino,2.0,1.0,True,25,2026-08-29T20:00,False
-Vasco da Gama,Cruzeiro,3.0,1.0,True,25,2026-08-29T21:20,False
-Athletico Paranaense,Fluminense,3.0,3.0,True,25,2026-08-30T11:00,False
-Corinthians,Santos,0.0,1.0,True,25,2026-08-30T16:00,False
-Flamengo,Botafogo,3.0,0.0,True,25,2026-08-30T16:00,False
-Grêmio,Chapecoense,3.0,1.0,True,25,2026-08-30T18:30,False
-Mirassol,Palmeiras,1.0,1.0,True,25,2026-08-30T18:30,False
-Bahia,Internacional,3.0,2.0,True,25,2026-08-30T19:30,False
-Remo,Coritiba,2.0,3.0,True,25,2026-08-31T20:00,False
-Flamengo,Mirassol,2.0,0.0,True,4,2026-09-02T19:30,False
-Red Bull Bragantino,Bahia,2.0,3.0,True,26,2026-09-05T16:00,False
-São Paulo,Atlético Mineiro,2.0,0.0,True,26,2026-09-05T18:30,False
-Fluminense,Vasco da Gama,1.0,0.0,True,26,2026-09-05T21:00,False
-Coritiba,Mirassol,1.0,2.0,True,26,2026-09-06T11:00,False
-Cruzeiro,Athletico Paranaense,3.0,1.0,True,26,2026-09-06T16:00,False
-Internacional,Santos,2.0,3.0,True,26,2026-09-06T16:00,False
-Remo,Flamengo,0.0,1.0,True,26,2026-09-06T16:00,False
-Botafogo,Palmeiras,0.0,0.0,True,26,2026-09-06T18:30,False
-Corinthians,Chapecoense,1.0,2.0,True,26,2026-09-06T19:30,False
-Vitória,Grêmio,1.0,0.0,True,26,2026-09-07T20:00,False
-Coritiba,Athletico Paranaense,3.0,3.0,True,27,2026-09-11T21:00,False
-Atlético Mineiro,Fluminense,,,False,27,2026-09-12T16:00,False
-Grêmio,Vasco da Gama,,,False,27,2026-09-12T16:00,False
-Chapecoense,Internacional,,,False,27,2026-09-12T17:00,False
-Palmeiras,São Paulo,,,False,27,2026-09-12T18:30,False
-Botafogo,Red Bull Bragantino,,,False,27,2026-09-12T20:30,False
-Santos,Cruzeiro,,,False,27,2026-09-12T21:00,False
-Mirassol,Vitória,,,False,27,2026-09-13T16:00,False
-Flamengo,Corinthians,,,False,27,2026-09-13T17:30,False
-Bahia,Remo,,,False,27,2026-09-14T20:00,False
-Botafogo,Grêmio,,,False,21,2026-09-16T19:30,False
-Atlético Mineiro,Chapecoense,,,False,28,2026-09-19T16:00,False
-Mirassol,Botafogo,,,False,28,2026-09-19T17:00,False
-Remo,Santos,,,False,28,2026-09-19T18:30,False
-Vasco da Gama,Coritiba,,,False,28,2026-09-19T20:30,False
-São Paulo,Internacional,,,False,28,2026-09-19T21:00,False
-Grêmio,Palmeiras,,,False,28,2026-09-20T11:00,False
-Corinthians,Fluminense,,,False,28,2026-09-20T16:00,False
-Vitória,Cruzeiro,,,False,28,2026-09-20T16:00,False
-Flamengo,Red Bull Bragantino,,,False,28,2026-09-20T18:30,False
-Athletico Paranaense,Bahia,,,False,28,2026-09-20T19:30,False
-Internacional,Corinthians,,,False,29,2026-10-07T19:30,False
-Red Bull Bragantino,Mirassol,,,False,29,2026-10-07T19:30,False
-Remo,Grêmio,,,False,29,2026-10-07T19:30,False
-Vitória,Chapecoense,,,False,29,2026-10-07T20:00,False
-Botafogo,Vasco da Gama,,,False,29,2026-10-07T20:30,False
-Cruzeiro,São Paulo,,,False,29,2026-10-07T21:30,False
-Santos,Flamengo,,,False,29,2026-10-08T19:30,False
-Athletico Paranaense,Atlético Mineiro,,,False,29,2026-10-08T20:00,False
-Fluminense,Coritiba,,,False,29,2026-10-08T21:30,False
-Palmeiras,Bahia,,,False,29,2026-10-08T21:30,False
-Vasco da Gama,Remo,,,False,30,2026-10-10T17:00,False
-São Paulo,Vitória,,,False,30,2026-10-10T21:00,False
-Atlético Mineiro,Santos,,,False,30,2026-10-11T16:00,False
-Flamengo,Fluminense,,,False,30,2026-10-11T17:30,False
-Grêmio,Internacional,,,False,30,2026-10-11T17:30,False
-Palmeiras,Corinthians,,,False,30,2026-10-11T17:30,False
-Bahia,Mirassol,,,False,30,2026-10-11T19:30,False
-Coritiba,Botafogo,,,False,30,2026-10-11T19:30,False
-Chapecoense,Athletico Paranaense,,,False,30,2026-10-12T19:30,False
-Red Bull Bragantino,Cruzeiro,,,False,30,2026-10-12T21:00,False
-Athletico Paranaense,Palmeiras,,,False,31,2026-10-18T12:00,False
-Atlético Mineiro,Coritiba,,,False,31,2026-10-18T12:00,False
-Bahia,Flamengo,,,False,31,2026-10-18T12:00,False
-Botafogo,Chapecoense,,,False,31,2026-10-18T12:00,False
-Corinthians,Vitória,,,False,31,2026-10-18T12:00,False
-Fluminense,Santos,,,False,31,2026-10-18T12:00,False
-Grêmio,Cruzeiro,,,False,31,2026-10-18T12:00,False
-Mirassol,Internacional,,,False,31,2026-10-18T12:00,False
-Remo,Red Bull Bragantino,,,False,31,2026-10-18T12:00,False
-São Paulo,Vasco da Gama,,,False,31,2026-10-18T12:00,False
-Chapecoense,Fluminense,,,False,32,2026-10-25T12:00,False
-Coritiba,Grêmio,,,False,32,2026-10-25T12:00,False
-Cruzeiro,Remo,,,False,32,2026-10-25T12:00,False
-Flamengo,Atlético Mineiro,,,False,32,2026-10-25T12:00,False
-Internacional,Botafogo,,,False,32,2026-10-25T12:00,False
-Mirassol,São Paulo,,,False,32,2026-10-25T12:00,False
-Palmeiras,Red Bull Bragantino,,,False,32,2026-10-25T12:00,False
-Santos,Bahia,,,False,32,2026-10-25T12:00,False
-Vasco da Gama,Corinthians,,,False,32,2026-10-25T12:00,False
-Vitória,Athletico Paranaense,,,False,32,2026-10-25T12:00,False
-Atlético Mineiro,Cruzeiro,,,False,33,2026-10-28T12:00,False
-Bahia,São Paulo,,,False,33,2026-10-28T12:00,False
-Corinthians,Mirassol,,,False,33,2026-10-28T12:00,False
-Coritiba,Vitória,,,False,33,2026-10-28T12:00,False
-Fluminense,Internacional,,,False,33,2026-10-28T12:00,False
-Grêmio,Athletico Paranaense,,,False,33,2026-10-28T12:00,False
-Red Bull Bragantino,Chapecoense,,,False,33,2026-10-28T12:00,False
-Remo,Botafogo,,,False,33,2026-10-28T12:00,False
-Santos,Palmeiras,,,False,33,2026-10-28T12:00,False
-Vasco da Gama,Flamengo,,,False,33,2026-10-28T12:00,False
-Athletico Paranaense,Vasco da Gama,,,False,34,2026-11-04T12:00,False
-Botafogo,Atlético Mineiro,,,False,34,2026-11-04T12:00,False
-Chapecoense,Mirassol,,,False,34,2026-11-04T12:00,False
-Cruzeiro,Bahia,,,False,34,2026-11-04T12:00,False
-Flamengo,Grêmio,,,False,34,2026-11-04T12:00,False
-Internacional,Coritiba,,,False,34,2026-11-04T12:00,False
-Palmeiras,Remo,,,False,34,2026-11-04T12:00,False
-Red Bull Bragantino,Santos,,,False,34,2026-11-04T12:00,False
-São Paulo,Corinthians,,,False,34,2026-11-04T12:00,False
-Vitória,Fluminense,,,False,34,2026-11-04T12:00,False
-Corinthians,Botafogo,,,False,35,2026-11-18T12:00,False
-Coritiba,Santos,,,False,35,2026-11-18T12:00,False
-Cruzeiro,Palmeiras,,,False,35,2026-11-18T12:00,False
-Flamengo,Athletico Paranaense,,,False,35,2026-11-18T12:00,False
-Grêmio,Bahia,,,False,35,2026-11-18T12:00,False
-Mirassol,Atlético Mineiro,,,False,35,2026-11-18T12:00,False
-Remo,Chapecoense,,,False,35,2026-11-18T12:00,False
-São Paulo,Fluminense,,,False,35,2026-11-18T12:00,False
-Vasco da Gama,Internacional,,,False,35,2026-11-18T12:00,False
-Vitória,Red Bull Bragantino,,,False,35,2026-11-18T12:00,False
-Athletico Paranaense,Remo,,,False,36,2026-11-22T12:00,False
-Atlético Mineiro,Corinthians,,,False,36,2026-11-22T12:00,False
-Bahia,Coritiba,,,False,36,2026-11-22T12:00,False
-Botafogo,São Paulo,,,False,36,2026-11-22T12:00,False
-Chapecoense,Cruzeiro,,,False,36,2026-11-22T12:00,False
-Fluminense,Mirassol,,,False,36,2026-11-22T12:00,False
-Internacional,Vitória,,,False,36,2026-11-22T12:00,False
-Palmeiras,Flamengo,,,False,36,2026-11-22T12:00,False
-Red Bull Bragantino,Vasco da Gama,,,False,36,2026-11-22T12:00,False
-Santos,Grêmio,,,False,36,2026-11-22T12:00,False
-Atlético Mineiro,Vasco da Gama,,,False,37,2026-11-29T12:00,False
-Botafogo,Bahia,,,False,37,2026-11-29T12:00,False
-Chapecoense,Palmeiras,,,False,37,2026-11-29T12:00,False
-Corinthians,Grêmio,,,False,37,2026-11-29T12:00,False
-Coritiba,Flamengo,,,False,37,2026-11-29T12:00,False
-Fluminense,Cruzeiro,,,False,37,2026-11-29T12:00,False
-Internacional,Red Bull Bragantino,,,False,37,2026-11-29T12:00,False
-Mirassol,Athletico Paranaense,,,False,37,2026-11-29T12:00,False
-São Paulo,Remo,,,False,37,2026-11-29T12:00,False
-Vitória,Santos,,,False,37,2026-11-29T12:00,False
-Athletico Paranaense,São Paulo,,,False,38,2026-12-02T12:00,False
-Bahia,Atlético Mineiro,,,False,38,2026-12-02T12:00,False
-Cruzeiro,Internacional,,,False,38,2026-12-02T12:00,False
-Flamengo,Chapecoense,,,False,38,2026-12-02T12:00,False
-Grêmio,Mirassol,,,False,38,2026-12-02T12:00,False
-Palmeiras,Coritiba,,,False,38,2026-12-02T12:00,False
-Red Bull Bragantino,Fluminense,,,False,38,2026-12-02T12:00,False
-Remo,Corinthians,,,False,38,2026-12-02T12:00,False
-Santos,Botafogo,,,False,38,2026-12-02T12:00,False
-Vasco da Gama,Vitória,,,False,38,2026-12-02T12:00,False
-Atlético Mineiro,Red Bull Bragantino,,,False,21,,True
-Chapecoense,Vasco da Gama,,,False,21,,True
-São Paulo,Santos,,,False,21,,True
+home,away,home_goals,away_goals,played,em_andamento,estado,rodada,data,adiado
+Atlético Mineiro,Palmeiras,2.0,2.0,True,False,ENCERRADA,1,2026-01-28T19:00,False
+Coritiba,Red Bull Bragantino,0.0,1.0,True,False,ENCERRADA,1,2026-01-28T19:00,False
+Internacional,Athletico Paranaense,0.0,1.0,True,False,ENCERRADA,1,2026-01-28T19:00,False
+Vitória,Remo,2.0,0.0,True,False,ENCERRADA,1,2026-01-28T19:00,False
+Fluminense,Grêmio,2.0,1.0,True,False,ENCERRADA,1,2026-01-28T19:30,False
+Chapecoense,Santos,4.0,2.0,True,False,ENCERRADA,1,2026-01-28T20:00,False
+Corinthians,Bahia,1.0,2.0,True,False,ENCERRADA,1,2026-01-28T20:00,False
+São Paulo,Flamengo,2.0,1.0,True,False,ENCERRADA,1,2026-01-28T21:30,False
+Mirassol,Vasco da Gama,2.0,1.0,True,False,ENCERRADA,1,2026-01-29T20:00,False
+Botafogo,Cruzeiro,4.0,0.0,True,False,ENCERRADA,1,2026-01-29T21:30,False
+Flamengo,Internacional,1.0,1.0,True,False,ENCERRADA,2,2026-02-04T19:00,False
+Red Bull Bragantino,Atlético Mineiro,1.0,0.0,True,False,ENCERRADA,2,2026-02-04T19:00,False
+Remo,Mirassol,2.0,2.0,True,False,ENCERRADA,2,2026-02-04T20:00,False
+Santos,São Paulo,1.0,1.0,True,False,ENCERRADA,2,2026-02-04T20:00,False
+Grêmio,Botafogo,5.0,3.0,True,False,ENCERRADA,2,2026-02-04T21:30,False
+Palmeiras,Vitória,5.0,1.0,True,False,ENCERRADA,2,2026-02-04T21:30,False
+Bahia,Fluminense,1.0,1.0,True,False,ENCERRADA,2,2026-02-05T19:00,False
+Vasco da Gama,Chapecoense,1.0,1.0,True,False,ENCERRADA,2,2026-02-05T20:00,False
+Cruzeiro,Coritiba,1.0,2.0,True,False,ENCERRADA,2,2026-02-05T21:30,False
+Vitória,Flamengo,1.0,2.0,True,False,ENCERRADA,3,2026-02-10T21:30,False
+Chapecoense,Coritiba,3.0,3.0,True,False,ENCERRADA,3,2026-02-11T19:00,False
+Mirassol,Cruzeiro,2.0,2.0,True,False,ENCERRADA,3,2026-02-11T19:00,False
+Atlético Mineiro,Remo,3.0,3.0,True,False,ENCERRADA,3,2026-02-11T20:00,False
+São Paulo,Grêmio,2.0,0.0,True,False,ENCERRADA,3,2026-02-11T21:30,False
+Vasco da Gama,Bahia,0.0,1.0,True,False,ENCERRADA,3,2026-02-11T21:30,False
+Athletico Paranaense,Santos,2.0,1.0,True,False,ENCERRADA,3,2026-02-12T19:00,False
+Fluminense,Botafogo,1.0,0.0,True,False,ENCERRADA,3,2026-02-12T19:30,False
+Corinthians,Red Bull Bragantino,2.0,0.0,True,False,ENCERRADA,3,2026-02-12T20:00,False
+Internacional,Palmeiras,1.0,3.0,True,False,ENCERRADA,3,2026-02-12T21:30,False
+Athletico Paranaense,Corinthians,0.0,1.0,True,False,ENCERRADA,2,2026-02-19T19:30,False
+Red Bull Bragantino,Athletico Paranaense,1.0,1.0,True,False,ENCERRADA,4,2026-02-25T19:00,False
+Remo,Internacional,1.0,1.0,True,False,ENCERRADA,4,2026-02-25T19:00,False
+Coritiba,São Paulo,0.0,1.0,True,False,ENCERRADA,4,2026-02-25T19:30,False
+Cruzeiro,Corinthians,1.0,1.0,True,False,ENCERRADA,4,2026-02-25T20:00,False
+Grêmio,Atlético Mineiro,2.0,1.0,True,False,ENCERRADA,4,2026-02-25T21:30,False
+Palmeiras,Fluminense,2.0,1.0,True,False,ENCERRADA,4,2026-02-25T21:30,False
+Santos,Vasco da Gama,2.0,1.0,True,False,ENCERRADA,4,2026-02-26T19:00,False
+Mirassol,Santos,2.0,2.0,True,False,ENCERRADA,5,2026-03-10T21:30,False
+Atlético Mineiro,Internacional,1.0,0.0,True,False,ENCERRADA,5,2026-03-11T19:00,False
+Bahia,Vitória,1.0,1.0,True,False,ENCERRADA,5,2026-03-11T20:00,False
+Corinthians,Coritiba,0.0,2.0,True,False,ENCERRADA,5,2026-03-11T21:30,False
+Flamengo,Cruzeiro,2.0,0.0,True,False,ENCERRADA,5,2026-03-11T21:30,False
+Remo,Fluminense,0.0,2.0,True,False,ENCERRADA,5,2026-03-12T19:00,False
+Vasco da Gama,Palmeiras,2.0,1.0,True,False,ENCERRADA,5,2026-03-12T19:30,False
+São Paulo,Chapecoense,2.0,0.0,True,False,ENCERRADA,5,2026-03-12T20:00,False
+Grêmio,Red Bull Bragantino,1.0,1.0,True,False,ENCERRADA,5,2026-03-12T21:30,False
+Vitória,Atlético Mineiro,2.0,0.0,True,False,ENCERRADA,6,2026-03-14T18:30,False
+Botafogo,Flamengo,0.0,3.0,True,False,ENCERRADA,6,2026-03-14T20:30,False
+Fluminense,Athletico Paranaense,3.0,2.0,True,False,ENCERRADA,6,2026-03-15T16:00,False
+Internacional,Bahia,0.0,1.0,True,False,ENCERRADA,6,2026-03-15T16:00,False
+Santos,Corinthians,1.0,1.0,True,False,ENCERRADA,6,2026-03-15T16:00,False
+Coritiba,Remo,1.0,0.0,True,False,ENCERRADA,6,2026-03-15T18:30,False
+Palmeiras,Mirassol,1.0,0.0,True,False,ENCERRADA,6,2026-03-15T18:30,False
+Cruzeiro,Vasco da Gama,3.0,3.0,True,False,ENCERRADA,6,2026-03-15T20:30,False
+Red Bull Bragantino,São Paulo,1.0,2.0,True,False,ENCERRADA,6,2026-03-15T20:30,False
+Chapecoense,Grêmio,1.0,1.0,True,False,ENCERRADA,6,2026-03-16T20:00,False
+Bahia,Red Bull Bragantino,2.0,0.0,True,False,ENCERRADA,7,2026-03-18T19:00,False
+Palmeiras,Botafogo,2.0,1.0,True,False,ENCERRADA,7,2026-03-18T19:00,False
+Athletico Paranaense,Cruzeiro,2.0,1.0,True,False,ENCERRADA,7,2026-03-18T19:30,False
+Atlético Mineiro,São Paulo,1.0,0.0,True,False,ENCERRADA,7,2026-03-18T20:00,False
+Mirassol,Coritiba,0.0,1.0,True,False,ENCERRADA,7,2026-03-18T20:00,False
+Santos,Internacional,1.0,2.0,True,False,ENCERRADA,7,2026-03-18T21:30,False
+Vasco da Gama,Fluminense,3.0,2.0,True,False,ENCERRADA,7,2026-03-18T21:30,False
+Grêmio,Vitória,2.0,0.0,True,False,ENCERRADA,7,2026-03-19T19:00,False
+Flamengo,Remo,3.0,0.0,True,False,ENCERRADA,7,2026-03-19T20:00,False
+Chapecoense,Corinthians,0.0,0.0,True,False,ENCERRADA,7,2026-03-19T21:30,False
+Red Bull Bragantino,Botafogo,1.0,2.0,True,False,ENCERRADA,8,2026-03-21T16:00,False
+Fluminense,Atlético Mineiro,1.0,0.0,True,False,ENCERRADA,8,2026-03-21T18:30,False
+São Paulo,Palmeiras,0.0,1.0,True,False,ENCERRADA,8,2026-03-21T21:00,False
+Athletico Paranaense,Coritiba,2.0,0.0,True,False,ENCERRADA,8,2026-03-22T16:00,False
+Cruzeiro,Santos,0.0,0.0,True,False,ENCERRADA,8,2026-03-22T16:00,False
+Remo,Bahia,4.0,1.0,True,False,ENCERRADA,8,2026-03-22T16:00,False
+Vasco da Gama,Grêmio,2.0,1.0,True,False,ENCERRADA,8,2026-03-22T16:00,False
+Internacional,Chapecoense,2.0,0.0,True,False,ENCERRADA,8,2026-03-22T18:30,False
+Vitória,Mirassol,1.0,0.0,True,False,ENCERRADA,8,2026-03-22T18:30,False
+Corinthians,Flamengo,1.0,1.0,True,False,ENCERRADA,8,2026-03-22T20:30,False
+Athletico Paranaense,Botafogo,4.0,1.0,True,False,ENCERRADA,5,2026-03-29T19:30,False
+Botafogo,Mirassol,3.0,2.0,True,False,ENCERRADA,9,2026-04-01T19:30,False
+Internacional,São Paulo,1.0,1.0,True,False,ENCERRADA,9,2026-04-01T19:30,False
+Bahia,Athletico Paranaense,3.0,0.0,True,False,ENCERRADA,9,2026-04-01T20:00,False
+Cruzeiro,Vitória,3.0,0.0,True,False,ENCERRADA,9,2026-04-01T20:00,False
+Coritiba,Vasco da Gama,1.0,1.0,True,False,ENCERRADA,9,2026-04-01T20:30,False
+Fluminense,Corinthians,3.0,1.0,True,False,ENCERRADA,9,2026-04-01T21:30,False
+Chapecoense,Atlético Mineiro,0.0,4.0,True,False,ENCERRADA,9,2026-04-02T19:00,False
+Santos,Remo,2.0,0.0,True,False,ENCERRADA,9,2026-04-02T19:00,False
+Palmeiras,Grêmio,2.0,1.0,True,False,ENCERRADA,9,2026-04-02T21:30,False
+Red Bull Bragantino,Flamengo,3.0,0.0,True,False,ENCERRADA,9,2026-04-02T21:30,False
+São Paulo,Cruzeiro,4.0,1.0,True,False,ENCERRADA,10,2026-04-04T18:30,False
+Coritiba,Fluminense,1.0,1.0,True,False,ENCERRADA,10,2026-04-04T20:30,False
+Vasco da Gama,Botafogo,1.0,2.0,True,False,ENCERRADA,10,2026-04-04T21:00,False
+Chapecoense,Vitória,1.0,1.0,True,False,ENCERRADA,10,2026-04-05T16:00,False
+Atlético Mineiro,Athletico Paranaense,2.0,1.0,True,False,ENCERRADA,10,2026-04-05T17:30,False
+Flamengo,Santos,3.0,1.0,True,False,ENCERRADA,10,2026-04-05T17:30,False
+Bahia,Palmeiras,1.0,2.0,True,False,ENCERRADA,10,2026-04-05T19:30,False
+Corinthians,Internacional,0.0,1.0,True,False,ENCERRADA,10,2026-04-05T19:30,False
+Mirassol,Red Bull Bragantino,0.0,1.0,True,False,ENCERRADA,10,2026-04-05T20:00,False
+Grêmio,Remo,0.0,0.0,True,False,ENCERRADA,10,2026-04-05T20:30,False
+Remo,Vasco da Gama,1.0,1.0,True,False,ENCERRADA,11,2026-04-11T16:30,False
+Vitória,São Paulo,2.0,0.0,True,False,ENCERRADA,11,2026-04-11T16:30,False
+Mirassol,Bahia,1.0,2.0,True,False,ENCERRADA,11,2026-04-11T18:30,False
+Santos,Atlético Mineiro,1.0,0.0,True,False,ENCERRADA,11,2026-04-11T20:00,False
+Internacional,Grêmio,0.0,0.0,True,False,ENCERRADA,11,2026-04-11T20:30,False
+Athletico Paranaense,Chapecoense,2.0,0.0,True,False,ENCERRADA,11,2026-04-12T11:00,False
+Botafogo,Coritiba,2.0,2.0,True,False,ENCERRADA,11,2026-04-12T16:00,False
+Fluminense,Flamengo,1.0,2.0,True,False,ENCERRADA,11,2026-04-12T18:00,False
+Corinthians,Palmeiras,0.0,0.0,True,False,ENCERRADA,11,2026-04-12T18:30,False
+Cruzeiro,Red Bull Bragantino,2.0,1.0,True,False,ENCERRADA,11,2026-04-12T18:30,False
+Chapecoense,Botafogo,1.0,4.0,True,False,ENCERRADA,12,2026-04-18T18:30,False
+Vasco da Gama,São Paulo,2.0,1.0,True,False,ENCERRADA,12,2026-04-18T18:30,False
+Vitória,Corinthians,0.0,0.0,True,False,ENCERRADA,12,2026-04-18T20:00,False
+Cruzeiro,Grêmio,2.0,0.0,True,False,ENCERRADA,12,2026-04-18T20:30,False
+Internacional,Mirassol,1.0,2.0,True,False,ENCERRADA,12,2026-04-19T11:00,False
+Coritiba,Atlético Mineiro,2.0,0.0,True,False,ENCERRADA,12,2026-04-19T16:00,False
+Santos,Fluminense,2.0,3.0,True,False,ENCERRADA,12,2026-04-19T16:00,False
+Palmeiras,Athletico Paranaense,1.0,0.0,True,False,ENCERRADA,12,2026-04-19T18:30,False
+Red Bull Bragantino,Remo,4.0,2.0,True,False,ENCERRADA,12,2026-04-19T18:30,False
+Flamengo,Bahia,2.0,0.0,True,False,ENCERRADA,12,2026-04-19T19:30,False
+Bahia,Santos,2.0,2.0,True,False,ENCERRADA,13,2026-04-25T18:30,False
+Botafogo,Internacional,2.0,2.0,True,False,ENCERRADA,13,2026-04-25T18:30,False
+Remo,Cruzeiro,0.0,1.0,True,False,ENCERRADA,13,2026-04-25T18:30,False
+São Paulo,Mirassol,1.0,0.0,True,False,ENCERRADA,13,2026-04-25T21:00,False
+Corinthians,Vasco da Gama,1.0,0.0,True,False,ENCERRADA,13,2026-04-26T16:00,False
+Grêmio,Coritiba,1.0,0.0,True,False,ENCERRADA,13,2026-04-26T16:00,False
+Athletico Paranaense,Vitória,3.0,1.0,True,False,ENCERRADA,13,2026-04-26T18:30,False
+Red Bull Bragantino,Palmeiras,0.0,1.0,True,False,ENCERRADA,13,2026-04-26T18:30,False
+Atlético Mineiro,Flamengo,0.0,4.0,True,False,ENCERRADA,13,2026-04-26T20:30,False
+Fluminense,Chapecoense,2.0,1.0,True,False,ENCERRADA,13,2026-04-26T20:30,False
+Botafogo,Remo,1.0,2.0,True,False,ENCERRADA,14,2026-05-02T16:00,False
+Palmeiras,Santos,1.0,1.0,True,False,ENCERRADA,14,2026-05-02T18:30,False
+Vitória,Coritiba,4.0,1.0,True,False,ENCERRADA,14,2026-05-02T18:30,False
+Athletico Paranaense,Grêmio,0.0,0.0,True,False,ENCERRADA,14,2026-05-02T20:30,False
+Cruzeiro,Atlético Mineiro,1.0,3.0,True,False,ENCERRADA,14,2026-05-02T21:00,False
+Flamengo,Vasco da Gama,2.0,2.0,True,False,ENCERRADA,14,2026-05-03T16:00,False
+São Paulo,Bahia,2.0,2.0,True,False,ENCERRADA,14,2026-05-03T16:00,False
+Chapecoense,Red Bull Bragantino,1.0,2.0,True,False,ENCERRADA,14,2026-05-03T18:30,False
+Internacional,Fluminense,2.0,0.0,True,False,ENCERRADA,14,2026-05-03T18:30,False
+Mirassol,Corinthians,2.0,1.0,True,False,ENCERRADA,14,2026-05-03T20:30,False
+Coritiba,Internacional,2.0,2.0,True,False,ENCERRADA,15,2026-05-09T16:00,False
+Fluminense,Vitória,2.0,2.0,True,False,ENCERRADA,15,2026-05-09T18:00,False
+Bahia,Cruzeiro,1.0,2.0,True,False,ENCERRADA,15,2026-05-09T21:00,False
+Atlético Mineiro,Botafogo,1.0,1.0,True,False,ENCERRADA,15,2026-05-10T16:00,False
+Remo,Palmeiras,1.0,1.0,True,False,ENCERRADA,15,2026-05-10T16:00,False
+Corinthians,São Paulo,3.0,2.0,True,False,ENCERRADA,15,2026-05-10T18:30,False
+Mirassol,Chapecoense,1.0,1.0,True,False,ENCERRADA,15,2026-05-10T18:30,False
+Santos,Red Bull Bragantino,2.0,0.0,True,False,ENCERRADA,15,2026-05-10T18:30,False
+Grêmio,Flamengo,0.0,1.0,True,False,ENCERRADA,15,2026-05-10T19:30,False
+Vasco da Gama,Athletico Paranaense,1.0,0.0,True,False,ENCERRADA,15,2026-05-10T20:30,False
+Atlético Mineiro,Mirassol,3.0,1.0,True,False,ENCERRADA,16,2026-05-16T18:30,False
+Internacional,Vasco da Gama,4.0,1.0,True,False,ENCERRADA,16,2026-05-16T18:30,False
+Fluminense,São Paulo,2.0,1.0,True,False,ENCERRADA,16,2026-05-16T19:00,False
+Palmeiras,Cruzeiro,1.0,1.0,True,False,ENCERRADA,16,2026-05-16T21:00,False
+Santos,Coritiba,0.0,3.0,True,False,ENCERRADA,16,2026-05-17T11:00,False
+Bahia,Grêmio,1.0,1.0,True,False,ENCERRADA,16,2026-05-17T16:00,False
+Botafogo,Corinthians,3.0,1.0,True,False,ENCERRADA,16,2026-05-17T16:00,False
+Chapecoense,Remo,2.0,3.0,True,False,ENCERRADA,16,2026-05-17T18:30,False
+Red Bull Bragantino,Vitória,2.0,0.0,True,False,ENCERRADA,16,2026-05-17T18:30,False
+Athletico Paranaense,Flamengo,1.0,1.0,True,False,ENCERRADA,16,2026-05-17T19:30,False
+São Paulo,Botafogo,1.0,1.0,True,False,ENCERRADA,17,2026-05-23T17:00,False
+Vitória,Internacional,2.0,0.0,True,False,ENCERRADA,17,2026-05-23T17:00,False
+Grêmio,Santos,3.0,2.0,True,False,ENCERRADA,17,2026-05-23T19:00,False
+Mirassol,Fluminense,1.0,0.0,True,False,ENCERRADA,17,2026-05-23T19:00,False
+Flamengo,Palmeiras,0.0,3.0,True,False,ENCERRADA,17,2026-05-23T21:00,False
+Cruzeiro,Chapecoense,2.0,1.0,True,False,ENCERRADA,17,2026-05-24T16:00,False
+Remo,Athletico Paranaense,1.0,2.0,True,False,ENCERRADA,17,2026-05-24T16:00,False
+Corinthians,Atlético Mineiro,1.0,0.0,True,False,ENCERRADA,17,2026-05-24T18:30,False
+Vasco da Gama,Red Bull Bragantino,0.0,3.0,True,False,ENCERRADA,17,2026-05-24T20:30,False
+Coritiba,Bahia,3.0,2.0,True,False,ENCERRADA,17,2026-05-25T20:00,False
+Athletico Paranaense,Mirassol,1.0,0.0,True,False,ENCERRADA,18,2026-05-30T16:00,False
+Flamengo,Coritiba,3.0,0.0,True,False,ENCERRADA,18,2026-05-30T16:00,False
+Bahia,Botafogo,2.0,1.0,True,False,ENCERRADA,18,2026-05-30T17:30,False
+Grêmio,Corinthians,1.0,3.0,True,False,ENCERRADA,18,2026-05-30T17:30,False
+Santos,Vitória,3.0,1.0,True,False,ENCERRADA,18,2026-05-30T20:00,False
+Red Bull Bragantino,Internacional,3.0,1.0,True,False,ENCERRADA,18,2026-05-31T11:00,False
+Palmeiras,Chapecoense,1.0,0.0,True,False,ENCERRADA,18,2026-05-31T16:00,False
+Vasco da Gama,Atlético Mineiro,0.0,1.0,True,False,ENCERRADA,18,2026-05-31T16:00,False
+Cruzeiro,Fluminense,1.0,1.0,True,False,ENCERRADA,18,2026-05-31T20:30,False
+Remo,São Paulo,1.0,0.0,True,False,ENCERRADA,18,2026-05-31T20:30,False
+Botafogo,Santos,2.0,1.0,True,False,ENCERRADA,19,2026-07-16T19:30,False
+Vitória,Vasco da Gama,1.0,0.0,True,False,ENCERRADA,19,2026-07-16T19:30,False
+Bahia,Chapecoense,2.0,0.0,True,False,ENCERRADA,4,2026-07-17T19:30,False
+Fluminense,Red Bull Bragantino,1.0,1.0,True,False,ENCERRADA,19,2026-07-17T20:00,False
+Mirassol,Grêmio,2.0,1.0,True,False,ENCERRADA,19,2026-07-17T20:00,False
+Atlético Mineiro,Bahia,1.0,1.0,True,False,ENCERRADA,19,2026-07-21T19:30,False
+Coritiba,Palmeiras,1.0,3.0,True,False,ENCERRADA,19,2026-07-22T19:30,False
+Chapecoense,Flamengo,0.0,4.0,True,False,ENCERRADA,19,2026-07-22T21:30,False
+Internacional,Cruzeiro,1.0,2.0,True,False,ENCERRADA,19,2026-07-22T21:30,False
+São Paulo,Athletico Paranaense,1.0,2.0,True,False,ENCERRADA,19,2026-07-22T21:30,False
+Botafogo,Vitória,0.0,0.0,True,False,ENCERRADA,4,2026-07-23T19:30,False
+Corinthians,Remo,3.0,0.0,True,False,ENCERRADA,19,2026-07-23T19:30,False
+Athletico Paranaense,Internacional,2.0,0.0,True,False,ENCERRADA,20,2026-07-25T18:30,False
+Santos,Chapecoense,2.0,2.0,True,False,ENCERRADA,20,2026-07-25T18:30,False
+Vasco da Gama,Mirassol,1.0,1.0,True,False,ENCERRADA,20,2026-07-25T20:30,False
+Bahia,Corinthians,1.0,1.0,True,False,ENCERRADA,20,2026-07-26T16:00,False
+Cruzeiro,Botafogo,0.0,1.0,True,False,ENCERRADA,20,2026-07-26T16:00,False
+Flamengo,São Paulo,1.0,1.0,True,False,ENCERRADA,20,2026-07-26T18:30,False
+Grêmio,Fluminense,1.0,1.0,True,False,ENCERRADA,20,2026-07-26T18:30,False
+Red Bull Bragantino,Coritiba,0.0,0.0,True,False,ENCERRADA,20,2026-07-26T18:30,False
+Palmeiras,Atlético Mineiro,1.0,2.0,True,False,ENCERRADA,20,2026-07-26T19:30,False
+Remo,Vitória,2.0,0.0,True,False,ENCERRADA,20,2026-07-26T19:30,False
+Internacional,Flamengo,1.0,1.0,True,False,ENCERRADA,21,2026-07-29T19:30,False
+Mirassol,Remo,2.0,1.0,True,False,ENCERRADA,21,2026-07-29T19:30,False
+Fluminense,Bahia,0.0,0.0,True,False,ENCERRADA,21,2026-07-29T21:30,False
+Vitória,Palmeiras,0.0,4.0,True,False,ENCERRADA,21,2026-07-29T21:30,False
+Corinthians,Athletico Paranaense,0.0,0.0,True,False,ENCERRADA,21,2026-07-30T19:30,False
+Coritiba,Cruzeiro,0.0,1.0,True,False,ENCERRADA,21,2026-07-30T21:30,False
+Grêmio,São Paulo,2.0,1.0,True,False,ENCERRADA,22,2026-08-08T16:00,False
+Remo,Atlético Mineiro,2.0,2.0,True,False,ENCERRADA,22,2026-08-08T18:30,False
+Coritiba,Chapecoense,2.0,1.0,True,False,ENCERRADA,22,2026-08-08T20:30,False
+Botafogo,Fluminense,1.0,1.0,True,False,ENCERRADA,22,2026-08-08T21:00,False
+Cruzeiro,Mirassol,3.0,1.0,True,False,ENCERRADA,22,2026-08-09T11:00,False
+Bahia,Vasco da Gama,0.0,0.0,True,False,ENCERRADA,22,2026-08-09T16:00,False
+Palmeiras,Internacional,0.0,0.0,True,False,ENCERRADA,22,2026-08-09T16:00,False
+Red Bull Bragantino,Corinthians,0.0,2.0,True,False,ENCERRADA,22,2026-08-09T18:30,False
+Santos,Athletico Paranaense,0.0,2.0,True,False,ENCERRADA,22,2026-08-09T18:30,False
+Flamengo,Vitória,2.0,0.0,True,False,ENCERRADA,22,2026-08-09T19:30,False
+Fluminense,Palmeiras,3.0,2.0,True,False,ENCERRADA,23,2026-08-15T16:30,False
+Athletico Paranaense,Red Bull Bragantino,1.0,1.0,True,False,ENCERRADA,23,2026-08-15T18:30,False
+São Paulo,Coritiba,1.0,1.0,True,False,ENCERRADA,23,2026-08-15T21:00,False
+Chapecoense,Bahia,3.0,3.0,True,False,ENCERRADA,23,2026-08-16T11:00,False
+Atlético Mineiro,Grêmio,3.0,0.0,True,False,ENCERRADA,23,2026-08-16T16:00,False
+Vasco da Gama,Santos,0.0,3.0,True,False,ENCERRADA,23,2026-08-16T16:00,False
+Mirassol,Flamengo,1.0,5.0,True,False,ENCERRADA,23,2026-08-16T18:30,False
+Vitória,Botafogo,1.0,0.0,True,False,ENCERRADA,23,2026-08-16T18:30,False
+Corinthians,Cruzeiro,1.0,2.0,True,False,ENCERRADA,23,2026-08-16T19:30,False
+Internacional,Remo,1.0,1.0,True,False,ENCERRADA,23,2026-08-17T20:00,False
+Fluminense,Remo,2.0,1.0,True,False,ENCERRADA,24,2026-08-22T16:00,False
+Internacional,Atlético Mineiro,0.0,0.0,True,False,ENCERRADA,24,2026-08-22T18:30,False
+Cruzeiro,Flamengo,2.0,1.0,True,False,ENCERRADA,24,2026-08-22T20:30,False
+Palmeiras,Vasco da Gama,4.0,1.0,True,False,ENCERRADA,24,2026-08-23T16:00,False
+Red Bull Bragantino,Grêmio,1.0,0.0,True,False,ENCERRADA,24,2026-08-23T16:00,False
+Vitória,Bahia,0.0,2.0,True,False,ENCERRADA,24,2026-08-23T16:00,False
+Chapecoense,São Paulo,1.0,0.0,True,False,ENCERRADA,24,2026-08-23T18:30,False
+Santos,Mirassol,1.0,1.0,True,False,ENCERRADA,24,2026-08-23T18:30,False
+Coritiba,Corinthians,2.0,1.0,True,False,ENCERRADA,24,2026-08-23T19:30,False
+Botafogo,Athletico Paranaense,2.0,3.0,True,False,ENCERRADA,24,2026-08-24T20:00,False
+Atlético Mineiro,Vitória,2.0,1.0,True,False,ENCERRADA,25,2026-08-29T18:30,False
+São Paulo,Red Bull Bragantino,2.0,1.0,True,False,ENCERRADA,25,2026-08-29T20:00,False
+Vasco da Gama,Cruzeiro,3.0,1.0,True,False,ENCERRADA,25,2026-08-29T21:20,False
+Athletico Paranaense,Fluminense,3.0,3.0,True,False,ENCERRADA,25,2026-08-30T11:00,False
+Corinthians,Santos,0.0,1.0,True,False,ENCERRADA,25,2026-08-30T16:00,False
+Flamengo,Botafogo,3.0,0.0,True,False,ENCERRADA,25,2026-08-30T16:00,False
+Grêmio,Chapecoense,3.0,1.0,True,False,ENCERRADA,25,2026-08-30T18:30,False
+Mirassol,Palmeiras,1.0,1.0,True,False,ENCERRADA,25,2026-08-30T18:30,False
+Bahia,Internacional,3.0,2.0,True,False,ENCERRADA,25,2026-08-30T19:30,False
+Remo,Coritiba,2.0,3.0,True,False,ENCERRADA,25,2026-08-31T20:00,False
+Flamengo,Mirassol,2.0,0.0,True,False,ENCERRADA,4,2026-09-02T19:30,False
+Red Bull Bragantino,Bahia,2.0,3.0,True,False,ENCERRADA,26,2026-09-05T16:00,False
+São Paulo,Atlético Mineiro,2.0,0.0,True,False,ENCERRADA,26,2026-09-05T18:30,False
+Fluminense,Vasco da Gama,1.0,0.0,True,False,ENCERRADA,26,2026-09-05T21:00,False
+Coritiba,Mirassol,1.0,2.0,True,False,ENCERRADA,26,2026-09-06T11:00,False
+Cruzeiro,Athletico Paranaense,3.0,1.0,True,False,ENCERRADA,26,2026-09-06T16:00,False
+Internacional,Santos,2.0,3.0,True,False,ENCERRADA,26,2026-09-06T16:00,False
+Remo,Flamengo,0.0,1.0,True,False,ENCERRADA,26,2026-09-06T16:00,False
+Botafogo,Palmeiras,0.0,0.0,True,False,ENCERRADA,26,2026-09-06T18:30,False
+Corinthians,Chapecoense,1.0,2.0,True,False,ENCERRADA,26,2026-09-06T19:30,False
+Vitória,Grêmio,1.0,0.0,True,False,ENCERRADA,26,2026-09-07T20:00,False
+Coritiba,Athletico Paranaense,3.0,3.0,True,False,ENCERRADA,27,2026-09-11T21:00,False
+Atlético Mineiro,Fluminense,3.0,1.0,True,False,ENCERRADA,27,2026-09-12T16:00,False
+Grêmio,Vasco da Gama,1.0,2.0,True,False,ENCERRADA,27,2026-09-12T16:00,False
+Chapecoense,Internacional,1.0,2.0,True,False,ENCERRADA,27,2026-09-12T17:00,False
+Palmeiras,São Paulo,,,False,True,LIVE,27,2026-09-12T18:30,False
+Botafogo,Red Bull Bragantino,,,False,False,PRE_DIA,27,2026-09-12T20:30,False
+Santos,Cruzeiro,,,False,False,PRE_DIA,27,2026-09-12T21:00,False
+Mirassol,Vitória,,,False,False,PRE_DIA,27,2026-09-13T16:00,False
+Flamengo,Corinthians,,,False,False,PRE_DIA,27,2026-09-13T17:30,False
+Bahia,Remo,,,False,False,PRE_DIA,27,2026-09-14T20:00,False
+Botafogo,Grêmio,,,False,False,,21,2026-09-16T19:30,False
+Atlético Mineiro,Chapecoense,,,False,False,,28,2026-09-19T16:00,False
+Mirassol,Botafogo,,,False,False,,28,2026-09-19T17:00,False
+Remo,Santos,,,False,False,,28,2026-09-19T18:30,False
+Vasco da Gama,Coritiba,,,False,False,,28,2026-09-19T20:30,False
+São Paulo,Internacional,,,False,False,,28,2026-09-19T21:00,False
+Grêmio,Palmeiras,,,False,False,,28,2026-09-20T11:00,False
+Corinthians,Fluminense,,,False,False,,28,2026-09-20T16:00,False
+Vitória,Cruzeiro,,,False,False,,28,2026-09-20T16:00,False
+Flamengo,Red Bull Bragantino,,,False,False,,28,2026-09-20T18:30,False
+Athletico Paranaense,Bahia,,,False,False,,28,2026-09-20T19:30,False
+Internacional,Corinthians,,,False,False,,29,2026-10-07T19:30,False
+Red Bull Bragantino,Mirassol,,,False,False,,29,2026-10-07T19:30,False
+Remo,Grêmio,,,False,False,,29,2026-10-07T19:30,False
+Vitória,Chapecoense,,,False,False,,29,2026-10-07T20:00,False
+Botafogo,Vasco da Gama,,,False,False,,29,2026-10-07T20:30,False
+Cruzeiro,São Paulo,,,False,False,,29,2026-10-07T21:30,False
+Santos,Flamengo,,,False,False,,29,2026-10-08T19:30,False
+Athletico Paranaense,Atlético Mineiro,,,False,False,,29,2026-10-08T20:00,False
+Fluminense,Coritiba,,,False,False,,29,2026-10-08T21:30,False
+Palmeiras,Bahia,,,False,False,,29,2026-10-08T21:30,False
+Vasco da Gama,Remo,,,False,False,,30,2026-10-10T17:00,False
+São Paulo,Vitória,,,False,False,,30,2026-10-10T21:00,False
+Atlético Mineiro,Santos,,,False,False,,30,2026-10-11T16:00,False
+Flamengo,Fluminense,,,False,False,,30,2026-10-11T17:30,False
+Grêmio,Internacional,,,False,False,,30,2026-10-11T17:30,False
+Palmeiras,Corinthians,,,False,False,,30,2026-10-11T17:30,False
+Bahia,Mirassol,,,False,False,,30,2026-10-11T19:30,False
+Coritiba,Botafogo,,,False,False,,30,2026-10-11T19:30,False
+Chapecoense,Athletico Paranaense,,,False,False,,30,2026-10-12T19:30,False
+Red Bull Bragantino,Cruzeiro,,,False,False,,30,2026-10-12T21:00,False
+Athletico Paranaense,Palmeiras,,,False,False,,31,2026-10-18T12:00,False
+Atlético Mineiro,Coritiba,,,False,False,,31,2026-10-18T12:00,False
+Bahia,Flamengo,,,False,False,,31,2026-10-18T12:00,False
+Botafogo,Chapecoense,,,False,False,,31,2026-10-18T12:00,False
+Corinthians,Vitória,,,False,False,,31,2026-10-18T12:00,False
+Fluminense,Santos,,,False,False,,31,2026-10-18T12:00,False
+Grêmio,Cruzeiro,,,False,False,,31,2026-10-18T12:00,False
+Mirassol,Internacional,,,False,False,,31,2026-10-18T12:00,False
+Remo,Red Bull Bragantino,,,False,False,,31,2026-10-18T12:00,False
+São Paulo,Vasco da Gama,,,False,False,,31,2026-10-18T12:00,False
+Chapecoense,Fluminense,,,False,False,,32,2026-10-25T12:00,False
+Coritiba,Grêmio,,,False,False,,32,2026-10-25T12:00,False
+Cruzeiro,Remo,,,False,False,,32,2026-10-25T12:00,False
+Flamengo,Atlético Mineiro,,,False,False,,32,2026-10-25T12:00,False
+Internacional,Botafogo,,,False,False,,32,2026-10-25T12:00,False
+Mirassol,São Paulo,,,False,False,,32,2026-10-25T12:00,False
+Palmeiras,Red Bull Bragantino,,,False,False,,32,2026-10-25T12:00,False
+Santos,Bahia,,,False,False,,32,2026-10-25T12:00,False
+Vasco da Gama,Corinthians,,,False,False,,32,2026-10-25T12:00,False
+Vitória,Athletico Paranaense,,,False,False,,32,2026-10-25T12:00,False
+Atlético Mineiro,Cruzeiro,,,False,False,,33,2026-10-28T12:00,False
+Bahia,São Paulo,,,False,False,,33,2026-10-28T12:00,False
+Corinthians,Mirassol,,,False,False,,33,2026-10-28T12:00,False
+Coritiba,Vitória,,,False,False,,33,2026-10-28T12:00,False
+Fluminense,Internacional,,,False,False,,33,2026-10-28T12:00,False
+Grêmio,Athletico Paranaense,,,False,False,,33,2026-10-28T12:00,False
+Red Bull Bragantino,Chapecoense,,,False,False,,33,2026-10-28T12:00,False
+Remo,Botafogo,,,False,False,,33,2026-10-28T12:00,False
+Santos,Palmeiras,,,False,False,,33,2026-10-28T12:00,False
+Vasco da Gama,Flamengo,,,False,False,,33,2026-10-28T12:00,False
+Athletico Paranaense,Vasco da Gama,,,False,False,,34,2026-11-04T12:00,False
+Botafogo,Atlético Mineiro,,,False,False,,34,2026-11-04T12:00,False
+Chapecoense,Mirassol,,,False,False,,34,2026-11-04T12:00,False
+Cruzeiro,Bahia,,,False,False,,34,2026-11-04T12:00,False
+Flamengo,Grêmio,,,False,False,,34,2026-11-04T12:00,False
+Internacional,Coritiba,,,False,False,,34,2026-11-04T12:00,False
+Palmeiras,Remo,,,False,False,,34,2026-11-04T12:00,False
+Red Bull Bragantino,Santos,,,False,False,,34,2026-11-04T12:00,False
+São Paulo,Corinthians,,,False,False,,34,2026-11-04T12:00,False
+Vitória,Fluminense,,,False,False,,34,2026-11-04T12:00,False
+Corinthians,Botafogo,,,False,False,,35,2026-11-18T12:00,False
+Coritiba,Santos,,,False,False,,35,2026-11-18T12:00,False
+Cruzeiro,Palmeiras,,,False,False,,35,2026-11-18T12:00,False
+Flamengo,Athletico Paranaense,,,False,False,,35,2026-11-18T12:00,False
+Grêmio,Bahia,,,False,False,,35,2026-11-18T12:00,False
+Mirassol,Atlético Mineiro,,,False,False,,35,2026-11-18T12:00,False
+Remo,Chapecoense,,,False,False,,35,2026-11-18T12:00,False
+São Paulo,Fluminense,,,False,False,,35,2026-11-18T12:00,False
+Vasco da Gama,Internacional,,,False,False,,35,2026-11-18T12:00,False
+Vitória,Red Bull Bragantino,,,False,False,,35,2026-11-18T12:00,False
+Athletico Paranaense,Remo,,,False,False,,36,2026-11-22T12:00,False
+Atlético Mineiro,Corinthians,,,False,False,,36,2026-11-22T12:00,False
+Bahia,Coritiba,,,False,False,,36,2026-11-22T12:00,False
+Botafogo,São Paulo,,,False,False,,36,2026-11-22T12:00,False
+Chapecoense,Cruzeiro,,,False,False,,36,2026-11-22T12:00,False
+Fluminense,Mirassol,,,False,False,,36,2026-11-22T12:00,False
+Internacional,Vitória,,,False,False,,36,2026-11-22T12:00,False
+Palmeiras,Flamengo,,,False,False,,36,2026-11-22T12:00,False
+Red Bull Bragantino,Vasco da Gama,,,False,False,,36,2026-11-22T12:00,False
+Santos,Grêmio,,,False,False,,36,2026-11-22T12:00,False
+Atlético Mineiro,Vasco da Gama,,,False,False,,37,2026-11-29T12:00,False
+Botafogo,Bahia,,,False,False,,37,2026-11-29T12:00,False
+Chapecoense,Palmeiras,,,False,False,,37,2026-11-29T12:00,False
+Corinthians,Grêmio,,,False,False,,37,2026-11-29T12:00,False
+Coritiba,Flamengo,,,False,False,,37,2026-11-29T12:00,False
+Fluminense,Cruzeiro,,,False,False,,37,2026-11-29T12:00,False
+Internacional,Red Bull Bragantino,,,False,False,,37,2026-11-29T12:00,False
+Mirassol,Athletico Paranaense,,,False,False,,37,2026-11-29T12:00,False
+São Paulo,Remo,,,False,False,,37,2026-11-29T12:00,False
+Vitória,Santos,,,False,False,,37,2026-11-29T12:00,False
+Athletico Paranaense,São Paulo,,,False,False,,38,2026-12-02T12:00,False
+Bahia,Atlético Mineiro,,,False,False,,38,2026-12-02T12:00,False
+Cruzeiro,Internacional,,,False,False,,38,2026-12-02T12:00,False
+Flamengo,Chapecoense,,,False,False,,38,2026-12-02T12:00,False
+Grêmio,Mirassol,,,False,False,,38,2026-12-02T12:00,False
+Palmeiras,Coritiba,,,False,False,,38,2026-12-02T12:00,False
+Red Bull Bragantino,Fluminense,,,False,False,,38,2026-12-02T12:00,False
+Remo,Corinthians,,,False,False,,38,2026-12-02T12:00,False
+Santos,Botafogo,,,False,False,,38,2026-12-02T12:00,False
+Vasco da Gama,Vitória,,,False,False,,38,2026-12-02T12:00,False
+Atlético Mineiro,Red Bull Bragantino,,,False,False,,21,,True
+Chapecoense,Vasco da Gama,,,False,False,,21,,True
+São Paulo,Santos,,,False,False,,21,,True

@@ -55,6 +55,7 @@ def main():
              "d": (rem.data.iloc[m] if pd.notna(rem.data.iloc[m]) else None)
                   if "data" in rem.columns else None,
              "r": int(rem.rodada.iloc[m]) if "rodada" in rem.columns else None,
+             "viv": bool(rem.em_andamento.iloc[m]) if "em_andamento" in rem.columns else False,
              "p": [round(float(x), 6) for x in grid[m].ravel()]}
             for m, (h, a) in enumerate(zip(hi, ai))
         ],
@@ -65,6 +66,11 @@ def main():
                        if "data" in matches.columns else None),
         "geradoEm": datetime.now(timezone.utc).astimezone(
             timezone(timedelta(hours=-3))).strftime("%d/%m %H:%M"),
+        # Jogos rolando agora: NAO entram no ajuste nem na tabela, porque o
+        # placar deles e parcial. Precisam estar visiveis, senao a correcao
+        # vira omissao silenciosa.
+        "emAndamento": int(matches.em_andamento.sum())
+                       if "em_andamento" in matches.columns else 0,
     }
 
     # Sorteios de parametro do bootstrap, se existirem. Sao eles que permitem a
