@@ -1,7 +1,14 @@
 # Monte Carlo — Campeonato Brasileiro Série A 2026
 
-Projeto pessoal, local, sem deploy. Estima a distribuição de resultado final da
-temporada simulando os jogos que faltam.
+**→ https://danguibes.github.io/monte-carlo-brasileirao/**
+
+Estima a distribuição de resultado final da temporada simulando os jogos que
+faltam. A página no ar se atualiza sozinha todo dia às 8h de Brasília, por uma
+GitHub Action que roda `atualizar.py` e republica. Se as fontes divergirem, o
+job falha e o Pages continua servindo a última versão boa.
+
+O mesmo arquivo funciona offline: `web/brasileirao.html` abre com duplo clique,
+sem servidor e sem rede.
 
 ## Fontes de dados
 
