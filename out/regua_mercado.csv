@@ -1,0 +1,8 @@
+preditor,n,log_loss,vs_modelo,t
+Betfair Exchange,575,0.9973,0.0487,4.22
+media do mercado,3440,0.9977,0.0431,9.26
+media (devig simples),3440,0.9983,0.0425,9.25
+Bet365,302,1.0041,0.0209,1.21
+modelo,3440,1.0408,0.0,0.0
+taxa_liga,3440,1.0514,-0.0106,-1.54
+uniforme,3440,1.0986,-0.0578,-7.52

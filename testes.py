@@ -84,8 +84,30 @@ def teste_placar_parcial_nao_vaza():
                  pd.isna(r.home_goals) and pd.isna(r.away_goals))
 
 
+def teste_devig_shin():
+    """Shin tem que FAZER alguma coisa. A primeira versao passava a
+    probabilidade ja normalizada onde a formula pede a bruta, a raiz sumia do
+    intervalo, z caia em zero e a funcao devolvia o de-vig ingenuo — em 300 de
+    300 linhas. Rodava, nao quebrava, e nao media nada."""
+    import numpy as np
+    from regua_mercado import devig_shin, devig_simples
+    o = np.array([[1.14, 7.42, 16.04], [2.10, 3.30, 3.60], [1.43, 4.35, 7.08]])
+    a, b = devig_simples(o), devig_shin(o)
+    ok = True
+    ok &= check("Shin soma 1", np.allclose(b.sum(1), 1, atol=1e-9))
+    ok &= check("Shin difere do ingenuo", np.abs(b - a).max() > 1e-3,
+                f"maior desvio {np.abs(b-a).max():.6f}")
+    # desloca massa para o favorito, que e o vies que ele corrige
+    fav = a.argmax(1)
+    dif = b[np.arange(len(o)), fav] - a[np.arange(len(o)), fav]
+    ok &= check("Shin desloca para o favorito", (dif > 0).all(),
+                f"deslocamentos {dif.round(4)}")
+    return ok
+
+
 if __name__ == "__main__":
     print("invariantes:")
-    tudo = all([teste_fuso(), teste_estados(), teste_placar_parcial_nao_vaza()])
+    tudo = all([teste_fuso(), teste_estados(), teste_placar_parcial_nao_vaza(),
+                teste_devig_shin()])
     print("\n" + ("todos passaram" if tudo else "HA FALHA — nao publique"))
     sys.exit(0 if tudo else 1)

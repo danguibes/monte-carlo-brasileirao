@@ -280,6 +280,46 @@ modelo com 40+ parâmetros ajustado nesses mesmos jogos, então os resíduos
 encolhem por construção. Refeita com μ estimado só no treino, dá 1,02. É a
 mesma lição de sempre: medir com controle, não medir e pronto.
 
+## O mercado como régua
+
+`regua_mercado.py` mede a distância entre este modelo e as odds de fechamento,
+que são o melhor preditor público que existe para futebol. **As odds não entram
+no modelo** — servem só para saber quanto do erro é irredutível e quanto é meu.
+
+Fonte: `football-data.co.uk/new/BRA.csv`, sem chave, temporadas 2012 a 2026,
+com placar e odds no mesmo arquivo. Caminhada para a frente dentro de cada
+temporada: o modelo só vê o que veio antes, mesma condição do mercado.
+
+**3.440 previsões fora da amostra:**
+
+| preditor | n | log-loss | ganha do modelo | t |
+|---|---|---|---|---|
+| Betfair Exchange | 575 | **0,9973** | +0,0487 | 4,22 |
+| média do mercado (Shin) | 3.440 | **0,9977** | +0,0431 | 9,26 |
+| média (de-vig ingênuo) | 3.440 | 0,9983 | +0,0425 | 9,25 |
+| Bet365 | 302 | 1,0041 | +0,0209 | 1,21 |
+| **este modelo** | 3.440 | **1,0408** | — | — |
+| taxa média da liga | 3.440 | 1,0514 | −0,0106 | −1,54 |
+| chutar 1/3 | 3.440 | 1,0986 | −0,0578 | −7,52 |
+
+**O modelo andou 20% do caminho entre o baseline e o mercado.** Faltam 0,0431
+nats/jogo, com t = 9,26 — não é ruído, é distância real.
+
+E o número mais duro: mesmo com 3.440 previsões, a vantagem sobre a taxa média
+da liga é de 0,0106 nats com **t = 1,54** — ainda não significante. O modelo é
+melhor que chutar, mas a margem sobre o baseline mais burro que existe continua
+sem passar no teste.
+
+O de-vig de Shin ganha do ingênuo por 0,0006 nats — pouco, mas na direção certa
+e consistente. Ele desloca massa para o favorito (+0,91 p.p.) e para longe da
+zebra (−0,58), que é exatamente o viés que corrige.
+
+**Armadilha encontrada no caminho:** a primeira implementação de Shin era um
+no-op silencioso — passava a probabilidade já normalizada onde a fórmula pede a
+bruta, a raiz sumia do intervalo, `z` caía em zero e a função devolvia o de-vig
+ingênuo em 300 de 300 linhas. Rodava, não quebrava, e concluía "o método de
+de-vig não faz diferença". `testes.py` agora trava isso.
+
 ## O limiar de ruído, medido em vez de suposto
 
 A variação em p.p. só aparece quando passa do ruído da simulação. A primeira

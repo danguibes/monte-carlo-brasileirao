@@ -1,0 +1,27 @@
+5575 jogos com placar, temporadas 2012–2026
+  media do mercado     odds em 100.0% dos jogos
+  Betfair Exchange     odds em  15.1% dos jogos
+  Bet365               odds em   8.2% dos jogos
+  2012 ate o jogo 140  2012 ate o jogo 160  2012 ate o jogo 180  2012 ate o jogo 200  2012 ate o jogo 220  2012 ate o jogo 240  2012 ate o jogo 260  2012 ate o jogo 280  2012 ate o jogo 300  2012 ate o jogo 320  2012 ate o jogo 340  2012 ate o jogo 360  2013 ate o jogo 140  2013 ate o jogo 160  2013 ate o jogo 180  2013 ate o jogo 200  2013 ate o jogo 220  2013 ate o jogo 240  2013 ate o jogo 260  2013 ate o jogo 280  2013 ate o jogo 300  2013 ate o jogo 320  2013 ate o jogo 340  2013 ate o jogo 360  2014 ate o jogo 140  2014 ate o jogo 160  2014 ate o jogo 180  2014 ate o jogo 200  2014 ate o jogo 220  2014 ate o jogo 240  2014 ate o jogo 260  2014 ate o jogo 280  2014 ate o jogo 300  2014 ate o jogo 320  2014 ate o jogo 340  2014 ate o jogo 360  2015 ate o jogo 140  2015 ate o jogo 160  2015 ate o jogo 180  2015 ate o jogo 200  2015 ate o jogo 220  2015 ate o jogo 240  2015 ate o jogo 260  2015 ate o jogo 280  2015 ate o jogo 300  2015 ate o jogo 320  2015 ate o jogo 340  2015 ate o jogo 360  2016 ate o jogo 140  2016 ate o jogo 160  2016 ate o jogo 180  2016 ate o jogo 200  2016 ate o jogo 220  2016 ate o jogo 240  2016 ate o jogo 260  2016 ate o jogo 280  2016 ate o jogo 300  2016 ate o jogo 320  2016 ate o jogo 340  2017 ate o jogo 140  2017 ate o jogo 160  2017 ate o jogo 180  2017 ate o jogo 200  2017 ate o jogo 220  2017 ate o jogo 240  2017 ate o jogo 260  2017 ate o jogo 280  2017 ate o jogo 300  2017 ate o jogo 320  2017 ate o jogo 340  2017 ate o jogo 360  2018 ate o jogo 140  2018 ate o jogo 160  2018 ate o jogo 180  2018 ate o jogo 200  2018 ate o jogo 220  2018 ate o jogo 240  2018 ate o jogo 260  2018 ate o jogo 280  2018 ate o jogo 300  2018 ate o jogo 320  2018 ate o jogo 340  2018 ate o jogo 360  2019 ate o jogo 140  2019 ate o jogo 160  2019 ate o jogo 180  2019 ate o jogo 200  2019 ate o jogo 220  2019 ate o jogo 240  2019 ate o jogo 260  2019 ate o jogo 280  2019 ate o jogo 300  2019 ate o jogo 320  2019 ate o jogo 340  2019 ate o jogo 360  2020 ate o jogo 140  2020 ate o jogo 160  2020 ate o jogo 180  2020 ate o jogo 200  2020 ate o jogo 220  2020 ate o jogo 240  2020 ate o jogo 260  2020 ate o jogo 280  2020 ate o jogo 300  2020 ate o jogo 320  2020 ate o jogo 340  2020 ate o jogo 360  2021 ate o jogo 140  2021 ate o jogo 160  2021 ate o jogo 180  2021 ate o jogo 200  2021 ate o jogo 220  2021 ate o jogo 240  2021 ate o jogo 260  2021 ate o jogo 280  2021 ate o jogo 300  2021 ate o jogo 320  2021 ate o jogo 340  2021 ate o jogo 360  2022 ate o jogo 140  2022 ate o jogo 160  2022 ate o jogo 180  2022 ate o jogo 200  2022 ate o jogo 220  2022 ate o jogo 240  2022 ate o jogo 260  2022 ate o jogo 280  2022 ate o jogo 300  2022 ate o jogo 320  2022 ate o jogo 340  2022 ate o jogo 360  2023 ate o jogo 140  2023 ate o jogo 160  2023 ate o jogo 180  2023 ate o jogo 200  2023 ate o jogo 220  2023 ate o jogo 240  2023 ate o jogo 260  2023 ate o jogo 280  2023 ate o jogo 300  2023 ate o jogo 320  2023 ate o jogo 340  2023 ate o jogo 360  2024 ate o jogo 140  2024 ate o jogo 160  2024 ate o jogo 180  2024 ate o jogo 200  2024 ate o jogo 220  2024 ate o jogo 240  2024 ate o jogo 260  2024 ate o jogo 280  2024 ate o jogo 300  2024 ate o jogo 320  2024 ate o jogo 340  2024 ate o jogo 360  2025 ate o jogo 140  2025 ate o jogo 160  2025 ate o jogo 180  2025 ate o jogo 200  2025 ate o jogo 220  2025 ate o jogo 240  2025 ate o jogo 260  2025 ate o jogo 280  2025 ate o jogo 300  2025 ate o jogo 320  2025 ate o jogo 340  2025 ate o jogo 360  2026 ate o jogo 140  2026 ate o jogo 160  2026 ate o jogo 180  2026 ate o jogo 200  2026 ate o jogo 220                                        
+LOG-LOSS 1X2, caminhada para a frente (3440 previsoes)
+vs_modelo: quanto o preditor ganha do Dixon-Coles, em nats/jogo
+
+             preditor    n  log_loss  vs_modelo     t
+     Betfair Exchange  575    0.9973     0.0487  4.22
+     media do mercado 3440    0.9977     0.0431  9.26
+media (devig simples) 3440    0.9983     0.0425  9.25
+               Bet365  302    1.0041     0.0209  1.21
+               modelo 3440    1.0408     0.0000  0.00
+            taxa_liga 3440    1.0514    -0.0106 -1.54
+             uniforme 3440    1.0986    -0.0578 -7.52
+
+--- onde o modelo esta na regua ---
+  chutar 1/3 (nada)         1.0986
+  taxa media da liga        1.0514
+  ESTE MODELO               1.0408
+  mercado (Shin)            0.9977
+
+  do caminho entre o baseline e o mercado, o modelo andou 20%
+  falta para o mercado: 0.0431 nats/jogo
+
+gravado out/regua_mercado.csv
