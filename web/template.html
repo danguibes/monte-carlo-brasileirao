@@ -67,7 +67,10 @@
   .fxrow:last-child{border-bottom:none}
   .fxrow .pp{color:var(--mut);font-size:11.5px;font-variant-numeric:tabular-nums}
   .grp{display:flex;gap:4px}
-  .grp button{padding:3px 9px;font-size:12px;border-radius:5px}
+  .grp button{padding:3px 8px;font-size:12px;border-radius:5px;color:var(--mut);
+              font-variant-numeric:tabular-nums;min-width:52px}
+  .grp button b{color:var(--ink);font-weight:700;margin-left:2px}
+  .grp button.on,.grp button.on b{color:#fff}
   .legend{display:flex;gap:16px;flex-wrap:wrap;color:var(--mut);font-size:12.5px;margin-top:10px}
   .legend b{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:5px}
   .note{color:var(--mut);font-size:13px;line-height:1.65;margin-top:14px}
@@ -160,7 +163,7 @@
     /* o jogo vira duas linhas: identificacao em cima, botoes embaixo */
     .fxrow{grid-template-columns:1fr;gap:8px}
     .fxrow .grp{justify-content:flex-start}
-    .grp button{padding:7px 16px;font-size:13.5px}
+    .grp button{padding:8px 12px;font-size:13.5px;min-width:64px}
     .fx{max-height:420px}
 
     .tri b{font-size:17px}
@@ -245,6 +248,7 @@
 <script>
 const D = /*__DADOS__*/null;
 const T = D.teams, NT = T.length, G = D.gmax + 1, NF = D.fixtures.length;
+const NC = i => (D.short && D.short[i]) || T[i];
 const FIX = D.fixtures.map(f => {
   const c = new Float64Array(f.p.length); let s = 0;
   for (let i = 0; i < f.p.length; i++) { s += f.p[i]; c[i] = s; }
@@ -553,12 +557,14 @@ function renderFixtures(){
     const dt = f.d ? new Date(f.d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}) : '—';
     const rod = (f.r ? `R${f.r}` : '') + (f.viv ? ' <span class="viv">em andamento</span>' : '');
     h += `<div class="fxrow"><button class="fxname" data-abrir="${m}">
-      <span class="fxdate">${dt} ${rod}</span>${T[f.h]} <span class="muted">x</span> ${T[f.a]}
-      <span class="pp">&nbsp; M ${(f.H*100).toFixed(0)} · E ${(f.E*100).toFixed(0)} · V ${(f.A*100).toFixed(0)}</span></button>
+      <span class="fxdate">${dt} ${rod}</span>
+      <span class="n-longo">${T[f.h]}</span><span class="n-curto">${NC(f.h)}</span>
+      <span class="muted">x</span>
+      <span class="n-longo">${T[f.a]}</span><span class="n-curto">${NC(f.a)}</span></button>
       <div class="grp">
-        <button data-m="${m}" data-k="H" class="${k==='H'?'on':''}">M</button>
-        <button data-m="${m}" data-k="E" class="${k==='E'?'on':''}">E</button>
-        <button data-m="${m}" data-k="A" class="${k==='A'?'on':''}">V</button>
+        <button data-m="${m}" data-k="H" class="${k==='H'?'on':''}" title="${T[f.h]} vence">M <b>${(f.H*100).toFixed(0)}</b></button>
+        <button data-m="${m}" data-k="E" class="${k==='E'?'on':''}" title="empate">E <b>${(f.E*100).toFixed(0)}</b></button>
+        <button data-m="${m}" data-k="A" class="${k==='A'?'on':''}" title="${T[f.a]} vence">V <b>${(f.A*100).toFixed(0)}</b></button>
       </div></div>`;
   });
   document.getElementById('fx').innerHTML = h || '<div class="fxrow"><span class="muted">nenhum jogo</span></div>';
