@@ -12,9 +12,16 @@ import sys
 import numpy as np
 import pandas as pd
 from model import DixonColes, MAXG
+from fetch_globo import NOMES as _NOMES
 from run import load, fit_model
 
 GMAX = 8  # teto de gols exportado; a cauda acima disso e desprezivel
+
+# Nome curto por time, para a margem do grafico no celular. Deriva do mapa do
+# ge.globo, que ja usa nomes curtos; os que faltam vao a mao.
+CURTO = {v: k for k, v in _NOMES.items()}
+CURTO.update({"Red Bull Bragantino": "Bragantino", "Vasco da Gama": "Vasco",
+              "Athletico Paranaense": "Athletico-PR", "Atlético Mineiro": "Atlético-MG"})
 
 
 def main():
@@ -35,6 +42,9 @@ def main():
     base = st.set_index("team").loc[dc.teams]
     payload = {
         "teams": dc.teams,
+        # nomes curtos: no celular nao cabe "Athletico Paranaense" na margem
+        # do grafico, e sem margem as curvas nao podem se sobrepor
+        "short": [CURTO.get(t, t) for t in dc.teams],
         "gmax": GMAX,
         "homeAdv": round(float(np.exp(dc.home_adv)), 3),
         "homeAdvLog": round(float(dc.home_adv), 4),

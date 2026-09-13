@@ -1,3 +1,7 @@
+<!doctype html>
+<!-- Sem esta linha o navegador entra em quirks mode, e la TABELA NAO
+     HERDA cor nem fonte dos ancestrais: no tema escuro os nomes dos
+     times ficavam pretos sobre fundo preto. -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brasileirão 2026 — Monte Carlo</title>
@@ -41,6 +45,7 @@
   td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:right;font-variant-numeric:tabular-nums}
   tr:last-child td{border-bottom:none}
   .nm{font-weight:600}
+  .n-curto{display:none}
   .cell{position:relative}
   .cell i{position:absolute;left:0;top:3px;bottom:3px;background:var(--bar);border-radius:2px;opacity:.55}
   .cell span{position:relative}
@@ -136,10 +141,17 @@
     .scroll table{min-width:620px}
     body.comvar .scroll table{min-width:740px}   /* as variações alargam as células */
     .dlt{font-size:11.5px}
+    /* Coluna congelada com largura FIXA e nome curto: sem isso "Red Bull
+       Bragantino" estourava a célula e, por ser sticky com fundo, pintava por
+       cima do primeiro dígito da coluna J — 27 aparecia como 7. */
     #tbl td:first-child,#tbl th:first-child,
     .hm td:first-child,.hm th:first-child{
       position:sticky;left:0;background:var(--card);z-index:2;
-      box-shadow:1px 0 0 var(--line)}
+      box-shadow:1px 0 0 var(--line);
+      width:106px;max-width:106px;white-space:nowrap;overflow:hidden;
+      text-overflow:ellipsis}
+    .n-longo{display:none}
+    .n-curto{display:inline}
     .hm{min-width:760px}
     .hm td div{padding:6px 0}
     .hm th{font-size:10.5px}
@@ -171,8 +183,9 @@
     <div class="ctl">
       <select id="n">
         <option value="2000">2.000 temporadas</option>
-        <option value="10000" selected>10.000 temporadas</option>
-        <option value="50000">50.000 temporadas</option>
+        <option value="10000">10.000 temporadas</option>
+        <option value="50000" selected>50.000 temporadas</option>
+        <option value="100000">100.000 temporadas</option>
       </select>
       <label id="lerro" style="display:none;align-items:center;gap:6px;font-size:13px;color:var(--mut);cursor:pointer">
         <input type="checkbox" id="erro" checked> erro de estimação
@@ -305,9 +318,9 @@ function pick(cum, u){ let lo = 0, hi = cum.length - 1;
 
 let RUN_ID = 0;   // rodadas obsoletas param sozinhas em vez de brigar pela tela
 
-function run(n, cenario, done){
+function run(n, cenario, done, semente){
   const meuID = ++RUN_ID;
-  const rnd = mulberry32(12345);
+  const rnd = mulberry32(semente === undefined ? 12345 : semente);
   const comErro = usarErro();
   const nSorteios = comErro ? D.draws.length : 1;
   const porSorteio = Math.ceil(n / nSorteios);
@@ -376,7 +389,7 @@ function summarise(r){
       if (i < 4) g4 += rc(i); if (i < 6) g6 += rc(i); if (i >= NT-4) z4 += rc(i);
       acc += rc(i); if (med === 0 && acc >= 50) med = i + 1;
     }
-    return { t, name, pts: v, mean, sd: Math.sqrt(ss/n),
+    return { t, name, curto: (D.short && D.short[t]) || name, pts: v, mean, sd: Math.sqrt(ss/n),
       gp: sgp/n, gc: sgc/n, sg: (sgp-sgc)/n,
       p10: srt[(n*0.10)|0], p90: srt[(n*0.90)|0],
       tit, g4, g6, z4, med, dist: Array.from({length: NT}, (_, i) => rc(i)) };
@@ -394,15 +407,32 @@ function bar(v, max, cls, dh){
    Variação menor que o ruído das duas simulações não é exibida. São duas
    rodadas independentes, então o erro da DIFERENÇA é raiz de 2 vezes o de uma
    só: mostrar "+0,3" com ruído de ±1,4 seria inventar precisão. */
-function limiarRuido(n){ return 1.96 * Math.sqrt(2 * 0.25 / n) * 100; }
+/* Ruído de Monte Carlo NA CÉLULA. Duas correções sobre a versão anterior,
+   as duas medidas e não supostas:
 
-function dlt(v, b, inverso, limiar){
+   1. Usava p = 0,5 para todas as células — o pior caso possível. Quase
+      nenhuma probabilidade aqui está perto de 0,5, e o erro cai rápido nas
+      pontas. Medido com 5 sementes em 10 mil temporadas: mediana 0,03 e
+      p95 0,81 p.p., contra os 1,39 que o pior caso previa.
+
+   2. Multiplicava por √2, assumindo duas rodadas INDEPENDENTES. Elas não
+      são: a referência e o cenário usam a mesma semente e percorrem os
+      jogos na mesma ordem, então todo jogo não fixado recebe o mesmo placar
+      nas duas. Medido: para times fora do confronto fixado, a diferença dá
+      ZERO exato em todas as sementes testadas. O √2 inflava o limiar e
+      escondia variação de verdade. */
+function limiarRuido(n, p){
+  const q = (p === undefined ? 50 : Math.min(Math.max(p, 0), 100)) / 100;
+  return Math.max(0.05, 1.96 * Math.sqrt(q * (1 - q) / n) * 100);
+}
+
+function dlt(v, b, inverso, n, fixo){
   if (b === undefined || b === null) return '';
   const d = v - b;
-  if (Math.abs(d) < limiar) return '';
+  if (Math.abs(d) < (fixo !== undefined ? fixo : limiarRuido(n, b))) return '';
   const bom = inverso ? d < 0 : d > 0;
   const sinal = d > 0 ? '+' : '−';
-  return `<span class="dlt ${bom ? 'bom' : 'ruim'}">${sinal}${Math.abs(d).toFixed(1).replace('.', ',')}</span>`;
+  return `<span class="dlt ${bom ? 'bom' : 'ruim'}">(${sinal}${Math.abs(d).toFixed(1).replace('.', ',')})</span>`;
 }
 
 function indexar(S){
@@ -413,23 +443,23 @@ function indexar(S){
 
 function renderTable(S, base, n){
   const b = D.base;
-  const lim = limiarRuido(n || 10000);
+  const N = n || 10000;
   const limPts = 0.20;                       // pontos médios: ruído bem menor
   let h = `<thead><tr><th>Time</th><th>J</th><th>Pts hoje</th><th>Pts médio</th><th>p10–p90</th><th>Saldo</th>
     <th>Pos. med.</th><th>Título %</th><th>G4 %</th><th>G6 %</th><th>Z4 %</th></tr></thead><tbody>`;
   for (const r of S){
     const o = base ? base[r.name] : null;
-    h += `<tr><td class="nm">${r.name}</td>
+    h += `<tr><td class="nm" title="${r.name}"><span class="n-longo">${r.name}</span><span class="n-curto">${r.curto}</span></td>
       <td class="muted">${b.j[r.t]}</td>
       <td class="muted">${b.pts[r.t]}</td>
-      <td><strong>${r.mean.toFixed(1)}</strong>${o ? dlt(r.mean, o.mean, false, limPts) : ''}</td>
+      <td><strong>${r.mean.toFixed(1)}</strong>${o ? dlt(r.mean, o.mean, false, N, limPts) : ''}</td>
       <td class="muted">${r.p10}–${r.p90}</td>
       <td class="muted">${r.sg>=0?'+':''}${r.sg.toFixed(0)}</td>
       <td class="muted">${r.med}º</td>
-      ${bar(r.tit,100,'g4', o ? dlt(r.tit,o.tit,false,lim) : '')}
-      ${bar(r.g4,100,'g4',  o ? dlt(r.g4, o.g4, false,lim) : '')}
-      ${bar(r.g6,100,'g6',  o ? dlt(r.g6, o.g6, false,lim) : '')}
-      ${bar(r.z4,100,'z4',  o ? dlt(r.z4, o.z4, true, lim) : '')}</tr>`;
+      ${bar(r.tit,100,'g4', o ? dlt(r.tit,o.tit,false,N) : '')}
+      ${bar(r.g4,100,'g4',  o ? dlt(r.g4, o.g4, false,N) : '')}
+      ${bar(r.g6,100,'g6',  o ? dlt(r.g6, o.g6, false,N) : '')}
+      ${bar(r.z4,100,'z4',  o ? dlt(r.z4, o.z4, true, N) : '')}</tr>`;
   }
   document.getElementById('tbl').innerHTML = h + '</tbody>';
 }
@@ -444,9 +474,11 @@ function renderRidge(S){
 
   const lo = Math.max(0, Math.min(...S.map(r => r.p10)) - 8),
         hi = Math.max(...S.map(r => r.p90)) + 8;
-  const L = estreito ? 6 : 150, R = estreito ? 30 : 46;
-  const ROW = estreito ? 54 : 38, TOP = estreito ? 22 : 26;
-  const AMP = estreito ? 30 : ROW * 1.75;
+  // Margem a esquerda tambem no celular, com nome curto: e o que deixa as
+  // curvas se sobreporem, como no desktop, em vez de cada uma no seu andar.
+  const L = estreito ? 78 : 150, R = estreito ? 26 : 46;
+  const ROW = estreito ? 30 : 38, TOP = estreito ? 24 : 26;
+  const AMP = ROW * 1.75;
   const PW = W - L - R, H = TOP + S.length * ROW + 14;
   const X = p => L + (p - lo) / (hi - lo) * PW;
 
@@ -485,9 +517,8 @@ function renderRidge(S){
     s += `<path d="${d}" fill="${col}" fill-opacity=".22" stroke="${col}" stroke-width="1.4"/>
           <path d="${nd}" fill="none" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" opacity=".75"/>`;
     if (estreito){
-      // nome ACIMA da curva: no celular nao ha gutter lateral que caiba
-      s += `<text x="${L}" y="${y - AMP - 5}" font-size="12.5" font-weight="600" fill="var(--ink)">${r.name}</text>
-            <text x="${W - 2}" y="${y - AMP - 5}" font-size="12" text-anchor="end" fill="var(--mut)">${r.mean.toFixed(0)} pts</text>`;
+      s += `<text x="${L-7}" y="${y-3}" text-anchor="end" font-size="11.5" fill="var(--ink)">${r.curto}</text>
+            <text x="${W-1}" y="${y-3}" font-size="10.5" text-anchor="end" fill="var(--mut)">${r.mean.toFixed(0)}</text>`;
     } else {
       s += `<text x="${L-12}" y="${y-3}" text-anchor="end" font-size="12.5" fill="var(--ink)">${r.name}</text>
             <text x="${W-R+8}" y="${y-3}" font-size="11.5" fill="var(--mut)">${r.mean.toFixed(0)}</text>`;
@@ -587,12 +618,13 @@ function executar(n, st, t0){
       + 'contra a projeção sem nada fixado — '
       + '<span class="dlt bom">verde</span> melhora para o time, '
       + '<span class="dlt ruim">vermelho</span> piora (no Z4, subir é piorar). '
-      + `Variação abaixo de ${limiarRuido(n).toFixed(1).replace('.', ',')} p.p. fica oculta: não se distingue `
-      + 'do ruído das duas simulações. Rode com mais temporadas para enxergar diferenças menores.';
+      + 'Variação dentro do ruído fica oculta, com limiar calculado em cada célula: '
+      + `${limiarRuido(n, 50).toFixed(2).replace('.', ',')} p.p. numa probabilidade perto de 50%, `
+      + `${limiarRuido(n, 5).toFixed(2).replace('.', ',')} p.p. perto de 5%.`;
 
     const err = 1.96 * Math.sqrt(0.25/n) * 100;
     st.textContent = `${r.n.toLocaleString('pt-BR')} temporadas em ${((performance.now()-t0)/1000).toFixed(1)}s `
-      + `· erro de Monte Carlo ≤ ${err.toFixed(2)} p.p.`
+      + `· erro de Monte Carlo ≤ ${err.toFixed(2)} p.p. (pior caso, perto de 50%)`
       + (usarErro() ? ` · forças sorteadas de ${D.draws.length} reajustes` : ' · forças fixas')
       + (nc ? ` · ${nc} resultado${nc>1?'s':''} fixado${nc>1?'s':''}` : '');
   });

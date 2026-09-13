@@ -257,6 +257,25 @@ normal de mesma média e desvio sobreposta para comparação, e o mapa de calor
 `Palmeiras>Flamengo`, 50,61/49,23 contra 50,0/49,8 — dentro do erro de Monte
 Carlo de 10.000 temporadas (≤ 0,98 p.p.).
 
+## O limiar de ruído, medido em vez de suposto
+
+A variação em p.p. só aparece quando passa do ruído da simulação. A primeira
+versão do limiar estava **superestimada por dois motivos**, os dois corrigidos
+depois de medir:
+
+1. Usava `p = 0,5` em todas as células — o pior caso. Com 5 sementes em 10 mil
+   temporadas, o desvio real teve **mediana 0,03 e p95 0,81 p.p.**, contra os
+   1,39 que a fórmula do pior caso previa.
+2. Multiplicava por `√2`, supondo duas rodadas independentes. **Não são**: a
+   referência e o cenário usam a mesma semente e percorrem os jogos na mesma
+   ordem, então todo jogo não fixado recebe o mesmo placar nas duas. Medido:
+   para times fora do confronto fixado, a diferença dá **zero exato** em todas
+   as sementes testadas.
+
+O limiar agora é `1,96·√(p(1−p)/n)` por célula, sem o `√2`. Com 50 mil
+temporadas dá 0,44 p.p. perto de 50% e 0,19 perto de 5%. Continua conservador
+em relação ao ruído medido, e é de propósito.
+
 ## Glossário
 
 `web/glossario.html` explica Dixon-Coles, vantagem de casa, ρ, bootstrap,

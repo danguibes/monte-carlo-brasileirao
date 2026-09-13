@@ -1,3 +1,7 @@
+<!doctype html>
+<!-- Sem esta linha o navegador entra em quirks mode, e la TABELA NAO
+     HERDA cor nem fonte dos ancestrais: no tema escuro os nomes dos
+     times ficavam pretos sobre fundo preto. -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glossário — Brasileirão Monte Carlo</title>
@@ -148,6 +152,15 @@ tamanho do tremor.</p>
 percentual</span>; com 50.000, cai para <span class="num">0,44</span>. É o
 único erro desta página que se resolve só esperando mais — todos os outros são
 do modelo, não da contagem.</p>
+<p>Esse é o <strong>pior caso</strong>, numa probabilidade perto de 50%. Nas
+pontas o erro é bem menor: perto de 5%, cai para
+<span class="num">0,19</span> p.p. com 50.000 temporadas.</p>
+<p>E a <strong>variação</strong> mostrada quando você fixa um resultado é ainda
+mais precisa do que isso sugere. A projeção de referência e a do cenário usam a
+mesma semente e percorrem os jogos na mesma ordem, então todo jogo que você não
+fixou recebe exatamente o mesmo placar nas duas. Medido: para times fora do
+confronto fixado, a diferença dá <strong>zero exato</strong>. O que sobra na
+tela é efeito, não sorteio.</p>
 </dd>
 
 <dt id="modal">"placar mais provável" — a armadilha</dt>
