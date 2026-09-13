@@ -1,0 +1,33 @@
+(tabela publicada e de outro momento: 257 jogos contra 261; conferencia pulada)
+A. DISPERSAO DE PEARSON: 0.854
+   (1,00 = Poisson perfeita; acima disso sobra variancia)
+   media dos gols 1.326  variancia 1.137
+
+B. DISTRIBUICAO DE GOLS POR TIME EM CADA JOGO
+   gols   observado   Poisson   dif
+   0       23.56%     30.55%   -6.98
+   1       38.12%     33.81%   +4.32
+   2       24.33%     20.84%   +3.49
+   3       10.73%      9.51%   +1.22
+   4        2.68%      3.60%   -0.92
+   5        0.57%      1.20%   -0.62
+   6+       0.00%      0.50%   -0.50
+
+C. AJUSTE (mesmos 261 jogos)
+   Poisson             log-verossimilhanca   -710.41   AIC  1500.82
+   binomial negativa   log-verossimilhanca   -710.46   AIC  1502.92
+   r estimado: 10294.6   (r grande = indistinguivel da Poisson)
+   variancia extra no lambda medio: 0.0002 gol^2 sobre uma media de 1.276
+   teste da razao de verossimilhanca: -0.091 (qui-quadrado 1 gl; 3,84 = 5%)  -> NAO justifica o parametro extra
+
+D. LOG-LOSS FORA DA AMOSTRA — 1X2 (650 previsoes)
+   Poisson            1.0831
+   binomial negativa  1.0830
+   ganho da NB: +0.0001 nats/previsao (t=0.56)
+
+D. LOG-LOSS FORA DA AMOSTRA — placar exato (650 previsoes)
+   Poisson            2.9557
+   binomial negativa  2.9566
+   ganho da NB: -0.0009 nats/previsao (t=-1.47)
+
+gravado out/dispersao_gols.csv

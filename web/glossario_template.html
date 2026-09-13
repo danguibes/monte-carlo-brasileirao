@@ -57,6 +57,7 @@
   <a href="#casa">vantagem de casa</a>
   <a href="#rho">ρ</a>
   <a href="#bootstrap">bootstrap</a>
+  <a href="#aleatorio">de onde vem o sorteio</a>
   <a href="#nats">nats/jogo</a>
   <a href="#mc">erro de Monte Carlo</a>
   <a href="#modal">placar mais provável</a>
@@ -125,6 +126,36 @@ simulada sorteia uma dessas versões em vez de fingir que as forças são
 exatas. O efeito é desinflar confiança falsa — o líder perde alguns pontos
 percentuais de título e os times na beira do Z4 ganham risco de verdade. É
 mais honesto, e por isso vem ligado.</p>
+</dd>
+
+<dt id="aleatorio">De onde vem a aleatoriedade?</dt>
+<dd>
+<p>A fórmula do Dixon-Coles devolve um número fixo — 1,178 gol esperado para o
+mandante, por exemplo. Se é fixo, de onde sai o sorteio?</p>
+<p>A resposta é que <strong>esse número não é um resultado: é o parâmetro de
+uma distribuição.</strong> O modelo não diz "o Palmeiras fará 1,178 gol". Diz
+"o número de gols do Palmeiras é uma variável aleatória <strong>Poisson</strong>
+cuja média é 1,178".</p>
+<p>A aleatoriedade não é deduzida do λ — ela é <em>postulada junto com ele</em>.
+A Poisson é uma escolha de modelo, feita antes de olhar qualquer dado, e supõe
+que gols acontecem como eventos raros e independentes ao longo dos 90 minutos.
+Dado isso, a chance de exatamente <em>k</em> gols é:</p>
+<div class="box">P(k) = e<sup>−λ</sup> · λ<sup>k</sup> / k!</div>
+<p>Com λ = 1,178: <span class="num">31%</span> de nenhum gol,
+<span class="num">36%</span> de um, <span class="num">21%</span> de dois,
+<span class="num">8%</span> de três. É daí que vem a grade de 81 placares — do
+par (família Poisson, parâmetro λ), nunca do λ sozinho.</p>
+<p>A analogia que costuma resolver: dizer λ = 1,178 é como dizer que uma moeda
+tem p = 0,5. O p é determinístico e conhecido; o resultado do lançamento não é.
+O modelo entrega o p, o sorteio entrega a cara ou coroa.</p>
+<p><strong>E a Poisson está certa?</strong> É suposição, não fato, e foi
+testada. Se o futebol tivesse mais variância do que a Poisson permite — goleadas
+mais frequentes do que ela admite —, o caminho seria a binomial negativa, que
+relaxa exatamente essa restrição. Medido: a dispersão fora da amostra dá
+<span class="num">1,02</span>, e a Poisson exige exatamente 1,00. A binomial
+negativa, ao ser ajustada, escolhe um parâmetro tão grande que ela <em>vira</em>
+a Poisson de volta, e perde no AIC por gastar um parâmetro à toa. A suposição
+se sustenta.</p>
 </dd>
 
 <dt id="nats">nats por jogo</dt>

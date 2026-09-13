@@ -257,6 +257,29 @@ normal de mesma média e desvio sobreposta para comparação, e o mapa de calor
 `Palmeiras>Flamengo`, 50,61/49,23 contra 50,0/49,8 — dentro do erro de Monte
 Carlo de 10.000 temporadas (≤ 0,98 p.p.).
 
+## A Poisson se sustenta? Testada contra a binomial negativa
+
+`binomial_negativa.py` responde. A Poisson impõe **variância igual à média**;
+a binomial negativa relaxa isso (`Var = μ + μ²/r`) e com `r` grande vira a
+Poisson de volta — então o teste é limpo.
+
+| medida | resultado |
+|---|---|
+| dispersão de Pearson, **fora da amostra** | **1,018** (p5 0,82 · p95 1,24) — Poisson exige 1,00 |
+| `r` estimado | 10.295, ou seja, indistinguível de infinito |
+| razão de verossimilhança | −0,09 (χ² 1 gl exige 3,84) |
+| AIC | Poisson 1500,8 · NB 1502,9 — a NB **perde** |
+| log-loss 1X2 fora da amostra | +0,0001 nats para a NB (t = 0,56) |
+| log-loss do **placar exato** | −0,0009 nats — a NB fica **pior** (t = −1,47) |
+
+**A Poisson passa.** Quatro medidas independentes, nenhuma pede a troca.
+
+Uma armadilha no caminho: a dispersão **in-sample** deu 0,854, sugerindo
+*sub*dispersão — e isso teria virado uma conclusão errada. O μ vinha de um
+modelo com 40+ parâmetros ajustado nesses mesmos jogos, então os resíduos
+encolhem por construção. Refeita com μ estimado só no treino, dá 1,02. É a
+mesma lição de sempre: medir com controle, não medir e pronto.
+
 ## O limiar de ruído, medido em vez de suposto
 
 A variação em p.p. só aparece quando passa do ruído da simulação. A primeira
