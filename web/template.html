@@ -142,6 +142,9 @@
             margin:0 -14px;padding:0 14px;
             scrollbar-width:thin}
     .scroll table{min-width:620px}
+    #tcortes{min-width:0}              /* 5 colunas curtas: nao precisa rolar */
+    #tcortes td,#tcortes th{padding:7px 4px;font-size:12.5px}
+    #tcortes td:first-child,#tcortes th:first-child{width:auto;max-width:none;position:static;box-shadow:none}
     body.comvar .scroll table{min-width:740px}   /* as variações alargam as células */
     .dlt{font-size:11.5px}
     /* Coluna congelada com largura FIXA e nome curto: sem isso "Red Bull
@@ -235,6 +238,15 @@
   <p class="sub">Cada linha soma 100%. Células em branco são abaixo de 0,5%.</p>
   <div class="scroll" style="margin-top:14px"><table class="hm" id="heat"></table></div>
   <p class="dica-rolar">← arraste de lado para ver todas as 20 posições</p>
+</section>
+
+<section>
+  <h2>Linhas de corte</h2>
+  <p class="sub">Quantos pontos faz <em>quem</em> termina em cada posição, seja qual time for.
+     São mais estreitas que a curva de qualquer time: a incerteza sobre <em>quem</em> chega lá
+     desaparece, e sobra só a do nível da liga.</p>
+  <div id="cortes" style="margin-top:18px"></div>
+  <div class="scroll" style="margin-top:12px"><table id="tcortes"></table></div>
 </section>
 
 <p class="note wrap" style="max-width:1120px;margin:0 auto;padding:0 20px">
@@ -338,6 +350,8 @@ function run(n, cenario, done, semente){
     const i = s*NT+t; pts[i]=b.pts[t]; win[i]=b.v[t]; gp[i]=b.gp[t]; gc[i]=b.gc[t];
   }
   const key = new Float64Array(NT), ord = new Int32Array(NT);
+  const MAXP = 130;
+  const cortes = new Int32Array(NT * MAXP);   // pontos de cada POSICAO
   let di = 0;
 
   function bloco(){
@@ -363,12 +377,15 @@ function run(n, cenario, done, semente){
         ord[t] = t;
       }
       const a2 = Array.from(ord).sort((x, y) => key[y] - key[x]);
-      for (let p = 0; p < NT; p++) rankCount[a2[p]*NT + p]++;
+      for (let p = 0; p < NT; p++){
+        rankCount[a2[p]*NT + p]++;
+        cortes[p*MAXP + Math.min(MAXP-1, pts[o + a2[p]])]++;   // linha de corte
+      }
     }
     di++;
     document.querySelector('#bar i').style.width = (100*di/nSorteios) + '%';
     if (di < nSorteios) setTimeout(bloco, 0);
-    else if (meuID === RUN_ID) done({ n: total, pts, gp, gc, rankCount });
+    else if (meuID === RUN_ID) done({ n: total, pts, gp, gc, rankCount, cortes, MAXP });
   }
   bloco();
 }
@@ -531,6 +548,77 @@ function renderRidge(S){
   cont.innerHTML = s + '</svg>';
 }
 
+/* Distribuição de pontos POR POSIÇÃO — a linha de corte.
+   É uma estatística de ordem: não pergunta QUEM termina ali, só QUANTO fez.
+   Por isso é bem mais estreita que a curva de um time. */
+const CORTES = [
+  {pos: 1,  nome: 'Campeão',   cor: 'var(--g4)'},
+  {pos: 4,  nome: 'G4 · 4º',   cor: 'var(--g4)'},
+  {pos: 6,  nome: 'G6 · 6º',   cor: 'var(--g6)'},
+  {pos: 16, nome: 'Z4 · 16º',  cor: 'var(--z4)'},
+];
+
+function estatCorte(h){
+  let tot = 0; for (const v of h) tot += v;
+  const quantil = p => { let acc = 0;
+    for (let g = 0; g < h.length; g++){ acc += h[g]; if (acc >= tot * p) return g; }
+    return h.length - 1; };
+  let moda = 0, media = 0;
+  for (let g = 0; g < h.length; g++){ if (h[g] > h[moda]) moda = g; media += g * h[g]; }
+  return {tot, moda, media: media / tot, med: quantil(.5),
+          p5: quantil(.05), p95: quantil(.95)};
+}
+
+function renderCortes(r){
+  const cont = document.getElementById('cortes');
+  if (!cont || !r || !r.cortes) return;
+  const W = Math.max(280, Math.round(cont.clientWidth || 900));
+  const estreito = W < 520;
+  const MAXP = r.MAXP;
+  const hist = CORTES.map(c => Array.from(r.cortes.slice((c.pos-1)*MAXP, c.pos*MAXP)));
+  const est = hist.map(estatCorte);
+
+  const lo = Math.max(0, Math.min(...est.map(e => e.p5)) - 4);
+  const hi = Math.max(...est.map(e => e.p95)) + 4;
+  const L = estreito ? 78 : 132, R = estreito ? 30 : 52;
+  const ROW = estreito ? 48 : 56, TOP = 24, PW = W - L - R;
+  const H = TOP + CORTES.length * ROW + 14;
+  const X = p => L + (p - lo) / (hi - lo) * PW;
+  const pico = Math.max(...hist.map((h, i) =>
+    Math.max(...h.slice(lo, hi + 1)) / est[i].tot));
+  const AMP = ROW * 0.82;
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribuição de pontos por posição final">`;
+  const passo = estreito ? 10 : 5;
+  for (let p = Math.ceil(lo/passo)*passo; p <= hi; p += passo){
+    s += `<line x1="${X(p)}" y1="${TOP-10}" x2="${X(p)}" y2="${H-14}" stroke="var(--grid)"/>
+          <text x="${X(p)}" y="${TOP-15}" fill="var(--mut)" font-size="11" text-anchor="middle">${p}</text>`;
+  }
+  CORTES.forEach((c, i) => {
+    const e = est[i], h = hist[i], y = TOP + i*ROW + ROW - 6;
+    let d = `M ${X(lo)} ${y}`;
+    for (let g = lo; g <= hi; g++)
+      d += ` L ${X(g).toFixed(1)} ${(y - (h[g]/e.tot)/pico*AMP).toFixed(1)}`;
+    d += ` L ${X(hi)} ${y} Z`;
+    s += `<path d="${d}" fill="${c.cor}" fill-opacity=".25" stroke="${c.cor}" stroke-width="1.5"/>
+          <line x1="${X(e.med)}" y1="${y}" x2="${X(e.med)}" y2="${(y-AMP-2).toFixed(1)}"
+                stroke="${c.cor}" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <text x="${L-10}" y="${y-2}" text-anchor="end" font-size="${estreito?12:13}" fill="var(--ink)" font-weight="600">${c.nome}</text>
+          <text x="${W-2}" y="${y-2}" text-anchor="end" font-size="12" fill="var(--mut)">${e.med}</text>`;
+  });
+  cont.innerHTML = s + '</svg>';
+
+  let t = `<thead><tr><th>Posição</th><th>Mediana</th><th>Mais provável</th>
+           <th>Média</th><th>90% das vezes entre</th></tr></thead><tbody>`;
+  CORTES.forEach((c, i) => {
+    const e = est[i];
+    t += `<tr><td class="nm">${c.nome}</td><td><strong>${e.med}</strong></td>
+      <td class="muted">${e.moda}</td><td class="muted">${e.media.toFixed(1)}</td>
+      <td class="muted">${e.p5} – ${e.p95}</td></tr>`;
+  });
+  document.getElementById('tcortes').innerHTML = t + '</tbody>';
+}
+
 function renderHeat(S){
   let h = '<thead><tr><th></th>';
   for (let p = 1; p <= NT; p++) h += `<th>${p}º</th>`;
@@ -615,7 +703,7 @@ function executar(n, st, t0){
     if (!nc){ BASE = indexar(S); BASE_CHAVE = chaveCenario(); }
 
     renderTable(S, nc ? BASE : null, n);
-    renderRidge(S); renderHeat(S);
+    renderRidge(S); renderHeat(S); renderCortes(r);
 
     const cap = document.getElementById('capvar');
     document.body.classList.toggle('comvar', !!nc);
@@ -740,9 +828,25 @@ if (D.draws) {
 }
 
 let redesenho;
+/* ResizeObserver pega mudanca de largura do CONTAINER, que o evento de resize
+   da janela nem sempre acompanha (rotacao, barra do navegador, painel lateral). */
+if (window.ResizeObserver){
+  let larguraAnterior = 0;
+  new ResizeObserver(es => {
+    const w = Math.round(es[0].contentRect.width);
+    if (!w || Math.abs(w - larguraAnterior) < 12) return;
+    larguraAnterior = w;
+    clearTimeout(redesenho);
+    redesenho = setTimeout(() => {
+      if (RES){ renderRidge(summarise(RES)); renderCortes(RES); }
+    }, 150);
+  }).observe(document.getElementById('cortes'));
+}
 addEventListener('resize', () => {
   clearTimeout(redesenho);
-  redesenho = setTimeout(() => { if (RES) renderRidge(summarise(RES)); }, 180);
+  redesenho = setTimeout(() => {
+    if (RES){ renderRidge(summarise(RES)); renderCortes(RES); }
+  }, 180);
 });
 
 document.getElementById('go').onclick = go;

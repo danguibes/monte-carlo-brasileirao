@@ -299,6 +299,26 @@ O limiar agora é `1,96·√(p(1−p)/n)` por célula, sem o `√2`. Com 50 mil
 temporadas dá 0,44 p.p. perto de 50% e 0,19 perto de 5%. Continua conservador
 em relação ao ruído medido, e é de propósito.
 
+## Linhas de corte
+
+A página tem, no fim, a distribuição de pontos **por posição** — campeão, G4,
+G6 e o 16º que escapa do Z4. É outra pergunta que a curva por time: não é
+"quantos pontos o Flamengo faz", é "quantos pontos faz **quem** termina em 16º",
+seja quem for.
+
+O ponto estatístico interessante é a largura. O desvio da linha de corte é de
+~1,9 ponto, contra ~4 a 5 de qualquer time individual. É uma **estatística de
+ordem**: a incerteza sobre *quem* ocupa a vaga — que é enorme — desaparece, e
+sobra só a incerteza sobre o nível da liga. Dá para cravar "45 salva" com
+confiança sem fazer ideia de quem vai precisar dos 45.
+
+O histograma é acumulado dentro do próprio laço da simulação (20 operações a
+mais por temporada), então a seção responde aos condicionais e ao erro de
+estimação como todo o resto, e vai estreitando conforme sobram menos jogos.
+
+`linha_de_corte.py` faz a mesma conta em Python, com a tabela de "quantos
+pontos bastam" que não cabia na página.
+
 ## Glossário
 
 `web/glossario.html` explica Dixon-Coles, vantagem de casa, ρ, bootstrap,
