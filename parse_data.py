@@ -76,14 +76,28 @@ def check(matches, st):
     join = st.set_index("team").join(derived, rsuffix="_calc")
     bad = join[(join.pts != join.pts_calc) | (join.j != join.j_calc)
                | (join.gp != join.gp_calc) | (join.gc != join.gc_calc)]
-    return join, bad
+
+    # Duas coisas MUITO diferentes cabem em "bad", e tratar as duas como fatal
+    # custou caro: um editor da Wikipedia atualizou a tabela e esqueceu de
+    # preencher a celula da matriz, e isso desligou a conferencia cruzada do
+    # projeto inteiro por dias.
+    #
+    #   MATRIZ ATRASADA: a matriz tem MENOS jogos, e nada se contradiz. E uma
+    #   lacuna — o que esta la continua confiavel, e o ge.globo preenche o
+    #   resto. Avisa e segue.
+    #
+    #   CONTRADICAO: a matriz afirma algo que a tabela nega. Aborta.
+    atrasada = bool(len(bad)) and bool(
+        (join.j_calc <= join.j).all() and (join.gp_calc <= join.gp).all()
+        and (join.gc_calc <= join.gc).all() and (join.pts_calc <= join.pts).all())
+    return join, bad, atrasada
 
 
 if __name__ == "__main__":
     html = fetch_html(refresh="--refresh" in sys.argv)
     matrix, standings = pick_tables(html)
     matches, st, code_of = build(matrix, standings)
-    join, bad = check(matches, st)
+    join, bad, atrasada = check(matches, st)
     print(f"jogos totais    : {len(matches)}")
     print(f"jogos disputados: {int(matches.played.sum())}")
     print(f"jogos restantes : {int((~matches.played).sum())}")
@@ -92,15 +106,26 @@ if __name__ == "__main__":
     # A conferencia vem ANTES de gravar: se a matriz nao bate com a tabela
     # publicada, os CSVs antigos ficam intactos em vez de virarem lixo.
     if len(bad):
-        print("\nDIVERGENCIA entre a matriz de confrontos e a tabela publicada:")
-        print(bad[["pts", "pts_calc", "j", "j_calc", "gp", "gp_calc", "gc", "gc_calc"]].to_string())
-        print("\nNada foi gravado; data/ continua com os dados da ultima rodada boa.")
-        print("Em geral isso e a Wikipedia no meio de uma edicao: a tabela ja foi")
-        print("atualizada e a matriz ainda nao, ou o contrario. Tente de novo mais tarde.")
-        sys.exit(1)
+        cols = ["pts", "pts_calc", "j", "j_calc", "gp", "gp_calc", "gc", "gc_calc"]
+        if atrasada:
+            faltam = int((join.j - join.j_calc).sum() // 2)
+            print(f"\nAVISO: a MATRIZ da Wikipedia esta atrasada em {faltam} jogo(s).")
+            print(bad[cols].to_string())
+            print("\nNada se contradiz — e lacuna, nao erro. O que a matriz tem continua")
+            print("valendo, o ge.globo preenche o resto, e a conferencia cruzada segue")
+            print("valida nos jogos que as duas fontes tem.")
+        else:
+            print("\nCONTRADICAO entre a matriz de confrontos e a tabela publicada:")
+            print(bad[cols].to_string())
+            print("\nA matriz afirma algo que a tabela nega — nao e so atraso.")
+            print("Nada foi gravado; data/ continua com os dados da ultima rodada boa.")
+            sys.exit(1)
 
     matches.to_csv("data/matches.csv", index=False, encoding="utf-8")
     st.to_csv("data/standings.csv", index=False, encoding="utf-8")
     json.dump(code_of, open("data/codes.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
-    print("\nconferido: matriz bate com a tabela publicada nos 20 times")
+    if len(bad):
+        print("\ngravado, com a ressalva do atraso acima")
+    else:
+        print("\nconferido: matriz bate com a tabela publicada nos 20 times")

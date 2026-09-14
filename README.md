@@ -42,6 +42,17 @@ cruzado prova consistência, não finalização — são coisas diferentes, e es
 foi a lição mais cara desta página. O topo do site mostra quantos jogos estão
 em andamento e fora da conta, e a lista de jogos marca cada um deles.
 
+**Matriz atrasada não é contradição.** O parser distingue dois casos que antes
+tratava igual. Se a matriz tem *menos* jogos que a tabela e nada se contradiz,
+é lacuna: avisa e segue, e o ge.globo preenche. Só aborta quando a matriz
+**afirma algo que a tabela nega**.
+
+A diferença custou caro para aprender: em 12/09 um editor da Wikipedia atualizou
+a tabela com Grêmio 1–2 Vasco e nunca preencheu a célula da matriz. Com a regra
+antiga, essa única célula esquecida **desligou a conferência cruzada do projeto
+por dois dias**, e a mensagem ainda dizia "tente de novo mais tarde", como se
+fosse transitório.
+
 `atualizar.py` busca as duas e **só grava se elas concordarem jogo a jogo**.
 Medido em 2026-09-12: acordo total nos 257 jogos disputados. Duas fontes
 independentes batendo é o que separa "o número apareceu" de "o número está
@@ -61,8 +72,15 @@ com cobertura pior que o ge.globo.
 python atualizar.py
 ```
 
-Faz os três passos em ordem — busca os resultados novos, reajusta o modelo e
+Faz os passos em ordem — busca os resultados novos, reajusta o modelo e
 simula, regenera a página — e **para no primeiro que falhar**. Leva ~1 min.
+
+**O agendamento atrasa.** O cron do GitHub Actions é best-effort e enfileira
+muito na hora cheia, que é quando todo mundo agenda. Medido neste repo: o cron
+das 11:00 UTC disparou às **14:50** — 3h50 de atraso — e no dia seguinte não
+tinha disparado até as 13:00. Por isso o horário virou minuto quebrado (11:23)
+e ganhou uma segunda tentativa à tarde (15:23). Se precisar na hora, use
+`publicar.py`.
 
 O guarda-corpo é a conferência: antes de gravar qualquer coisa, o parser
 reconstrói pontos, jogos e gols de cada time a partir da matriz de confrontos e

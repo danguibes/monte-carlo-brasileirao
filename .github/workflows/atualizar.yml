@@ -5,7 +5,12 @@ name: atualizar e publicar
 # Pages continua servindo a última versão boa — que é o comportamento certo.
 on:
   schedule:
-    - cron: "0 11 * * *"
+    # O agendador do Actions é best-effort e atrasa muito na hora cheia, que é
+    # quando todo mundo agenda. Medido neste repo: o cron das 11:00 UTC disparou
+    # às 14:50 — 3h50 de atraso. Minuto quebrado pega menos fila, e a segunda
+    # tentativa cobre o dia em que a primeira for engolida.
+    - cron: "23 11 * * *"
+    - cron: "23 15 * * *"
   workflow_dispatch:
 
 permissions:
