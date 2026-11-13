@@ -1,0 +1,81 @@
+name: manter o cron vivo
+
+# POR QUE ESTE ARQUIVO EXISTE
+#
+# Em repositorio PUBLICO o GitHub desabilita workflow agendado quando nao ha
+# atividade por 60 dias. Texto literal da documentacao:
+#
+#   "In a public repository, scheduled workflows are automatically disabled
+#    when no repository activity has occurred in 60 days."
+#
+# A rotina diaria deste repo roda todo dia e mesmo assim NAO conta: ela publica
+# no Pages por artefato, e isso nao cria commit. Medido em 13/11/2026 — o cron
+# tinha disparado naquela manha e o `pushed_at` estava parado ha 60 dias, em
+# cima do corte.
+#
+# O QUE E DOCUMENTADO E O QUE NAO E
+#
+# A documentacao NAO define o que conta como "repository activity". Ela so diz
+# que um commit que altera o proprio cron, feito por quem tem permissao de
+# escrita, REATIVA um workflow ja desabilitado. Se um push feito pelo
+# github-actions[bot] zera o contador, nao esta escrito em lugar nenhum — e so
+# se descobre esperando 60 dias.
+#
+# Por isso este arquivo nao se declara suficiente. A verdade do estado mora num
+# campo da API, e esse campo e o que conferir quando houver duvida:
+#
+#   gh api repos/danguibes/<repo>/actions/workflows --jq '.workflows[].state'
+#
+# "active" esta vivo; "disabled_inactivity" e exatamente este problema tendo
+# acontecido. Um workflow desabilitado nao roda, entao ele nao consegue avisar
+# de si mesmo — este arquivo empurra, mas quem confere e aquele comando.
+
+on:
+  schedule:
+    # Semanal, em minuto quebrado: o agendador do Actions e best-effort e
+    # atrasa horas na hora cheia. Licao ja paga neste repo.
+    - cron: "41 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  manter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: medir quantos dias faz desde o ultimo push
+        id: medir
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ultimo=$(gh api "repos/${{ github.repository }}" --jq .pushed_at)
+          dias=$(( ( $(date -u +%s) - $(date -u -d "$ultimo" +%s) ) / 86400 ))
+          echo "ultimo push: $ultimo  ($dias dias)"
+          echo "dias=$dias" >> "$GITHUB_OUTPUT"
+          echo "ultimo=$ultimo" >> "$GITHUB_OUTPUT"
+
+      # 25 dias deixa folga de 35 ate o corte, e mantem o historico limpo: um
+      # commit de manutencao por mes, nao um por dia. Empurrar todo dia
+      # encheria o log e esconderia os commits de verdade.
+      - name: empurrar um commit de manutencao
+        if: steps.medir.outputs.dias >= 25
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          {
+            echo "- $(date -u +%Y-%m-%d): ultimo push humano foi em ${{ steps.medir.outputs.ultimo }}," \
+                 "${{ steps.medir.outputs.dias }} dias atras. Commit automatico para o cron nao ser" \
+                 "desabilitado por inatividade."
+          } >> MANUTENCAO.md
+          git add MANUTENCAO.md
+          git commit -m "Manutencao: ${{ steps.medir.outputs.dias }} dias sem push, mantendo o cron vivo"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: nada a fazer
+        if: steps.medir.outputs.dias < 25
+        run: echo "ultimo push ha ${{ steps.medir.outputs.dias }} dias — longe do corte de 60"
