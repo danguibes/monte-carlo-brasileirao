@@ -36,6 +36,11 @@ on:
     # atrasa horas na hora cheia. Licao ja paga neste repo.
     - cron: "41 9 * * 1"
   workflow_dispatch:
+    inputs:
+      forcar:
+        description: "empurrar o commit mesmo sem ter chegado nos 25 dias (teste)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -62,7 +67,7 @@ jobs:
       # commit de manutencao por mes, nao um por dia. Empurrar todo dia
       # encheria o log e esconderia os commits de verdade.
       - name: empurrar um commit de manutencao
-        if: steps.medir.outputs.dias >= 25
+        if: steps.medir.outputs.dias >= 25 || inputs.forcar
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
@@ -77,5 +82,5 @@ jobs:
           git push origin HEAD:${{ github.ref_name }}
 
       - name: nada a fazer
-        if: steps.medir.outputs.dias < 25
+        if: steps.medir.outputs.dias < 25 && ! inputs.forcar
         run: echo "ultimo push ha ${{ steps.medir.outputs.dias }} dias — longe do corte de 60"
