@@ -49,7 +49,7 @@ jobs:
   manter:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: medir quantos dias faz desde o ultimo push
         id: medir
